@@ -1,7 +1,6 @@
 {
   "watch": [
-    "src/",
-    "sandbox/"
-  ],
-  "ext": "ts,js,css,json"
+    "src/**/*",
+    "sandbox/**/*.ts"
+  ]
 }

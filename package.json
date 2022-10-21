@@ -10,8 +10,8 @@
     "build": "tsc && yarn run tailwind",
     "start:dev": "nodemon sandbox/main.ts",
     "start:prod": "yarn run build && dotenv -e sandbox/.env.local -v NODE_ENV=production node .",
-    "tailwind": "tailwindcss -i sandbox/tailwind.css -o public/css/style.css",
-    "tailwind:watch": "tailwindcss -i sandbox/tailwind.css -o public/css/style.css --watch"
+    "tailwind": "postcss sandbox/tailwind.css -o public/css/style.css",
+    "tailwind:watch": "postcss sandbox/tailwind.css -o public/css/style.css -w"
   },
   "dependencies": {
     "class-transformer": "^0.5.1",
@@ -53,12 +53,15 @@
     "@types/recursive-readdir": "^2.2.1",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
+    "autoprefixer": "^10.4.12",
     "dotenv": "^16.0.3",
     "dotenv-cli": "^6.0.0",
     "eslint": "^8.25.0",
     "jest": "^29.2.0",
     "nodemon": "^2.0.20",
     "postcss": "^8.4.18",
+    "postcss-cli": "^10.0.0",
+    "postcss-nesting": "^10.2.0",
     "tailwindcss": "^3.1.8",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
