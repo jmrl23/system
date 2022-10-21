@@ -1,0 +1,7 @@
+{
+  "watch": [
+    "src/",
+    "sandbox/"
+  ],
+  "ext": "ts,js,css,json"
+}
