@@ -1,0 +1,5 @@
+sandbox/
+public/
+build/
+*.config.js
+*.config.ts
