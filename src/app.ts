@@ -1,5 +1,6 @@
 import express from 'express'
 import { join } from 'path'
+import { NODE_ENV } from './configurations'
 import { controller } from './controllers'
 import { pageNotFound } from './controllers/404'
 import { rateLimiter, session, logger, compressor, publicMinifier, htmlMinifier } from './middlewares'
@@ -7,13 +8,16 @@ import { rateLimiter, session, logger, compressor, publicMinifier, htmlMinifier 
 const app = express()
 
 /** configurations */
-app.disable('x-powered-by')
 app.set('view engine', 'ejs')
 app.set('views', join(__dirname, '../views'))
+if (NODE_ENV === 'production') {
+  app.set('trust proxy', 1)
+  app.disable('x-powered-by')
+}
 
 /** middlewares */
 app.use(
-  rateLimiter,
+  rateLimiter(),
   session,
   logger,
   compressor,
