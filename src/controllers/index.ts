@@ -1,4 +1,4 @@
-import e, { Router } from 'express'
+import { type Express, Router } from 'express'
 import listEndpoints from 'express-list-endpoints'
 import recursive from 'recursive-readdir'
 import clc from 'cli-color'
@@ -17,7 +17,7 @@ recursive(__dirname, ['!*.controller.{ts,js}'])
         .replace(/^_+/g, '')
         .toLowerCase()
       controller.use(`/${path}`, _controller)
-      const endpoints = listEndpoints(_controller as e.Express)
+      const endpoints = listEndpoints(_controller as Express)
       console.log(clc.bold.bgBlueBright(' CONTROLLER ') + clc.black.bgWhite(` ${path} `))
       for (const endpoint of endpoints) {
         const { methods, path } = endpoint
@@ -27,4 +27,5 @@ recursive(__dirname, ['!*.controller.{ts,js}'])
     }
   })
 
+export * from './404'
 export { controller }
