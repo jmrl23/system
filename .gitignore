@@ -1,4 +1,5 @@
 node_modules
+prisma/.env
 .env*.local
 build/
 public/css/style.css

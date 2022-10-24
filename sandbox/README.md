@@ -5,7 +5,7 @@ This folder is for development only.
 [![Banner](https://media.giphy.com/media/bGgsc5mWoryfgKBx1u/giphy.gif)](https://github.com/jmrl23/system)
 
 **Before running** the application in **_development mode_**, kindly create a `.env.local` file 
-and populate its values base on `.env` file. Inside the `/prisma` folder, create also a `.env.local` file and 
+and populate its values base on `.env` file. Inside the `/prisma` folder, create also a `.env` file and 
 paste your `DATABASE_URL`.
 
 ### Software requirements
