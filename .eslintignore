@@ -1,5 +1,6 @@
 sandbox/
-public/
+public/dist/
+public/static/
 build/
-*.config.js
-*.config.ts
+**/*config.js
+**/*config.ts

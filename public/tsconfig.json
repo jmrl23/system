@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/js",
+    "target": "ES5",
+    "module": "ES2015",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

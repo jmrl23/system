@@ -2,5 +2,6 @@ node_modules
 prisma/.env
 .env*.local
 build/
+dist/
 public/css/style.css
 yarn-error.log
