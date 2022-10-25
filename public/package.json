@@ -1,0 +1,10 @@
+{
+  "license": "UNLICENSED",
+  "scripts": {
+    "tsc": "tsc",
+    "tsc:w": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  }
+}

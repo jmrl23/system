@@ -2,6 +2,7 @@ import express from 'express'
 import { join } from 'path'
 import { controller, pageNotFound } from './controllers'
 import { rateLimiter, session, logger, compressor, publicMinifier, htmlMinifier } from './middlewares'
+import { staticConfig } from './configurations'
 
 const app = express()
 
@@ -21,10 +22,8 @@ app.use(
   htmlMinifier,
   express.json(),
   express.urlencoded({ extended: false }),
-  express.static(join(__dirname, '../public'), {
-    maxAge: process.env.NODE_ENV === 'production' ?
-      '31536000' : 'public, max-age=0'
-  }),
+  express.static(join(__dirname, '../public/static'), staticConfig),
+  express.static(join(__dirname, '../public/dist'), staticConfig),
 )
 
 /** controllers */
