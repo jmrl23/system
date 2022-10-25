@@ -7,6 +7,7 @@ async function main() {
   process.env.PORT = port.toString()
   server.listen(port, () => {
     console.log(`${clc.bold.bgGreen(' SERVER ')} http://localhost:${port}/\n`)
+    import('./websocket')
   })
 }
-main()
+void main()
