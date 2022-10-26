@@ -6,7 +6,7 @@ This folder is for development only.
 
 **Before running** the application in **_development mode_**, kindly create a `.env.local` file 
 and populate its values base on `.env` file. Inside the `/prisma` folder, create also a `.env` file and 
-paste your `DATABASE_URL`.
+paste your `DATABASE_URL` and `SHADOW_DATABASE_URL`.
 
 ### Software requirements
   - [NodeJS](https://nodejs.org/en/)
