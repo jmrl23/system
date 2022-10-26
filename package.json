@@ -43,6 +43,7 @@
     "nodemailer": "^6.8.0",
     "recursive-readdir": "^2.2.2",
     "socket.io": "^4.5.3",
+    "socket.io-client": "^4.5.3",
     "table": "^6.8.0"
   },
   "devDependencies": {
@@ -64,7 +65,6 @@
     "@types/node": "^18.11.0",
     "@types/nodemailer": "^6.4.6",
     "@types/recursive-readdir": "^2.2.1",
-    "@types/socket.io-client": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "autoprefixer": "^10.4.12",
