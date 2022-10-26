@@ -7,7 +7,15 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
+    "paths": {
+      "https://cdn.socket.io/4.3.2/socket.io.esm.min.js": [
+        "../node_modules/socket.io-client"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts"

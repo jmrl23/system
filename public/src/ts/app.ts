@@ -1,7 +1,5 @@
-import type { io, Socket } from 'socket.io-client'
+import { io, type Socket } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 const socket: Socket = io('/')
 
 socket.emit('ping')
