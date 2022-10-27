@@ -1,4 +1,5 @@
 import express from 'express'
+import passport from 'passport'
 import { join } from 'path'
 import { controller, pageNotFound } from './controllers'
 import { rateLimiter, session, logger, compressor, publicMinifier, htmlMinifier } from './middlewares'
@@ -24,6 +25,8 @@ app.use(
   express.urlencoded({ extended: false }),
   express.static(join(__dirname, '../public/static'), staticConfig),
   express.static(join(__dirname, '../public/dist'), staticConfig),
+  passport.initialize(),
+  passport.session(),
 )
 
 /** controllers */

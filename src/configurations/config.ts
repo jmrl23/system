@@ -14,4 +14,6 @@ export const GOOGLE_CLIENT_SECRET = env.get('GOOGLE_CLIENT_SECRET').required().a
 
 export const GOOGLE_REFRESH_TOKEN = env.get('GOOGLE_REFRESH_TOKEN').required().asString()
 
+export const PASSPORT_GOOGLE_CALLBACK_URL = env.get('PASSPORT_GOOGLE_CALLBACK_URL').required().asUrlString()
+
 export const SERVICE_EMAIL = env.get('SERVICE_EMAIL').required().asEnum(['on', 'off'])

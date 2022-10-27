@@ -42,10 +42,6 @@
         "eqeqeq": [
             "error"
         ],
-        "max-lines": [
-            "warn",
-            80
-        ],
         "@typescript-eslint/array-type": [
             "warn",
             {
