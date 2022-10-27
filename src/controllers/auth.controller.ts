@@ -52,32 +52,40 @@ passport.deserializeUser(async (user, done) => {
 
 const controller = Router()
 
-controller.get('/google', passport.authenticate('google', {
-  scope: ['profile', 'email'],
-  prompt: 'select_account'
-}))
+controller
 
-controller.get('/google/redirect', passport.authenticate('google'), function (_request, response) {
-  response.redirect('/')
-})
-
-controller.get('/logout', sessionRequired, function (request, response) {
-  if (request.user) {
-    const user = request.user as User
-    cache.del(`user-${user.id}`)
-  }
-  request.logOut({ keepSessionInfo: false },
-    (error) => {
-      if (error) {
-        return response.status(400).json({
-          statusCode: 400,
-          message: error.message,
-          error: 'Bad Request'
-        })
-      }
-      response.redirect('/')
-    }
+  .get('/google',
+    passport.authenticate('google', {
+      scope: ['profile', 'email'],
+      prompt: 'select_account'
+    })
   )
-})
+
+  .get('/google/redirect',
+    passport.authenticate('google'),
+    function (_request, response) {
+      response.redirect('/')
+    })
+
+  .get('/logout',
+    sessionRequired,
+    function (request, response) {
+      if (request.user) {
+        const user = request.user as User
+        cache.del(`user-${user.id}`)
+      }
+      request.logOut({ keepSessionInfo: false },
+        (error) => {
+          if (error) {
+            return response.status(400).json({
+              statusCode: 400,
+              message: error.message,
+              error: 'Bad Request'
+            })
+          }
+          response.redirect('/')
+        }
+      )
+    })
 
 export { controller }

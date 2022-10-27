@@ -5,7 +5,7 @@ import type { Request, Response } from 'express'
 const rateLimiter = (passedOptions: Partial<Options> = {}) => {
   return limiter({
     windowMs: 5 * 60 * 1000,
-    max: 120,
+    max: 200,
     standardHeaders: true,
     legacyHeaders: false,
     message: async (request: Request, response: Response) => {
