@@ -1,0 +1,3 @@
+views/**/*.ejs linguist-vendor
+*.js linguist-vendor
+.env* linguist-vendor
