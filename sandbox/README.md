@@ -17,6 +17,7 @@ paste your `DATABASE_URL` and `SHADOW_DATABASE_URL`.
   - [MySQL Database Online](https://app.planetscale.com/)
   - [Google Console](https://console.cloud.google.com/)
   - [OAuth Playground](https://developers.google.com/oauthplayground/)
+  - [CA certificate](https://curl.se/docs/caextract.html)
 
 ### Reference
   - [URL Structure for authentication](https://danq.me/2021/09/07/http-basic-auth-urls/)

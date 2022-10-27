@@ -1,7 +1,10 @@
 import type { ServeStaticOptions } from 'serve-static'
+import { NODE_ENV } from '.'
 
 const staticConfig: ServeStaticOptions = {
-    maxAge: process.env.NODE_ENV === 'production' ? '31536000' : 'public, max-age=0'
+    maxAge: NODE_ENV === 'development' ?
+        '0, public' :
+        '365000000, immutable'
 }
 
 export { staticConfig }

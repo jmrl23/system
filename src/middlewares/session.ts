@@ -12,7 +12,8 @@ const connection = createPool({
   port: parseInt(databaseURL.port, 10),
   database: databaseURL.pathname.substring(1),
   user: decodeURIComponent(databaseURL.username),
-  password: decodeURIComponent(databaseURL.password)
+  password: decodeURIComponent(databaseURL.password),
+  ssl: { rejectUnauthorized: true }
 })
 
 const store = new MySQLStore({
@@ -24,7 +25,7 @@ const _session = session({
   secret: SESSION_SECRET,
   store,
   saveUninitialized: false,
-  resave: false,
+  resave: false
 })
 
 export { _session as session }

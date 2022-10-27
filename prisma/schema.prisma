@@ -27,6 +27,5 @@ model User {
   id          String   @default(uuid())
   dateCreated DateTime @default(now())
 
-  username String @unique
-  password String
+  email String @unique
 }
