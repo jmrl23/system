@@ -1,11 +1,13 @@
 import passport from 'passport'
 import { Router } from 'express'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, PASSPORT_GOOGLE_CALLBACK_URL } from '../configurations'
-import { db } from '../services'
-import { User } from '@prisma/client'
-import { cache } from '../services'
-import { sessionRequired } from '../middlewares'
+import {
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  PASSPORT_GOOGLE_CALLBACK_URL
+} from '../configurations'
+import { db, cache } from '../services'
+import { rateLimiter, sessionRequired } from '../middlewares'
 
 passport.use(
   new GoogleStrategy({
@@ -23,7 +25,7 @@ passport.use(
         update: {},
         create: { email: data.email }
       })
-      next(null, user)
+      next(null, user.id)
     } catch (error: unknown) {
       if (error instanceof Error)
         next(error.message)
@@ -31,17 +33,16 @@ passport.use(
   })
 )
 
-passport.serializeUser((user, done) => {
-  done(null, JSON.stringify(user))
+passport.serializeUser((userId, done) => {
+  done(null, userId)
 })
 
-passport.deserializeUser(async (user, done) => {
-  const _user = JSON.parse(user as string) as User
+passport.deserializeUser(async (userId: string, done) => {
   try {
-    const cachedUser = await cache.get(`user-${_user.id}`)
+    const cachedUser = await cache.get(`user-${userId}`)
     if (cachedUser) return done(null, cachedUser)
-    const result = await db.user.findFirst({
-      where: { id: _user.id }
+    const result = await db.user.findUnique({
+      where: { id: userId }
     })
     await cache.put(`user-${result?.id}`, result)
     done(null, result)
@@ -51,6 +52,8 @@ passport.deserializeUser(async (user, done) => {
 })
 
 const controller = Router()
+
+controller.use(rateLimiter({ max: 50 }))
 
 controller
 
@@ -70,10 +73,7 @@ controller
   .get('/logout',
     sessionRequired,
     function (request, response) {
-      if (request.user) {
-        const user = request.user as User
-        cache.del(`user-${user.id}`)
-      }
+      if (request.user) cache.del(`user-${request.user}`)
       request.logOut({ keepSessionInfo: false },
         (error) => {
           if (error) {
