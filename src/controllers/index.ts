@@ -18,7 +18,10 @@ recursive(__dirname, ['!*.controller.{ts,js}'])
         .toLowerCase()
       controller.use(`/${path}`, _controller)
       const endpoints = listEndpoints(_controller as Express)
-      console.log(clc.bold.bgBlueBright(' CONTROLLER ') + clc.black.bgWhite(` ${path} `))
+      console.log(
+        clc.bold.bgBlueBright(' CONTROLLER ') +
+        clc.black.bgWhite(` ${path} `)
+      )
       for (const endpoint of endpoints) {
         const { methods, path } = endpoint
         console.log(` - [${methods.join(', ')}] ${path}`)
@@ -27,5 +30,4 @@ recursive(__dirname, ['!*.controller.{ts,js}'])
     }
   })
 
-export * from './404'
 export { controller }

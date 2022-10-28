@@ -1,7 +1,13 @@
 import type { SendMailOptions } from 'nodemailer'
 import type { EmailServiceResponse } from '../types'
 import { createTransport } from 'nodemailer'
-import { SERVICE_EMAIL, SMTP_TRANSPORT_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN } from '../configurations'
+import {
+  SERVICE_EMAIL,
+  SMTP_TRANSPORT_URL,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_REFRESH_TOKEN
+} from '../configurations'
 
 const transportURL = new URL(SMTP_TRANSPORT_URL)
 
@@ -19,7 +25,9 @@ const transporter = createTransport({
   }
 })
 
-async function sendMail(options: SendMailOptions): Promise<EmailServiceResponse> {
+async function sendMail(
+  options: SendMailOptions
+): Promise<EmailServiceResponse> {
   if (SERVICE_EMAIL === 'off') {
     return {
       error: null,

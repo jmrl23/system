@@ -9,7 +9,7 @@ generator client {
 generator erd {
   provider                      = "prisma-erd-generator"
   output                        = "../sandbox/erd.png"
-  theme                         = "forest"
+  theme                         = "neutral"
   includeRelationshipFromFields = true
 }
 
@@ -24,8 +24,10 @@ datasource db {
 // ============================= MODELS =============================
 
 model User {
-  id          String   @default(uuid())
+  id          String   @unique @default(uuid())
   dateCreated DateTime @default(now())
 
   email String @unique
+
+  @@unique([id, email])
 }
