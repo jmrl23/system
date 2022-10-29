@@ -4,7 +4,7 @@ import { Router } from 'express'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { db, cache } from '../services'
 import { isAuthenticated, rateLimiter } from '../middlewares'
-import { NotFoundError } from 'express-response-errors'
+import { BadRequestError, NotFoundError } from 'express-response-errors'
 import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
@@ -99,17 +99,12 @@ controller
 
   .get('/logout',
     isAuthenticated,
-    function (request: Request, response: Response) {
+    function (request: Request, response: Response, next: NextFunction) {
       if (request.user) cache.del(`user-${request.user}`)
       request.logOut({ keepSessionInfo: false },
         (error) => {
-          if (error) {
-            return response.status(400).json({
-              statusCode: 400,
-              message: error.message,
-              error: 'Bad Request'
-            })
-          }
+          if (error)
+            return next(new BadRequestError(error.message))
           response.redirect('/')
         }
       )
