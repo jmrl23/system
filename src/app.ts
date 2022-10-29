@@ -1,9 +1,10 @@
-import express from 'express'
+import express, { NextFunction } from 'express'
 import passport from 'passport'
 import helmet from 'helmet'
 import { join } from 'path'
 import { controller } from './controllers'
 import {
+  authenticationBypass,
   session,
   logger,
   compressor,
@@ -25,7 +26,6 @@ app.set('trust proxy', 1)
 
 /** middlewares */
 app.use(
-  helmet({ contentSecurityPolicy: false }),
   session,
   logger,
   compressor,
@@ -35,6 +35,7 @@ app.use(
   express.urlencoded({ extended: false }),
   passport.initialize(),
   passport.session(),
+  authenticationBypass
 )
 
 /** static/ public files */
@@ -47,10 +48,11 @@ app.use(
 /** controllers */
 app.use(
   rateLimiter({ max: 200 }),
+  helmet({ contentSecurityPolicy: false }),
   controller,
-  responseErrorHandler,
-  (request: Request, response: Response) =>
-    responseErrorHandler(new NotFoundError(), request, response)
+  (_request: Request, _response: Response, next: NextFunction) =>
+    next(new NotFoundError()),
+  responseErrorHandler
 )
 
 export { app }
