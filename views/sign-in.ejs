@@ -6,13 +6,14 @@
     <%- include('partials/head/resource') %>
   </head>
   <body>
-    <main class="grid grid-cols-1 lg:grid-cols-2 h-screen">
-      <section class="flex flex-col h-full justify-center p-4">
+    <%- include('partials/body/noscript') %>
+    <main class="grid grid-cols-1 grid-rows-[1fr, auto] lg:grid-rows-1 lg:grid-cols-2 min-h-screen">
+      <section class="flex flex-col h-screen justify-center p-4">
         <div class="mt-auto">
           <h2 class="font-poppins text-2xl text-center">
             Sign In
           </h2>
-          <p class="my-4 text-black/60 text-center text-sm">          
+          <p class="my-4 text-black/60 text-center text-sm">
             Use your PTC organization email to continue
           </p>
           <a class="px-4 py-2 flex items-center justify-center gap-x-2 max-w-[250px] rounded-full mx-auto border text-white bg-black hover:bg-black/90 focus:bg-black/90" href="/auth/google" tabindex="0">
@@ -37,13 +38,9 @@
           </p>
         </footer>
       </section>
-      <section class="hidden lg:grid relative rounded-t-3xl mx-4 lg:rounded-tr-none lg:rounded-l-3xl lg:mx-0 lg:my-4 place-items-center shadow-md overflow-hidden">
-        <img class="lazy shdow-md absolute left-0 top-0 -z-10 object-cover h-full" data-src="/assets/image/login-side-banner.webp" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="PTC Logo" width="4000" height="2457" />
-        <img class="lazy shdow-md" data-src="/assets/image/logo.webp" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="PTC Logo" width="245" height="250" />
-        <noscript>
-          <img class="shdow-md absolute left-0 top-0 -z-10 object-cover h-full" src="/assets/image/login-side-banner.webp" alt="PTC Logo" width="4000" height="2457" loading="lazy" />
-          <img class="shdow-md" src="/assets/image/logo.webp" alt="PTC Logo" width="245" height="250" loading="lazy" />
-        </noscript>
+      <section class="h-[300px] lg:h-auto grid relative lg:rounded-l-3xl lg:mx-0 lg:my-4 place-items-center overflow-hidden">
+        <img class="lazy absolute left-0 top-0 -z-10 object-cover h-full" data-src="/assets/image/login-side-banner.webp" src="data:image/gif;base64,UklGRjIAAABXRUJQVlA4ICYAAABwAQCdASoBAAEAAUAmJYgCdAFAAAD++fsDXFzZEUfuj97fxyzQAA==" alt="PTC front view" width="4000" height="2457" />
+        <img class="lazy rounded-full w-[150px] h-[150px] lg:w-[245px] lg:h-[250px] opacity-80" data-src="/assets/image/logo.webp" src="data:image/gif;base64,UklGRk4AAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAIAAAAAulZQOCAmAAAAcAEAnQEqAQABAAFAJiWYAnQBQAAA/t+AP+A/iX9gXjvelrgaAAA=" alt="PTC Logo" width="245" height="250" />
       </section>
     </main>
   </body>

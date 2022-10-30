@@ -20,10 +20,6 @@
 
 @layer components {
 
-  img.lazy {
-    @apply invisible;
-  }
-
   .container {
     @apply mx-auto max-w-screen-xl;
   }
