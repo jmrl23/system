@@ -18,7 +18,10 @@ function isAuthenticated(
   next: NextFunction
 ) {
   if (request.isAuthenticated()) return next()
-  next(new NotFoundError())
+  next(
+    // eslint-disable-next-line max-len
+    new NotFoundError('The page you are looking for might have been remove or temporary unavailable')
+  )
 }
 
 export { isAuthenticated }

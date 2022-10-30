@@ -13,8 +13,8 @@ import type { Request, Response } from 'express'
  */
 function rateLimiter(passedOptions: Partial<Options> = {}) {
   return limiter({
-    windowMs: 5 * 60 * 1000,
-    max: 50,
+    windowMs: 60000,
+    max: 100,
     standardHeaders: true,
     legacyHeaders: false,
     message: async (request: Request, response: Response) => {

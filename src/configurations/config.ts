@@ -17,5 +17,3 @@ export const GOOGLE_REFRESH_TOKEN = env.get('GOOGLE_REFRESH_TOKEN').required().a
 export const PASSPORT_GOOGLE_CALLBACK_URL = env.get('PASSPORT_GOOGLE_CALLBACK_URL').required().asUrlString()
 
 export const SERVICE_EMAIL = env.get('SERVICE_EMAIL').required().asEnum(['on', 'off'])
-
-export const AUTH_BYPASS_MODE = env.get('AUTH_BYPASS_MODE').required().asEnum(['none', 'admin', 'user'])
