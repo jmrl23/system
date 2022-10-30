@@ -4,13 +4,25 @@
 
 @layer base {
 
+  * {
+    @apply focus:outline-none;
+  }
+
   body {
     @apply overflow-x-hidden;
+  }
+
+  a, button {
+    @apply cursor-default md:cursor-pointer;
   }
 
 }
 
 @layer components {
+
+  img.lazy {
+    @apply invisible;
+  }
 
   .container {
     @apply mx-auto max-w-screen-xl;

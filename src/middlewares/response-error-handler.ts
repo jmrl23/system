@@ -27,8 +27,11 @@ function responseErrorHandler(
     .status(error.code)
     .json({
       statusCode: error.code,
-      error: error.name,
-      message: error.message
+      message: error.message,
+      error: error.name
+        .replace(/([A-Z])/g, ' $1')
+        .replace(/Error$/g, '')
+        .trim()
     })
 }
 

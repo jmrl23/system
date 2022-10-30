@@ -27,7 +27,20 @@ passport.use(
       })
       if (user) return next(null, user.id)
       const newUser = await db.user.create({
-        data: { email: data.email }
+        data: {
+          email: data.email,
+          /**
+           * TODO: 
+           * 
+           * Check role if admin setted it
+           * 
+           */
+          role: 'STUDENT',
+          givenName: data.given_name,
+          familyName: data.family_name,
+          displayName: data.name,
+          picture: data.picture
+        }
       })
       next(null, newUser.id)
     } catch (error: unknown) {

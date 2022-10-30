@@ -1,10 +1,9 @@
-import express, { NextFunction } from 'express'
+import express from 'express'
 import passport from 'passport'
 import helmet from 'helmet'
 import { join } from 'path'
 import { controller } from './controllers'
 import {
-  authenticationBypass,
   session,
   logger,
   compressor,
@@ -15,7 +14,7 @@ import {
 } from './middlewares'
 import { staticConfig } from './configurations'
 import { NotFoundError } from 'express-response-errors'
-import type { Request, Response } from 'express'
+import type { Request, Response, NextFunction } from 'express'
 
 const app = express()
 
@@ -35,23 +34,22 @@ app.use(
   express.urlencoded({ extended: false }),
   passport.initialize(),
   passport.session(),
-  authenticationBypass
+  helmet({ contentSecurityPolicy: false })
 )
 
 /** static/ public files */
 app.use(
-  rateLimiter({ max: 500 }),
+  rateLimiter({ max: 200 }),
   express.static(join(__dirname, '../public/static'), staticConfig),
   express.static(join(__dirname, '../public/dist'), staticConfig),
 )
 
 /** controllers */
 app.use(
-  rateLimiter({ max: 200 }),
-  helmet({ contentSecurityPolicy: false }),
+  rateLimiter({ max: 25 }),
   controller,
   (_request: Request, _response: Response, next: NextFunction) =>
-    next(new NotFoundError()),
+    next(new NotFoundError('The page you are looking for might have been remove or temporary unavailable')),
   responseErrorHandler
 )
 
