@@ -7,7 +7,7 @@
     "test": "jest --detectOpenHandles",
     "lint": "eslint src --fix",
     "start": "node .",
-    "build": "tsc && yarn run tsc:public && yarn run tw",
+    "build": "yarn run db:generate && tsc && yarn run tsc:public && yarn run tw",
     "start:dev": "nodemon sandbox/main.ts",
     "start:prod": "yarn run build && dotenv -e sandbox/.env.local -v NODE_ENV=production node .",
     "tw": "postcss public/src/css/tailwind.css -o public/dist/css/style.css",
