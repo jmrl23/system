@@ -1,8 +1,7 @@
 import limiter from 'express-rate-limit'
-import { responseErrorHandler } from '.'
 import { TooManyRequestsError } from 'express-response-errors'
 import type { Options } from 'express-rate-limit'
-import type { Request, Response } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 
 /**
  * It returns a function that takes a request and a response 
@@ -14,11 +13,10 @@ import type { Request, Response } from 'express'
 function rateLimiter(passedOptions: Partial<Options> = {}) {
   return limiter({
     windowMs: 60000,
-    max: 100,
     standardHeaders: true,
     legacyHeaders: false,
-    message: async (request: Request, response: Response) => {
-      responseErrorHandler(new TooManyRequestsError(), request, response)
+    handler: async (_request: Request, _response: Response, next: NextFunction) => {
+      next(new TooManyRequestsError('Rate limit reached'))
     },
     ...passedOptions
   })

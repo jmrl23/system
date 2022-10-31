@@ -12,7 +12,7 @@ import {
   responseErrorHandler,
   rateLimiter
 } from './middlewares'
-import { staticConfig, helmetConfig } from './configurations'
+import { TRUST_PROXY, staticConfig, helmetConfig } from './configurations'
 import { NotFoundError } from 'express-response-errors'
 import type { Request, Response, NextFunction } from 'express'
 
@@ -21,7 +21,7 @@ const app = express()
 /** configurations */
 app.set('view engine', 'ejs')
 app.set('views', join(__dirname, '../views'))
-app.set('trust proxy', 1)
+app.set('trust proxy', TRUST_PROXY)
 
 /** middlewares */
 app.use(
