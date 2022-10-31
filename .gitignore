@@ -5,3 +5,4 @@ build/
 dist/
 public/css/style.css
 yarn-error.log
+sandbox/erd.png
