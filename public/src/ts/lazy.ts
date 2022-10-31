@@ -54,7 +54,7 @@
     const handler = () => {
       const images = lazyImages()
       if (images.length < 1) {
-        globalThis.removeEventListener('scroll', handler)
+        window.removeEventListener('scroll', handler)
         return
       }
       for (const image of images) {
