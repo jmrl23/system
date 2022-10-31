@@ -1,6 +1,6 @@
 <%- include('_external') %> 
 <link rel="stylesheet" href="/css/style.css" />
-<script>
+<script nonce="<%= typeof process.env.NONCE === 'string' ? process.env.NONCE : 'invalid' %>">
 /**
  * Lazy Image
  * 

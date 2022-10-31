@@ -12,7 +12,7 @@ import {
   responseErrorHandler,
   rateLimiter
 } from './middlewares'
-import { staticConfig } from './configurations'
+import { staticConfig, helmetConfig } from './configurations'
 import { NotFoundError } from 'express-response-errors'
 import type { Request, Response, NextFunction } from 'express'
 
@@ -34,7 +34,7 @@ app.use(
   express.urlencoded({ extended: false }),
   passport.initialize(),
   passport.session(),
-  helmet({ contentSecurityPolicy: false })
+  helmet(helmetConfig)
 )
 
 /** static/ public files */

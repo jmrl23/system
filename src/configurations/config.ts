@@ -2,6 +2,8 @@ import * as env from 'env-var'
 
 export const NODE_ENV = env.get('NODE_ENV').default('development').asEnum(['development', 'production', 'test'])
 
+export const NONCE = env.get('NONCE').required().asString()
+
 export const SESSION_SECRET = env.get('SESSION_SECRET').required().asString()
 
 export const DATABASE_URL = env.get('DATABASE_URL').required().asUrlString()
