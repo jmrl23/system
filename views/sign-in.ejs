@@ -13,6 +13,11 @@
           <h2 class="font-poppins text-2xl text-center">
             Sign In
           </h2>
+          <% if (typeof error !== 'undefined') { %>
+            <p class="bg-red-100 border border-red-500 text-red-500 text-center rounded px-4 py-2 mt-4 max-w-sm mx-auto">
+              <%= error %>
+            </p>
+          <% } %>
           <p class="my-4 text-black/60 text-center text-sm">
             Use your PTC organization email to continue
           </p>

@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import type { Request, Response, NextFunction } from 'express'
-import { NotFoundError } from 'express-response-errors'
 
 const controller = Router()
 
@@ -16,14 +15,11 @@ controller
     })
 
   .get('/login',
-    function (
-      request: Request,
-      response: Response,
-      next: NextFunction
-    ) {
-      if (request.isAuthenticated())
-        return next(new NotFoundError())
-      response.render('sign-in')
+    function (request: Request, response: Response, next: NextFunction) {
+      if (request.isAuthenticated()) return next()
+      response.render('sign-in', {
+        error: request.flash('error')[0]
+      })
     })
 
 export { controller }

@@ -20,7 +20,7 @@ passport.use(
   }, async (_accessToken, _refreshToken, profile, next) => {
     const data = profile._json
     if (!data.email?.endsWith('@paterostechnologicalcollege.edu.ph'))
-      return next(null, undefined)
+      return next(null, undefined, { message: 'Cannot login, invalid email' })
     try {
       const user = await db.user.findUnique({
         where: { email: data.email }
@@ -82,13 +82,9 @@ const controller = Router()
  * is a function that will be called when the middleware is done.
  * @returns A function that takes a request, response, and next function.
  */
-function notAuthenticated(
-  request: Request,
-  _response: Response,
-  next: NextFunction
-) {
+function notAuthenticated(request: Request, _response: Response, next: NextFunction) {
   if (request.isUnauthenticated()) return next()
-  next(new NotFoundError())
+  next(new BadRequestError('Already signed-in'))
 }
 
 controller.use(rateLimiter({ max: 50 }))
@@ -105,10 +101,12 @@ controller
 
   .get('/google/redirect',
     notAuthenticated,
-    passport.authenticate('google'),
-    function (_request: Request, response: Response) {
-      response.redirect('/')
+    passport.authenticate('google', {
+      failureRedirect: '/login',
+      failureFlash: true,
+      successRedirect: '/'
     })
+  )
 
   .get('/logout',
     isAuthenticated,
