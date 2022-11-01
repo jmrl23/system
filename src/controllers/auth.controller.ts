@@ -82,13 +82,9 @@ const controller = Router()
  * is a function that will be called when the middleware is done.
  * @returns A function that takes a request, response, and next function.
  */
-function notAuthenticated(
-  request: Request,
-  _response: Response,
-  next: NextFunction
-) {
+function notAuthenticated(request: Request, _response: Response, next: NextFunction) {
   if (request.isUnauthenticated()) return next()
-  next(new NotFoundError())
+  next(new BadRequestError('Already signed-in'))
 }
 
 controller.use(rateLimiter({ max: 50 }))

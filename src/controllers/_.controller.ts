@@ -16,11 +16,7 @@ controller
     })
 
   .get('/login',
-    function (
-      request: Request,
-      response: Response,
-      next: NextFunction
-    ) {
+    function (request: Request, response: Response, next: NextFunction) {
       if (request.isAuthenticated())
         return next(new NotFoundError())
       response.render('sign-in')
