@@ -1,8 +1,11 @@
 import express from 'express'
 import passport from 'passport'
 import helmet from 'helmet'
+import flash from 'connect-flash'
 import { join } from 'path'
 import { controller } from './controllers'
+import { TRUST_PROXY, staticConfig, helmetConfig } from './configurations'
+import { NotFoundError } from 'express-response-errors'
 import {
   session,
   logger,
@@ -12,8 +15,6 @@ import {
   responseErrorHandler,
   rateLimiter
 } from './middlewares'
-import { TRUST_PROXY, staticConfig, helmetConfig } from './configurations'
-import { NotFoundError } from 'express-response-errors'
 import type { Request, Response, NextFunction } from 'express'
 
 const app = express()
@@ -47,6 +48,7 @@ app.use(
 /** controllers */
 app.use(
   rateLimiter({ max: 25 }),
+  flash(),
   controller,
   (_request: Request, _response: Response, next: NextFunction) =>
     next(new NotFoundError('The page you are looking for might have been remove or temporary unavailable')),

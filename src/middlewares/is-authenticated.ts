@@ -12,14 +12,9 @@ import { NotFoundError } from 'express-response-errors'
  * control to the next middleware function in the chain.
  * @returns The function isAuthenticated is being returned.
  */
-function isAuthenticated(
-  request: Request,
-  _response: Response,
-  next: NextFunction
-) {
+function isAuthenticated(request: Request, _response: Response, next: NextFunction) {
   if (request.isAuthenticated()) return next()
   next(
-    // eslint-disable-next-line max-len
     new NotFoundError('The page you are looking for might have been remove or temporary unavailable')
   )
 }

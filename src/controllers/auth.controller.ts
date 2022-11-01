@@ -20,7 +20,7 @@ passport.use(
   }, async (_accessToken, _refreshToken, profile, next) => {
     const data = profile._json
     if (!data.email?.endsWith('@paterostechnologicalcollege.edu.ph'))
-      return next(null, undefined)
+      return next(null, undefined, { message: 'Cannot login, invalid email' })
     try {
       const user = await db.user.findUnique({
         where: { email: data.email }
@@ -101,10 +101,12 @@ controller
 
   .get('/google/redirect',
     notAuthenticated,
-    passport.authenticate('google'),
-    function (_request: Request, response: Response) {
-      response.redirect('/')
+    passport.authenticate('google', {
+      failureRedirect: '/login',
+      failureFlash: true,
+      successRedirect: '/'
     })
+  )
 
   .get('/logout',
     isAuthenticated,
