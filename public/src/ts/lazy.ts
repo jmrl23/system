@@ -37,20 +37,14 @@
         )
       }
       const handler = () => {
-        const images = getLazyImages()
-        if (images.length < 1) {
-          window.removeEventListener('scroll', handler)
-          window.removeEventListener('resize', handler)
-          return
-        }
-        for (const image of images) {
+        for (const image of getLazyImages()) {
           if (isInViewPort(image)) loadImage(image)
         }
+        if (getLazyImages().length < 1) {
+          clearInterval(listener)
+        }
       }
-      if (getLazyImages().length > 0) {
-        addEventListener('scroll', handler)
-        addEventListener('resize', handler)
-      }
+      const listener = setInterval(handler, 10)
       return
     } catch (error) { /** Do nothing */ }
 
