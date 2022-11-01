@@ -1,71 +1,63 @@
-/**
- * Lazy load image
- */
 (function () {
-  document.addEventListener('DOMContentLoaded', () => {
-    const lazyImages: () => HTMLImageElement[] = () =>
-      Array.from(
-        document.querySelectorAll<HTMLImageElement>('img.lazy')
-      )
 
-    const loadImage = (img: HTMLImageElement) => {
-      if (typeof img.dataset.src !== 'string') return
-      img.setAttribute('src', img.dataset.src)
-      img.removeAttribute('data-src')
-      img.classList.remove('lazy')
+  document.addEventListener('DOMContentLoaded', () => {
+    const getLazyImages: () => HTMLImageElement[] = () =>
+      Array.from(document.querySelectorAll<HTMLImageElement>('img[data-lazy-src]'))
+
+    const loadImage = (image: HTMLImageElement) => {
+      const lazySrc = image.dataset.lazySrc
+      if (typeof lazySrc !== 'string') return
+      image.removeAttribute('data-lazy-src')
+      image.setAttribute('src', lazySrc)
     }
 
     if ('IntersectionObserver' in window) {
-      const o = function (
-        entries: IntersectionObserverEntry[],
-        observer: IntersectionObserver
-      ) {
+      const intersectionObserver = new IntersectionObserver((entries, observer) => {
         for (const entry of entries) {
-          const image = entry.target as HTMLImageElement
-          if (typeof image.dataset.src !== 'string') {
-            observer.unobserve(image)
-            continue
-          }
           if (entry.isIntersecting) {
-            loadImage(image)
-            observer.unobserve(image)
+            loadImage(entry.target as HTMLImageElement)
+            observer.unobserve(entry.target)
           }
         }
-      }
-      const intersectionObserver = new IntersectionObserver(
-        o as IntersectionObserverCallback
-      )
-      for (const image of lazyImages()) {
+      })
+      for (const image of getLazyImages()) {
         intersectionObserver.observe(image)
       }
       return
     }
 
-    const isInViewPort = (img: HTMLImageElement) => {
-      const rect = img.getBoundingClientRect()
-      return (
-        rect.top >= -rect.height &&
-        rect.left >= -rect.width &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + rect.height &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth) + rect.width
-      )
-    }
-
-    const handler = () => {
-      const images = lazyImages()
-      if (images.length < 1) {
-        window.removeEventListener('scroll', handler)
-        return
+    try {
+      const isInViewPort = (image: HTMLImageElement) => {
+        const rect = image.getBoundingClientRect()
+        return (
+          rect.top >= -rect.height &&
+          rect.left >= -rect.width &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + rect.height &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth) + rect.width
+        )
       }
-      for (const image of images) {
-        if (isInViewPort(image)) loadImage(image)
+      const handler = () => {
+        const images = getLazyImages()
+        if (images.length < 1) {
+          window.removeEventListener('scroll', handler)
+          window.removeEventListener('resize', handler)
+          return
+        }
+        for (const image of images) {
+          if (isInViewPort(image)) loadImage(image)
+        }
       }
-    }
+      if (getLazyImages().length > 0) {
+        addEventListener('scroll', handler)
+        addEventListener('resize', handler)
+      }
+      return
+    } catch (error) { /** Do nothing */ }
 
-    for (const image of lazyImages()) {
-      if (isInViewPort(image)) loadImage(image)
+    for (const image of getLazyImages()) {
+      loadImage(image)
+      image.setAttribute('loading', 'lazy')
     }
-
-    addEventListener('scroll', handler)
   })
+
 })()
