@@ -1,6 +1,6 @@
 <%- include('_external') %> 
 <link rel="stylesheet" href="/css/style.css" />
-<script nonce="<%= typeof process.env.NONCE === 'string' ? process.env.NONCE : 'invalid' %>">
+<script nonce="<%= config.NONCE %>">
 /**
  * HTTP: GET /js/lazy.js
  * */

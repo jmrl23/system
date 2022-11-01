@@ -52,7 +52,7 @@
   /* 
     add `__dev` class to body to enable
     why #777?
-      - It does not blend with black nor white background.
+      - It does not blend with black or white background.
   */
   body.__dev * {
     @apply outline-[#777] outline-dotted outline-1;

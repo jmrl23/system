@@ -13,7 +13,8 @@ import {
   publicMinifier,
   htmlMinifier,
   responseErrorHandler,
-  rateLimiter
+  rateLimiter,
+  ejsVars
 } from './middlewares'
 import type { Request, Response, NextFunction } from 'express'
 
@@ -35,7 +36,8 @@ app.use(
   express.urlencoded({ extended: false }),
   passport.initialize(),
   passport.session(),
-  helmet(helmetConfig)
+  helmet(helmetConfig),
+  ejsVars
 )
 
 /** static/ public files */
