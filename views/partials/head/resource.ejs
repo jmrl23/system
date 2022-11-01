@@ -2,12 +2,7 @@
 <link rel="stylesheet" href="/css/style.css" />
 <script nonce="<%= typeof process.env.NONCE === 'string' ? process.env.NONCE : 'invalid' %>">
 /**
- * Lazy Image
- * 
- * SOURCE: /public/src/ts/lazy.ts
- * BUILD:  /public/dist/js/lazy.js
- * 
  * HTTP: GET /js/lazy.js
  * */
- "use strict";document.addEventListener("DOMContentLoaded",function(){function i(){return Array.from(document.querySelectorAll("img.lazy"))}function s(e){"string"==typeof e.dataset.src&&(e.setAttribute("src",e.dataset.src),e.removeAttribute("data-src"),e.classList.remove("lazy"))}if("IntersectionObserver"in window)for(var e=new IntersectionObserver(function(e,t){for(var n=0,r=e;n<r.length;n++){var i=r[n],o=i.target;"string"!=typeof o.dataset.src?t.unobserve(o):i.isIntersecting&&(s(o),t.unobserve(o))}}),t=0,n=i();t<n.length;t++){var r=n[t];e.observe(r)}else{for(var o=function(e){e=e.getBoundingClientRect();return e.top>=-e.height&&e.left>=-e.width&&e.bottom<=(window.innerHeight||document.documentElement.clientHeight)+e.height&&e.right<=(window.innerWidth||document.documentElement.clientWidth)+e.width},c=function(){var e=i();if(e.length<1)globalThis.removeEventListener("scroll",c);else for(var t=0,n=e;t<n.length;t++){var r=n[t];o(r)&&s(r)}},a=0,l=i();a<l.length;a++){r=l[a];o(r)&&s(r)}addEventListener("scroll",c)}});
- </script>
+ "use strict";document.addEventListener("DOMContentLoaded",function(){function i(){return Array.from(document.querySelectorAll("img[data-lazy-src]"))}function o(e){var t=e.dataset.lazySrc;"string"==typeof t&&(e.removeAttribute("data-lazy-src"),e.setAttribute("src",t))}if("IntersectionObserver"in window)for(var e=new IntersectionObserver(function(e,t){for(var n=0,r=e;n<r.length;n++){var i=r[n];i.isIntersecting&&(o(i.target),t.unobserve(i.target))}}),t=0,n=i();t<n.length;t++){var r=n[t];e.observe(r)}else{try{var a=function(){var e=i();if(e.length<1)window.removeEventListener("scroll",a),window.removeEventListener("resize",a);else for(var t=0,n=e;t<n.length;t++){var r=n[t];!function(e){e=e.getBoundingClientRect();return e.top>=-e.height&&e.left>=-e.width&&e.bottom<=(window.innerHeight||document.documentElement.clientHeight)+e.height&&e.right<=(window.innerWidth||document.documentElement.clientWidth)+e.width}(r)||o(r)}};return void(0<i().length&&(addEventListener("scroll",a),addEventListener("resize",a)))}catch(e){}for(var d=0,c=i();d<c.length;d++){r=c[d];o(r),r.setAttribute("loading","lazy")}}});
+</script>
