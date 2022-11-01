@@ -20,8 +20,42 @@
 
 @layer components {
 
-  .container {
-    @apply mx-auto max-w-screen-xl;
+  .btn {
+    @apply px-4 py-2 rounded-md text-black bg-gray-200 hover:bg-gray-300 ring-4 ring-transparent focus:ring focus:ring-inset focus:ring-gray-400 transition-colors shadow-sm;
+
+    &.black {
+      @apply text-white bg-black hover:bg-black/90 focus:ring-black/90;
+    }
+
+    &.red {
+      @apply text-white bg-red-500 hover:bg-red-600 focus:ring-red-700;
+    }
+
+    &.blue {
+      @apply text-white bg-blue-500 hover:bg-blue-600 focus:ring-blue-600;
+    }
+
+    &.yellow {
+      @apply bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-500;
+    }
+
+    &.green {
+      @apply text-white bg-green-600 hover:bg-green-700 focus:ring-green-700;
+    }
+
+  }
+
+}
+
+@layer utilities {
+
+  /* 
+    add `__dev` class to body to enable
+    why #777?
+      - It does not blend with black nor white background.
+  */
+  body.__dev * {
+    @apply outline-[#777] outline-dotted outline-1;
   }
 
 }
