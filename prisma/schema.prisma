@@ -44,15 +44,17 @@ model User {
   isDisabled  Boolean  @default(false)
 
   email       String  @unique
-  role        Role
   givenName   String?
   familyName  String?
   displayName String?
   picture     String?
 
-  userBasicInfo UserBasicInfo?
+  UserBasicInfo UserBasicInfo?
 
-  @@unique([id, email])
+  UserRole   UserRole @relation(fields: [userRoleId], references: [id])
+  userRoleId String   @unique
+
+  @@unique([id, email, userRoleId])
 }
 
 model UserBasicInfo {
@@ -62,45 +64,20 @@ model UserBasicInfo {
 
   gender Gender
 
-  user   User   @relation(fields: [userId], references: [id])
+  User   User   @relation(fields: [userId], references: [id])
   userId String
-
-  course   course @relation(fields: [courseId], references: [id])
-  courseId String
 
   @@unique([userId])
 }
 
-model course {
+model UserRole {
   id          String   @unique @default(uuid())
   dateCreated DateTime @default(now())
   lastUpdated DateTime @updatedAt
-  isDisabled  Boolean  @default(false)
 
-  name        String  @unique
-  code        String  @unique
-  description String?
+  email String
+  role  Role   @default(STUDENT)
+  User  User?
 
-  userBasicInfo UserBasicInfo[]
-  subjects      Subject[]
-
-  @@unique([name, code])
-}
-
-model Subject {
-  id          String   @unique @default(uuid())
-  dateCreated DateTime @default(now())
-  lastUpdated DateTime @updatedAt
-  isDisabled  Boolean  @default(false)
-
-  unit  Int
-  price Float
-
-  name        String  @unique
-  code        String  @unique
-  description String?
-  course      course? @relation(fields: [courseId], references: [id])
-  courseId    String  @unique
-
-  @@unique([name, code, courseId])
+  @@unique([email])
 }
