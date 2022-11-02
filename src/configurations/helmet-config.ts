@@ -2,16 +2,21 @@ import type { HelmetOptions } from 'helmet'
 import { NONCE } from './config'
 
 const trusted = [
-  '\'self\''
+  '\'self\'',
+  'lh3.googleusercontent.com'
 ]
 
 const helmetConfig: HelmetOptions = {
+  crossOriginResourcePolicy: {
+    policy: 'cross-origin'
+  },
   contentSecurityPolicy: {
     directives: {
       defaultSrc: trusted,
       scriptSrc: [`'nonce-${NONCE}'`, ...trusted],
       mediaSrc: [...trusted],
-      frameSrc: [...trusted]
+      frameSrc: [...trusted],
+      imgSrc: [...trusted]
     }
   }
 }
