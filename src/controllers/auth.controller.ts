@@ -3,7 +3,6 @@ import type { SessionUser } from '../types'
 import { Router } from 'express'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { db, cache } from '../services'
-import { isAuthenticated, rateLimiter } from '../middlewares'
 import { BadRequestError, NotFoundError } from 'express-response-errors'
 import {
   GOOGLE_CLIENT_ID,
@@ -86,15 +85,15 @@ const controller = Router()
  * is a function that will be called when the middleware is done.
  * @returns A function that takes a request, response, and next function.
  */
-function notAuthenticated(request: Request, _response: Response, next: NextFunction) {
+function isNotAuthenticated(request: Request, _response: Response, next: NextFunction) {
   if (request.isUnauthenticated()) return next()
-  next(new BadRequestError('Already signed-in'))
+  next(new BadRequestError('Already signed in'))
 }
 
 controller
 
   .get('/google',
-    notAuthenticated,
+    isNotAuthenticated,
     passport.authenticate('google', {
       scope: ['profile', 'email'],
       prompt: 'select_account'
@@ -102,7 +101,7 @@ controller
   )
 
   .get('/google/redirect',
-    notAuthenticated,
+    isNotAuthenticated,
     passport.authenticate('google', {
       failureRedirect: '/',
       failureFlash: true,
@@ -111,7 +110,10 @@ controller
   )
 
   .get('/logout',
-    isAuthenticated,
+    function (request: Request, _response: Response, next: NextFunction) {
+      if (request.isAuthenticated()) return next()
+      next(new BadRequestError('You are not signed in'))
+    },
     function (request: Request, response: Response, next: NextFunction) {
       const user = request.user as SessionUser
       if (request.user) cache.del(`user-${user.id}`)
