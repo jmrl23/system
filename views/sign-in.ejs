@@ -21,9 +21,30 @@
             Sign in with your organization's email
           </p>
           <% if (typeof error !== 'undefined') { %>
-            <p class="bg-red-100 border border-red-500 text-red-500 text-center rounded px-4 py-2 mt-4 max-w-sm mx-auto">
-              <%= error %>
-            </p>
+            <div class="bg-red-100 border border-red-500 text-red-500 rounded pl-4 pr-2 py-2 my-4 max-w-sm mx-auto flex justify-between" id="error-container">
+              <div>
+                <h3 class="font-bold uppercase">Error</h3>
+                <p>
+                  <%= error %>
+                </p>
+              </div>
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 lg:cursor-pointer" id="error-close-button">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>                
+              </div>
+            </div>
+            <script nonce="<%= config.NONCE %>" id="error-script">
+              (function () {
+                const errorContainer = document.querySelector('#error-container')
+                const errorScript = document.querySelector('#error-script')
+                const errorCloseButton = errorContainer.querySelector('#error-close-button')
+                errorCloseButton.addEventListener('click', function () {
+                  errorContainer.remove()
+                  errorScript.remove()
+                })
+              })()
+            </script>
           <% } %>
           <a class="btn black px-4 py-2 flex items-center justify-center gap-x-2 max-w-[250px] mx-auto" href="/auth/google" tabindex="0">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48">

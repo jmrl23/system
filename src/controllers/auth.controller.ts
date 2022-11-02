@@ -21,7 +21,7 @@ passport.use(
   }, async (_accessToken, _refreshToken, profile, next) => {
     const data = profile._json
     if (!data.email?.endsWith('@paterostechnologicalcollege.edu.ph'))
-      return next(null, undefined, { message: 'Cannot login, invalid email' })
+      return next(null, undefined, { message: 'Invalid email' })
     try {
       const user = await db.user.findUnique({
         where: { email: data.email }
