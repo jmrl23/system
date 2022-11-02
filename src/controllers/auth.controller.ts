@@ -91,8 +91,6 @@ function notAuthenticated(request: Request, _response: Response, next: NextFunct
   next(new BadRequestError('Already signed-in'))
 }
 
-controller.use(rateLimiter({ max: 50 }))
-
 controller
 
   .get('/google',

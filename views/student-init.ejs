@@ -2,17 +2,32 @@
 <html lang="en">
   <head>
     <%- include('partials/head/meta') %>
-    <title>Student initialize</title>
+    <title>Student Initialize</title>
     <%- include('partials/head/resource') %>
   </head>
   <body>
     <main class="p-4">
-      <h1 class="font-poppins text-2xl">
-        Student initialize
-      </h1>
-      <p>
-        Hello, <%= user.displayName %>
-      </p>
+      <div class="max-w-screen-md flex overflow-hidden shadow-md rounded-lg">
+        <img 
+          class=""
+          src="<%= user.picture %>" 
+          alt="User profile picture"
+          crossorigin="anonymous"
+        />
+        <div class="m-2 flex flex-col">
+          <h3 class="font-bold font-poppins text-lg">
+            <%= user.UserRole.role %>
+          </h3>
+          <div class="mt-auto">
+            <p>
+              <%= user.displayName %>
+            </p>
+            <p>
+              <%= user.email %>
+            </p>
+          </div>
+        </div>
+      </div>
       <a class="inline-flex gap-x-2 mt-4 btn red" href="/auth/logout">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
