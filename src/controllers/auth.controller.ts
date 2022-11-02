@@ -1,5 +1,5 @@
-import passport from 'passport'
 import type { Request, Response, NextFunction } from 'express'
+import type { SessionUser } from '../types'
 import { Router } from 'express'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { db, cache } from '../services'
@@ -10,6 +10,7 @@ import {
   GOOGLE_CLIENT_SECRET,
   PASSPORT_GOOGLE_CALLBACK_URL
 } from '../configurations'
+import passport from 'passport'
 
 passport.use(
   new GoogleStrategy({
@@ -26,20 +27,19 @@ passport.use(
         where: { email: data.email }
       })
       if (user) return next(null, user.id)
+      const userRole = await db.userRole.findUnique({
+        where: { email: data.email }
+      })
       const newUser = await db.user.create({
         data: {
           email: data.email,
-          /**
-           * TODO: 
-           * 
-           * Check role if admin setted it
-           * 
-           */
-          role: 'STUDENT',
           givenName: data.given_name,
           familyName: data.family_name,
           displayName: data.name,
-          picture: data.picture
+          picture: data.picture,
+          userRoleId: userRole?.id || (await db.userRole.create({
+            data: { email: data.email }
+          })).id
         }
       })
       next(null, newUser.id)
@@ -58,10 +58,14 @@ passport.deserializeUser(async (userId: string, done) => {
     const cachedUser = await cache.get(`user-${userId}`)
     if (cachedUser) return done(null, cachedUser)
     const user = await db.user.findUnique({
-      where: { id: userId }
+      where: { id: userId },
+      include: {
+        UserBasicInfo: true,
+        UserRole: true
+      }
     })
     if (user) {
-      await cache.put(`user-${user?.id}`, user)
+      await cache.put(`user-${user?.id}`, user, 300_000)
       return done(null, user)
     }
     throw new NotFoundError('Cannot find user')
@@ -102,7 +106,7 @@ controller
   .get('/google/redirect',
     notAuthenticated,
     passport.authenticate('google', {
-      failureRedirect: '/login',
+      failureRedirect: '/',
       failureFlash: true,
       successRedirect: '/'
     })
@@ -111,7 +115,8 @@ controller
   .get('/logout',
     isAuthenticated,
     function (request: Request, response: Response, next: NextFunction) {
-      if (request.user) cache.del(`user-${request.user}`)
+      const user = request.user as SessionUser
+      if (request.user) cache.del(`user-${user.id}`)
       request.logOut({ keepSessionInfo: false },
         (error) => {
           if (error)
