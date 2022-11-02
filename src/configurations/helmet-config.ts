@@ -2,7 +2,7 @@ import type { HelmetOptions } from 'helmet'
 import { NONCE } from './config'
 
 const trusted = [
-  '\'self\'',
+  `'self'`,
   'lh3.googleusercontent.com'
 ]
 
@@ -16,7 +16,7 @@ const helmetConfig: HelmetOptions = {
       scriptSrc: [`'nonce-${NONCE}'`, ...trusted],
       mediaSrc: [...trusted],
       frameSrc: [...trusted],
-      imgSrc: [...trusted]
+      imgSrc: ['data:', ...trusted]
     }
   }
 }
