@@ -50,11 +50,12 @@
     "passport-google-oauth20": "^2.0.0",
     "recursive-readdir": "^2.2.2",
     "socket.io": "^4.5.3",
-    "socket.io-client": "^4.5.3",
     "table": "^6.8.0"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "9.1.6",
+    "@popperjs/core": "^2.11.6",
+    "socket.io-client": "^4.5.3",
     "@prisma/generator-helper": "4.0.0",
     "@types/cli-color": "^2.0.2",
     "@types/compression": "^1.7.2",
