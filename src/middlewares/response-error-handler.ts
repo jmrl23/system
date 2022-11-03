@@ -16,12 +16,19 @@ import { HttpError } from 'express-response-errors'
  */
 function responseErrorHandler(
   error: HttpError,
-  _request: Request,
+  request: Request,
   response: Response,
   next?: NextFunction | undefined
 ) {
   if (!(error instanceof HttpError) ?? response.headersSent) {
     if (typeof next !== 'undefined') return next(error)
+  }
+  if (error.code === 404) {
+    if (request.method === 'GET') {
+      return response.render('page-not-found', {
+        message: error.message
+      })
+    }
   }
   response
     .status(error.code)
