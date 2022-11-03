@@ -4,9 +4,10 @@
     <%- include('partials/head/meta') %>
     <title>Account Disabled</title>
     <%- include('partials/head/resource') %>
+    <script src="/js/page-toggler.js" nonce="<%= config.NONCE %>"></script>
   </head>
   <body>
-    <div class="flex items-center h-screen overflow-hidden p-4">
+    <!-- <div class="flex items-center h-screen overflow-hidden p-4">
       <main class="p-4 max-w-screen-sm mx-auto shadow-md rounded-lg">
         <h1 class="font-poppins text-2xl font-bold text-red-500">
           Your account has been disabled
@@ -25,6 +26,15 @@
           </a>
         </div>
       </main>
-    </div>
+    </div> -->
+    <button data-toggle-page="2">test</button>
+    <main id="main-container">
+      <div data-content="1">
+        content 1
+      </div>
+      <div class="hidden" data-content="2">
+        content 2
+      </div>
+    </main>
   </body>
 </html>
