@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   * {
     @apply focus:outline-none;
   }
@@ -12,16 +11,15 @@
     @apply overflow-x-hidden;
   }
 
-  a, button {
+  a,
+  button {
     @apply cursor-default md:cursor-pointer;
   }
-
 }
 
 @layer components {
-
   .btn {
-    @apply px-4 py-2 rounded-md text-black bg-gray-200 hover:bg-gray-300 ring-4 ring-transparent focus:ring focus:ring-inset focus:ring-gray-400 transition-colors shadow-sm;
+    @apply px-4 py-2 rounded-md text-black bg-gray-200 hover:bg-gray-300 transition-colors shadow-sm;
 
     &.black {
       @apply text-white bg-black hover:bg-black/90 focus:ring-black/90;
@@ -40,15 +38,13 @@
     }
 
     &.green {
-      @apply text-white bg-green-600 hover:bg-green-700 focus:ring-green-700;
+      @apply text-[#0ACF83] bg-[#CDFFEC] hover:bg-[#88FFD2];
     }
 
   }
-
 }
 
 @layer utilities {
-
   /* 
     add `__dev` class to body to enable
     why #777?
@@ -57,5 +53,4 @@
   body.__dev * {
     @apply outline-[#777] outline-dotted outline-1;
   }
-
 }
