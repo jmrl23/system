@@ -14,7 +14,8 @@ import {
   htmlMinifier,
   responseErrorHandler,
   rateLimiter,
-  ejsVars
+  ejsVars,
+  isMaintenance
 } from './middlewares'
 import type { Request, Response, NextFunction } from 'express'
 
@@ -51,6 +52,7 @@ app.use(
 app.use(
   rateLimiter({ max: 25 }),
   flash(),
+  isMaintenance,
   controller,
   (_request: Request, _response: Response, next: NextFunction) =>
     next(new NotFoundError('The page you are looking for might have been remove or temporary unavailable')),

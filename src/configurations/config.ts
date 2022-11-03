@@ -2,6 +2,8 @@ import * as env from 'env-var'
 
 export const NODE_ENV = env.get('NODE_ENV').default('development').asEnum(['development', 'production', 'test'])
 
+export const IS_MAINTENANCE = env.get('IS_MAINTENANCE').default('false').asBool()
+
 export const NONCE = env.get('NONCE').required().asString()
 
 export const TRUST_PROXY = env.get('TRUST_PROXY').default('loopback').asString()
