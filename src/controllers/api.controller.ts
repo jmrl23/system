@@ -1,21 +1,13 @@
 import type { NextFunction, Response, Request } from 'express'
-import type { SessionUser } from '../types'
 import { Role } from '@prisma/client'
 import { Router } from 'express'
-import { InternalServerError, UnauthorizedError } from 'express-response-errors'
+import { InternalServerError } from 'express-response-errors'
 import { db } from '../services'
+import { authorization, rateLimiter } from '../middlewares'
 
 const controller = Router()
 
-function authorization(role: Role[]) {
-  return function (request: Request, _response: Response, next: NextFunction) {
-    const user = request.user as SessionUser
-    if (request.isUnauthenticated() || role.includes(user.UserRole.role))
-      return next(new UnauthorizedError('Access denied'))
-    next()
-  }
-}
-
+controller.use(rateLimiter({ max: 50 }))
 controller.use('/admin', authorization([Role.ADMIN]))
 controller.use('/registry', authorization([Role.REGISTRY]))
 
