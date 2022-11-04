@@ -19,7 +19,9 @@ function rateLimiter(passedOptions: Partial<Options> = {}) {
       response: Response,
       next: NextFunction
     ) => {
-      if (request.method === 'GET') return response.render('limit-reached')
+      if (request.method === 'GET') {
+        return response.status(429).render('limit-reached')
+      }
       next(new TooManyRequestsError('Rate limit reached'))
     },
     ...passedOptions
