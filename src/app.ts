@@ -45,17 +45,21 @@ app.use(
 app.use(
   rateLimiter({ max: 200 }),
   express.static(join(__dirname, '../public/static'), staticConfig),
-  express.static(join(__dirname, '../public/dist'), staticConfig),
+  express.static(join(__dirname, '../public/dist'), staticConfig)
 )
 
 /** controllers */
 app.use(
-  rateLimiter({ max: 25 }),
+  rateLimiter({ max: 10 }),
   flash(),
   isMaintenance,
   controller,
   (_request: Request, _response: Response, next: NextFunction) =>
-    next(new NotFoundError('The page you are looking for might have been remove or temporary unavailable')),
+    next(
+      new NotFoundError(
+        'The page you are looking for might have been remove or temporary unavailable'
+      )
+    ),
   responseErrorHandler
 )
 
