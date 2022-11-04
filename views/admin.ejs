@@ -5,45 +5,40 @@
     <title>Admin</title>
     <%- include('partials/head/resource') %>
   </head>
-  <body class="">
-    <main class="p-4">
-      <div class="header flex justify-end ">
-        <%- include('partials/body/profile-container')%>
+  <body class="__dev">
+    <main class="px-4">
+      
+      <%- include('partials/body/profile-container')%>
+      
+      <%- include('partials/body/sidebar') %>
+
+      <div class="selected-tab inline-block relative bottom-24 mx-2">
+        <p class="text-[#8B8B8B] font-semibold text-4xl " id="tabName">Sample text </p>
       </div>
+      <script nonce="<%= config.NONCE %>">
+        const tabName = document.querySelector('#tabName')
+        const userTab = document.querySelector('#usersTab')
+        const departmentsTab = document.querySelector('#departmentsTab')
+        const rolesTab = document.querySelector('#rolesTab')
+        
+        userTab.addEventListener('click',()=>{
+          
+          tabName.textContent = 'Users';
+        });
 
-      <div class="button flex justify-end">
-        <a class="inline-flex gap-x-2 mt-4 btn red" href="/auth/logout">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-            />
-          </svg>
-          Sign Out
-        </a>
-      </div>
+        departmentsTab.addEventListener('click',()=>{
+          
+          tabName.textContent = 'Departments';
+        });
 
-      <div class="side-nav">
-        <div class="logo">
-          <img src="/assets/image/app-logo.png" alt="resrv logo">
-        </div>
+        rolesTab.addEventListener('click',()=>{
+          
+          tabName.textContent = 'Roles';
+        });
 
-        <div class="nav-buttons h-screen  flex flex-col w-32">
-          <button class="btn green">Users</button>
-          <button>Departments</button>
-          <button>Roles</button>
-        </div>
 
-      </div>
 
+      </script>
     </main>
   </body>
 </html>

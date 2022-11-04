@@ -19,7 +19,7 @@
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-md text-black bg-gray-200 hover:bg-gray-300 transition-colors shadow-sm;
+    @apply px-4 py-2.5 rounded-xl text-black bg-gray-200 hover:bg-gray-300 transition-colors shadow-sm ;
 
     &.black {
       @apply text-white bg-black hover:bg-black/90 focus:ring-black/90;
@@ -38,7 +38,7 @@
     }
 
     &.green {
-      @apply text-[#0ACF83] bg-[#CDFFEC] hover:bg-[#88FFD2];
+      @apply font-semibold text-[#8B8B8B] bg-[#E9E9E9] hover:text-[#0ACF83] hover:bg-[#C0FFE7] active:bg-[#9EFCD8];
     }
 
   }
