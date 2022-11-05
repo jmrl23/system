@@ -50,7 +50,7 @@ app.use(
 
 /** controllers */
 app.use(
-  rateLimiter({ max: 10 }),
+  rateLimiter({ max: 15 }),
   flash(),
   isMaintenance,
   controller,
