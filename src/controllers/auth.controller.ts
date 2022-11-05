@@ -9,7 +9,6 @@ import {
   GOOGLE_CLIENT_SECRET,
   PASSPORT_GOOGLE_CALLBACK_URL
 } from '../configurations'
-import { rateLimiter } from '../middlewares'
 import passport from 'passport'
 
 passport.use(
@@ -83,8 +82,6 @@ passport.deserializeUser(async (userId: string, done) => {
 
 const controller = Router()
 
-controller.use(rateLimiter({ max: 20 }))
-
 /**
  * If the request is unauthenticated, then call the next
  * function. If the request is authenticated, then throw
@@ -125,7 +122,7 @@ controller
     })
   )
 
-  .get(
+  .post(
     '/logout',
     function (request: Request, _response: Response, next: NextFunction) {
       if (request.isAuthenticated()) return next()
@@ -136,7 +133,7 @@ controller
       if (request.user) cache.del(`user-${user.id}`)
       request.logOut({ keepSessionInfo: false }, (error) => {
         if (error) return next(new BadRequestError(error.message))
-        response.redirect('/')
+        response.status(200).json({ ok: true })
       })
     }
   )
