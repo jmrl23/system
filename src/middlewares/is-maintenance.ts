@@ -13,15 +13,16 @@ import { IS_MAINTENANCE } from '../configurations'
  * @returns The function isMaintenance is being returned.
  */
 function isMaintenance(
-  request: Request,
-  response: Response,
+  _request: Request,
+  _response: Response,
   next: NextFunction
 ) {
-  if (IS_MAINTENANCE) {
-    if (request.method === 'GET')
-      return response.status(503).render('maintenance')
-    return next(new ServiceUnavailableError('Maintenance'))
-  }
+  if (IS_MAINTENANCE)
+    return next(
+      new ServiceUnavailableError(
+        'Sorry for the inconvenience, we currenlty improving the system. We&rsquo;ll be back soon!'
+      )
+    )
   next()
 }
 

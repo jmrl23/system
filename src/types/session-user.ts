@@ -1,7 +1,7 @@
 import { User, UserBasicInfo, UserRole } from '@prisma/client'
 
 interface SessionUser extends User {
-  UserBasicInfo?: UserBasicInfo,
+  UserBasicInfo?: UserBasicInfo
   UserRole: UserRole
 }
 

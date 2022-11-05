@@ -3,7 +3,6 @@ import { config } from 'dotenv'
 import { join } from 'path'
 
 describe('service: email', () => {
-
   const options: SendMailOptions = {
     to: 'test@email.com',
     from: 'Test',
@@ -27,5 +26,4 @@ describe('service: email', () => {
     const data = await sendMail(options)
     expect(data.error).toBe(null)
   })
-
 })
