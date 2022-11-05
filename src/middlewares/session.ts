@@ -16,10 +16,13 @@ const connection = createPool({
   ssl: { rejectUnauthorized: true }
 })
 
-const store = new MySQLStore({
-  createDatabaseTable: true,
-  expiration: 10800000
-}, connection)
+const store = new MySQLStore(
+  {
+    createDatabaseTable: true,
+    expiration: 10800000
+  },
+  connection
+)
 
 const _session = session({
   secret: SESSION_SECRET,
