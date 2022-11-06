@@ -2,9 +2,11 @@
   Usage: 
 
   include('partials/body/switch', {
-    checkbox_name: <string>,       // optional
-    checkbox_id: <string>,         // optional
-    checkbox_checked: <boolean>,   // optional, default: false
+    attributes: {
+      id: 'my-switch',
+      title: 'switch',
+      ... // so on
+    }
   })
 
 -->
@@ -13,10 +15,7 @@
   <input 
     class="peer hidden" 
     type="checkbox" 
-    title="checkbox" 
-    name="<%= typeof checkbox_name === 'string' ? checkbox_name : '' %>" 
-    id="<%= typeof checkbox_id === 'string' ? checkbox_id : '' %>" 
-    <%= typeof checkbox_checked !== 'boolean' ? '' : (checkbox_checked ? 'checked' : '') %>
+    <%= toAttribute(attributes) %>
   />
   <span 
     class="w-full h-full left-0 top-0 p-[2px] peer-checked:bg-green-200 absolute transition-colors
