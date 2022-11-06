@@ -19,6 +19,7 @@ function ejsVars(request: Request, response: Response, next: NextFunction) {
       )
       .join(' ')
   }
+  response.locals.output = (input: unknown) => input ?? ''
   next()
 }
 
