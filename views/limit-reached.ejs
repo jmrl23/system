@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head/meta') %>
+    <title>Too many requests</title>
+    <%- include('partials/head/resource') %>
+  </head>
+  <body>
+    <main class="p-4 grid place-items-center h-screen overflow-hidden">
+      <div class="max-w-md text-center font-poppins">
+        <h1 class="text-slate-900 font-bold text-2xl">
+          Too many requests
+        </h1>
+        <p class="text-slate-700 mt-6">
+          <%= message %>
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

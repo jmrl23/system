@@ -4,41 +4,10 @@
     <%- include('partials/head/meta') %>
     <title>Admin</title>
     <%- include('partials/head/resource') %>
+    <script src="/js/page-toggler.js" nonce ="<%= config.NONCE %>"></script>
   </head>
-  <body class="__dev">
-    <main class="px-4">
-      
-      <%- include('partials/body/profile-container')%>
-      
-      <%- include('partials/body/sidebar') %>
-
-      <div class="selected-tab inline-block relative bottom-24 mx-2">
-        <p class="text-[#8B8B8B] font-semibold text-4xl " id="tabName">Sample text </p>
-      </div>
-      <script nonce="<%= config.NONCE %>">
-        const tabName = document.querySelector('#tabName')
-        const userTab = document.querySelector('#usersTab')
-        const departmentsTab = document.querySelector('#departmentsTab')
-        const rolesTab = document.querySelector('#rolesTab')
-        
-        userTab.addEventListener('click',()=>{
-          
-          tabName.textContent = 'Users';
-        });
-
-        departmentsTab.addEventListener('click',()=>{
-          
-          tabName.textContent = 'Departments';
-        });
-
-        rolesTab.addEventListener('click',()=>{
-          
-          tabName.textContent = 'Roles';
-        });
-
-
-
-      </script>
-    </main>
+  <body class="">
+        <%- include('partials/body/sidebar') %>
+        <%- include('partials/body/main-content')%>
   </body>
 </html>

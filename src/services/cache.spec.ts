@@ -1,7 +1,6 @@
 import { cache } from './cache'
 
 describe('service: cache', () => {
-
   it('cache a value', async () => {
     await cache.put('test', true)
     expect(await cache.get('test')).toBe(true)
@@ -12,5 +11,4 @@ describe('service: cache', () => {
     cache.clear()
     expect(await cache.get('test')).toBe(null)
   })
-
 })

@@ -1,8 +1,8 @@
-# The Development of Reservation System of Pateros Technological College
+# Resrv: PTC Subject Reservation System
 
-[![PTC Logo](https://raw.githubusercontent.com/jmrl23/system/main/public/static/favicon.ico)](https://www.facebook.com/ptc1993/)
+[![screenshot](/public/static/assets/image/screenshot.jpg)](https://github.com/jmrl23/system)
 
-#### Group Members
+### Group Members
   - Tumamak, John Vincent
   - Espra, Johnlloyd
   - Pielago, John McQuin Neo

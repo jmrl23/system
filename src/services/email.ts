@@ -37,9 +37,9 @@ async function sendMail(
   try {
     const info = await transporter.sendMail(options)
     return { error: null, info }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    return { error: error.message, info: null }
+  } catch (error: unknown) {
+    if (error instanceof Error) return { error: error.message, info: null }
+    return { error: 'an error occurs', info: null }
   }
 }
 

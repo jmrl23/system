@@ -6,10 +6,9 @@ import { validate } from 'class-validator'
 import { BadRequestError } from 'express-response-errors'
 
 /**
- * It takes a class constructor as an argument, and returns a middleware 
- * function that validates the request body against the class constructor
- * @param Cls - ClassConstructor<T> - This is the class that you want to 
- * validate the request body against.
+ * It takes a class constructor as an argument, and returns a middleware function that validates the
+ * request body against the class constructor
+ * @param Cls - ClassConstructor<T>
  * @returns A function that takes a request, response, and next function.
  */
 function validateBody<T extends Record<string, unknown>>(
@@ -23,13 +22,15 @@ function validateBody<T extends Record<string, unknown>>(
     if (!request.get('Content-Type')?.includes('application/json'))
       return next()
     const instance = plainToInstance(Cls, request.body)
-    const errors = (await validate(instance, { whitelist: true }))
-      .reduce((errors: string[], item: ValidationError) => {
+    const errors = (await validate(instance, { whitelist: true })).reduce(
+      (errors: string[], item: ValidationError) => {
         for (const key in item.constraints) {
           errors.push(item.constraints[key])
         }
         return errors
-      }, [])
+      },
+      []
+    )
     if (!errors.length) {
       request.body = instance
       return next()

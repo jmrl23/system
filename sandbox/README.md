@@ -28,6 +28,7 @@ paste your `DATABASE_URL` and `SHADOW_DATABASE_URL`.
 ### VSCODE Extensions
   - [EJS language support](https://marketplace.visualstudio.com/items?itemName=DigitalBrainstem.javascript-ejs-support)
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+  - [Prettier ESLint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
   - [JavaScript and TypeScript Nightly](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next)
   - [PostCSS Language Support](https://marketplace.visualstudio.com/items?itemName=csstools.postcss)
   - [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
