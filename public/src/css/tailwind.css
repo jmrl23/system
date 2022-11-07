@@ -43,7 +43,7 @@
 
   }
   .sidebar {
-    .btn {
+    .btn-sidebar {
       @apply px-4 py-2.5 rounded-xl text-black bg-gray-200 hover:bg-gray-300 transition-colors shadow-sm ;
 
       &.black {
@@ -62,13 +62,12 @@
         @apply bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-500;
       }
 
-      &.green {
+      &.green-1 {
         @apply font-semibold text-[#8B8B8B] bg-[#E9E9E9] hover:text-[#0ACF83] hover:bg-[#C0FFE7] active:bg-[#9EFCD8];
       }
 
     }
   }
-
 }
 
 @layer utilities {
