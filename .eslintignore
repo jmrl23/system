@@ -1,6 +1,10 @@
-sandbox/
+# builds
 public/dist/
 public/static/
 build/
-**/*config.js
-**/*config.ts
+
+# configuration files
+jest.config.ts
+tailwind.config.js
+postcss.config.js
+tsconfig.json

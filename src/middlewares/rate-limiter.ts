@@ -3,7 +3,7 @@ import type { NextFunction, Request, Response } from 'express'
 import limiter from 'express-rate-limit'
 import { TooManyRequestsError } from 'express-response-errors'
 
-function rateLimiter(passedOptions: Partial<Options> = {}) {
+export function rateLimiter(passedOptions: Partial<Options> = {}) {
   return limiter({
     windowMs: 60000,
     standardHeaders: true,
@@ -22,5 +22,3 @@ function rateLimiter(passedOptions: Partial<Options> = {}) {
     ...passedOptions
   })
 }
-
-export { rateLimiter }
