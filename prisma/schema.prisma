@@ -6,12 +6,12 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
-generator erd {
-  provider                      = "prisma-erd-generator"
-  output                        = "../sandbox/erd.png"
-  theme                         = "neutral"
-  includeRelationshipFromFields = true
-}
+// generator erd {
+//   provider                      = "prisma-erd-generator"
+//   output                        = "../sandbox/erd.png"
+//   theme                         = "neutral"
+//   includeRelationshipFromFields = true
+// }
 
 datasource db {
   provider             = "mysql"
