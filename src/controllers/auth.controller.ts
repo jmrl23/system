@@ -3,7 +3,11 @@ import type { SessionUser } from '../types'
 import { Router } from 'express'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { db, cache, cached } from '../services'
-import { BadRequestError, NotFoundError } from 'express-response-errors'
+import {
+  BadRequestError,
+  InternalServerError,
+  NotFoundError
+} from 'express-response-errors'
 import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
@@ -49,7 +53,7 @@ passport.use(
         })
         next(null, newUser.id)
       } catch (error: unknown) {
-        if (error instanceof Error) next(error.message)
+        if (error instanceof Error) next(new InternalServerError(error.message))
       }
     }
   )
