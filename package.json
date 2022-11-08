@@ -93,11 +93,6 @@
     "typescript": "^4.8.4",
     "yarn": "^1.22.19"
   },
-  "engines": {
-    "node": ">=16.14.2",
-    "npm": ">=8.14.0",
-    "yarn": ">=1.22.19"
-  },
   "repository": "https://github.com/jmrl23/system.git",
   "contributors": [
     "Jomariel Gaitera <gaiterajomariel@gmail.com>"
