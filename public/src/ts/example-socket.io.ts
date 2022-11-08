@@ -1,4 +1,7 @@
-import { io, type Socket } from 'https://cdn.socket.io/4.5.3/socket.io.esm.min.js'
+import {
+  io,
+  type Socket
+} from 'https://cdn.socket.io/4.5.3/socket.io.esm.min.js'
 
 const socket: Socket = io('/')
 

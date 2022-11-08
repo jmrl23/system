@@ -9,7 +9,11 @@ import * as config from '../configurations'
  * @param {NextFunction} next - The next function is a function in the Express router which, when
  * invoked, executes the middleware succeeding the current middleware.
  */
-function ejsVars(request: Request, response: Response, next: NextFunction) {
+export function ejsVars(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
   response.locals.config = config
   response.locals.user = request.user
   response.locals.toAttribute = (o: { [key: string]: string }) => {
@@ -22,5 +26,3 @@ function ejsVars(request: Request, response: Response, next: NextFunction) {
   response.locals.output = (input: unknown) => input ?? ''
   next()
 }
-
-export { ejsVars }

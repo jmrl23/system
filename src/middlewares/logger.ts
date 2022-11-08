@@ -3,18 +3,21 @@ import { NODE_ENV } from '../configurations'
 import type { Request, Response, NextFunction } from 'express'
 
 /**
- * If the environment is production, use the 'common' 
- * format, if the environment is development, use
- * the 'dev' format, otherwise, call the next function
- * @param {Request} req - Request - The request object.
- * @param {Response} res - Response - The response object
- * @param {NextFunction} next - The next middleware function in the stack.
- * @returns The return value of the function that is passed to morgan.
+ * If the environment is production, use the 'common' format, if the environment is development, use
+ * the 'dev' format, otherwise, do nothing.
+ * @param {Request} request - Request - The incoming request object.
+ * @param {Response} response - Response - The response object
+ * @param {NextFunction} next - A function to be called to invoke the next middleware function in the
+ * stack.
+ * @returns The function is being returned.
  */
-function logger(req: Request, res: Response, next: NextFunction): void {
-  if (NODE_ENV === 'production') return morgan('common')(req, res, next)
-  if (NODE_ENV === 'development') return morgan('dev')(req, res, next)
+export function logger(
+  request: Request,
+  response: Response,
+  next: NextFunction
+): void {
+  if (NODE_ENV === 'production')
+    return morgan('common')(request, response, next)
+  if (NODE_ENV === 'development') return morgan('dev')(request, response, next)
   next()
 }
-
-export { logger }

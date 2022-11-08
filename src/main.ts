@@ -1,13 +1,13 @@
+import { PORT } from './configurations'
 import { server } from './server'
-import clc from 'cli-color'
-import detectPort from 'detect-port'
+import { bold } from 'cli-color'
+import port from 'detect-port'
 
 async function main() {
-  const port = await detectPort(parseInt(process.env.PORT ?? '3000', 10))
-  process.env.PORT = port.toString()
-  server.listen(port, () => {
-    console.log(`${clc.bold.bgGreen(' SERVER ')} http://localhost:${port}/\n`)
-    import('./websocket')
+  const _port = await port(PORT)
+  await import('./websocket')
+  server.listen(_port, () => {
+    console.log(`${bold.bgGreen(' SERVER ')} http://localhost:${_port}/\n`)
   })
 }
 void main()

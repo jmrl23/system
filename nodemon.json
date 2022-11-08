@@ -1,6 +1,4 @@
 {
-  "watch": [
-    "src/**/*",
-    "sandbox/**/*.ts"
-  ]
+  "watch": ["src/", "sandbox/"],
+  "delay": 1200
 }

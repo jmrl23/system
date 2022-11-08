@@ -12,7 +12,11 @@ import { BadRequestError } from 'express-response-errors'
  * middleware is done.
  * @returns The function isAuthenticated is being returned.
  */
-function isAuthenticated(request: Request, response: Response, next: NextFunction) {
+export function isAuthenticated(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
   if (request.isAuthenticated()) {
     const user = request.user as SessionUser
     if (user.isDisabled) {
@@ -23,5 +27,3 @@ function isAuthenticated(request: Request, response: Response, next: NextFunctio
   }
   next(new BadRequestError('You are not signed in'))
 }
-
-export { isAuthenticated }

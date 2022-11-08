@@ -1,8 +1,15 @@
+# dependencies
 node_modules
+
+# env files
 prisma/.env
 .env*.local
+
+# output files
 build/
 dist/
 public/css/style.css
-yarn-error.log
 sandbox/erd.png
+
+# error log
+yarn-error.log

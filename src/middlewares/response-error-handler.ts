@@ -14,7 +14,7 @@ import { HttpError } from 'express-response-errors'
  * @param {NextFunction | undefined} [next] - The next function to be called in the middleware chain.
  * @returns the response object.
  */
-function responseErrorHandler(
+export function responseErrorHandler(
   error: HttpError,
   request: Request,
   response: Response,
@@ -39,5 +39,3 @@ function responseErrorHandler(
       .trim()
   })
 }
-
-export { responseErrorHandler }
