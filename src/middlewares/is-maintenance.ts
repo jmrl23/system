@@ -12,7 +12,7 @@ import { IS_MAINTENANCE } from '../configurations'
  * @param {NextFunction} next - This is a function that you call when you're done with your middleware.
  * @returns The function isMaintenance is being returned.
  */
-function isMaintenance(
+export function isMaintenance(
   _request: Request,
   _response: Response,
   next: NextFunction
@@ -25,5 +25,3 @@ function isMaintenance(
     )
   next()
 }
-
-export { isMaintenance }

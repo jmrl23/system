@@ -1,9 +1,7 @@
 import type { HelmetOptions } from 'helmet'
-import { NONCE } from './config'
+import { NONCE } from './env'
 
-const trusted = [
-  `'self'`
-]
+const trusted = [`'self'`]
 
 const helmetConfig: HelmetOptions = {
   crossOriginResourcePolicy: {

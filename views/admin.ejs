@@ -4,12 +4,15 @@
     <%- include('partials/head/meta') %>
     <title>Admin</title>
     <%- include('partials/head/resource') %>
-    <script src="/js/page-toggler.js" nonce ="<%= config.NONCE %>"></script>
+    <script src="/js/page-toggler.js" nonce="<%= config.NONCE %>"></script>
+    <script src="/js/profile-floater.js" nonce="<%= config.NONCE %>" type="module" defer></script>
+    <script src="/js/admin/script.js" nonce="<%= config.NONCE %>" defer></script>
   </head>
-  <body class="">
-        <%- include('partials/body/sidebar') %>
-        <%- include('partials/body/main-content') %>
-
-        <!-- dapat scrollable si main content, fixed si sidebar on the left side of the screen -->
+  <body>
+    <%- include('partials/body/admin/sidebar') %>
+    <div class="ml-20 md:ml-[300px]">
+      <%- include('partials/body/admin/main-header') %>
+      <%- include('partials/body/admin/main-content') %>
+    </div>
   </body>
 </html>

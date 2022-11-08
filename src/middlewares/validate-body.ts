@@ -11,7 +11,7 @@ import { BadRequestError } from 'express-response-errors'
  * @param Cls - ClassConstructor<T>
  * @returns A function that takes a request, response, and next function.
  */
-function validateBody<T extends Record<string, unknown>>(
+export function validateBody<T extends Record<string, unknown>>(
   Cls: ClassConstructor<T>
 ) {
   return async function (
@@ -38,5 +38,3 @@ function validateBody<T extends Record<string, unknown>>(
     next(new BadRequestError(errors[0]))
   }
 }
-
-export { validateBody }

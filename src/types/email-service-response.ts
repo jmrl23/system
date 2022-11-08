@@ -1,8 +1,6 @@
 import type { SentMessageInfo } from 'nodemailer'
 
-interface EmailServiceResponse {
+export interface EmailServiceResponse {
   error: string | null
   info: SentMessageInfo | { response: string } | null
 }
-
-export type { EmailServiceResponse }

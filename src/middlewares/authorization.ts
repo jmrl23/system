@@ -13,7 +13,7 @@ import { UnauthorizedError } from 'express-response-errors'
  * @param {Role[]} role - Role[] - an array of roles that are allowed to access the route
  * @returns A function that takes a request, response, and next function.
  */
-function authorization(role: Role[]) {
+export function authorization(role: Role[]) {
   return function (request: Request, _response: Response, next: NextFunction) {
     const user = request.user as SessionUser
     if (request.isUnauthenticated() || !role.includes(user.UserRole.role))
@@ -21,5 +21,3 @@ function authorization(role: Role[]) {
     next()
   }
 }
-
-export { authorization }
