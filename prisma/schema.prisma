@@ -18,7 +18,6 @@ datasource db {
   url                  = env("DATABASE_URL")
   shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
   referentialIntegrity = "prisma"
-  relationMode         = "prisma"
 }
 
 // ============================= ENUMS ==============================
@@ -43,11 +42,11 @@ model User {
   lastUpdated DateTime @updatedAt
   isDisabled  Boolean  @default(false)
 
-  email       String @unique
-  givenName   String
-  familyName  String
-  displayName String
-  picture     String
+  email       String  @unique
+  givenName   String?
+  familyName  String?
+  displayName String?
+  picture     String?
 
   UserBasicInfo UserBasicInfo?
 
