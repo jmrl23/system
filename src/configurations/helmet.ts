@@ -3,7 +3,7 @@ import { NONCE } from './env'
 
 const trusted = [`'self'`]
 
-const helmetConfig: HelmetOptions = {
+export const helmetConfig: HelmetOptions = {
   crossOriginResourcePolicy: {
     policy: 'cross-origin'
   },
@@ -18,5 +18,3 @@ const helmetConfig: HelmetOptions = {
     }
   }
 }
-
-export { helmetConfig }
