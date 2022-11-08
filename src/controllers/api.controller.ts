@@ -2,7 +2,7 @@ import type { NextFunction, Response, Request } from 'express'
 import { Role } from '@prisma/client'
 import { Router } from 'express'
 import { InternalServerError } from 'express-response-errors'
-import { cache, db } from '../services'
+import { cached, db } from '../services'
 import { authorization, rateLimiter } from '../middlewares'
 
 const controller = Router()
@@ -21,22 +21,20 @@ controller.get(
       if (typeof take !== 'string') take = '15'
       const _skip = parseInt(skip, 10)
       const _take = parseInt(take, 10)
-      const cached = await cache.get(
-        `api/student/list?skip=${skip}&take=${take}`
+      response.json(
+        await cached(
+          `api/student/list?skip=${_skip}&take=${_take}`,
+          async () => {
+            return db.user.findMany({
+              where: { UserRole: { role: Role.STUDENT } },
+              skip: isNaN(_skip) ? 0 : _skip,
+              take: isNaN(_take) ? 15 : _take,
+              include: { UserRole: true, UserBasicInfo: true }
+            })
+          },
+          60_000
+        )
       )
-      if (cached) return response.json(cached)
-      const users = await db.user.findMany({
-        where: { UserRole: { role: Role.STUDENT } },
-        skip: isNaN(_skip) ? 0 : _skip,
-        take: isNaN(_take) ? 15 : _take,
-        include: { UserRole: true, UserBasicInfo: true }
-      })
-      await cache.put(
-        `api/student/list?skip=${skip}&take=${take}`,
-        users,
-        60_000
-      )
-      response.json(users)
     } catch (error: unknown) {
       if (error instanceof Error) next(new InternalServerError(error.message))
     }
