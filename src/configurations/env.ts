@@ -9,6 +9,8 @@ export const PORT = e.get('PORT').default(3000).asPortNumber()
 
 export const IS_MAINTENANCE = e.get('IS_MAINTENANCE').default('false').asBool()
 
+export const API_AUTH_KEY = e.get('API_AUTH_KEY').required().asString()
+
 export const NONCE = e.get('NONCE').required().asString()
 
 export const TRUST_PROXY = e.get('TRUST_PROXY').default('loopback').asString()
