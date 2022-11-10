@@ -20,7 +20,7 @@ export function notFound(
 ) {
   next(
     new NotFoundError(
-      'The page you are looking for might have been remove or temporary unavailable'
+      'The page you are looking for might have been removed or temporary unavailable.'
     )
   )
 }

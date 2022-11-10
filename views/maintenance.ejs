@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <%- include('partials/head/meta')%>
+    <title>Site Under Maintenance</title>
+    <%- include('partials/head/resource')%>
+</head>
+<body class="overflow-hidden ">
+
+    <div class="grid place-items-center h-screen"> 
+      <div class="p-4">
+            <img class="mx-auto my-5" src="/assets/image/site-under-construction-image.svg" alt="site under maintenance" width="512" height="512">
+            <div class="text inline text-slate-800 font-poppins max-w-screen-sm">
+                <h1 class="font-bold text-center text-4xl py-2">Site Under Construction</h1>
+            </div>
+                <p class="text-center text-xl py-2 text-slate-700">Sorry for the Inconvenience</p>
+                <p class="text-center text-xl py-2 text-slate-700">We'll be back soon, should you need further assistance</p>
+                <p class="text-center text-xl py-2 text-slate-700">please contact <a href="mailto:mis_support@paterostechnologicalcollege.edu.ph" class="text-green-500 hover:underline">PTC MIS Support</a></p>
+                  
+              
+            
+        </div>  
+    </div>
+    <p class="sticky bottom-0 text-center text-black/60 py-2"> &copy;resrv 2022</p>
+</body>
+
   <head>
     <%- include('partials/head/meta') %>
     <title>Maintenance</title>
@@ -8,7 +33,7 @@
   <body>
     <main class="p-4 grid place-items-center h-screen overflow-hidden">
       <div class="max-w-md text-center font-poppins">
-        <h1 class="text-slate-900 font-bold text-2xl">
+        <h1 class="text-slate-900 font-bold text-3xl">
           We&rsquo;re down for maintenance
         </h1>
         <p class="text-slate-700 mt-6">
@@ -17,4 +42,5 @@
       </div>
     </main>
   </body>
+
 </html>
