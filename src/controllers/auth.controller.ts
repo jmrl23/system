@@ -2,8 +2,12 @@ import type { Request, Response, NextFunction } from 'express'
 import type { SessionUser } from '../types'
 import { Router } from 'express'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
-import { db, cache } from '../services'
-import { BadRequestError, NotFoundError } from 'express-response-errors'
+import { db, cache, cached } from '../services'
+import {
+  BadRequestError,
+  InternalServerError,
+  NotFoundError
+} from 'express-response-errors'
 import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
@@ -49,7 +53,7 @@ passport.use(
         })
         next(null, newUser.id)
       } catch (error: unknown) {
-        if (error instanceof Error) next(error.message)
+        if (error instanceof Error) next(new InternalServerError(error.message))
       }
     }
   )
@@ -61,19 +65,20 @@ passport.serializeUser((userId, done) => {
 
 passport.deserializeUser(async (userId: string, done) => {
   try {
-    const cachedUser = await cache.get(`user-${userId}`)
-    if (cachedUser) return done(null, cachedUser)
-    const user = await db.user.findUnique({
-      where: { id: userId },
-      include: {
-        UserBasicInfo: true,
-        UserRole: true
-      }
-    })
-    if (user) {
-      await cache.put(`user-${user?.id}`, user, 300_000)
-      return done(null, user)
-    }
+    const user = await cached(
+      `user-${userId}`,
+      async () => {
+        return db.user.findUnique({
+          where: { id: userId },
+          include: {
+            UserBasicInfo: true,
+            UserRole: true
+          }
+        })
+      },
+      300_000
+    )
+    if (user) return done(null, user)
     throw new NotFoundError('Cannot find user')
   } catch (error: unknown) {
     if (error instanceof Error) done(error.message)

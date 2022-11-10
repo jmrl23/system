@@ -5,7 +5,6 @@ import port from 'detect-port'
 
 async function main() {
   const _port = await port(PORT)
-  await import('./websocket')
   server.listen(_port, () => {
     console.log(`${bold.bgGreen(' SERVER ')} http://localhost:${_port}/\n`)
   })

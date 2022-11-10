@@ -1,9 +1,17 @@
-import { cache } from './cache'
+import { cache, cached } from './cache'
 
 describe('service: cache', () => {
-  it('cache a value', async () => {
-    await cache.put('test', true)
-    expect(await cache.get('test')).toBe(true)
+  it('get or set cached value', async () => {
+    expect(
+      await cached('test', () => {
+        return true
+      })
+    ).toBe(true)
+    expect(
+      await cached('test-async', async () => {
+        return new Promise((resolve) => resolve(true))
+      })
+    ).toBe(true)
   })
 
   it('clear cache', async () => {

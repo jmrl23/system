@@ -7,7 +7,11 @@ export const NODE_ENV = e
 
 export const PORT = e.get('PORT').default(3000).asPortNumber()
 
+export const DISABLE_ERD = e.get('DISABLE_ERD').required().asBool()
+
 export const IS_MAINTENANCE = e.get('IS_MAINTENANCE').default('false').asBool()
+
+export const API_AUTH_KEY = e.get('API_AUTH_KEY').required().asString()
 
 export const NONCE = e.get('NONCE').required().asString()
 

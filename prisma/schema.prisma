@@ -6,19 +6,18 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
-generator erd {
-  provider                      = "prisma-erd-generator"
-  output                        = "../sandbox/erd.png"
-  theme                         = "neutral"
-  includeRelationshipFromFields = true
-}
+// generator erd {
+//   provider                      = "prisma-erd-generator"
+//   output                        = "../sandbox/erd.png"
+//   theme                         = "neutral"
+//   includeRelationshipFromFields = true
+// }
 
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
   shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
   referentialIntegrity = "prisma"
-  relationMode         = "prisma"
 }
 
 // ============================= ENUMS ==============================
@@ -62,7 +61,8 @@ model UserBasicInfo {
   dateCreated DateTime @default(now())
   lastUpdated DateTime @updatedAt
 
-  gender Gender
+  gender  Gender
+  address String
 
   User   User   @relation(fields: [userId], references: [id])
   userId String
@@ -80,4 +80,43 @@ model UserRole {
   User  User?
 
   @@unique([email])
+}
+
+model Department {
+  id          String   @unique @default(uuid())
+  dateCreated DateTime @default(now())
+  lastUpdated DateTime @updatedAt
+
+  name   String
+  alias  String
+  Course Course[]
+
+  @@unique([name, alias])
+}
+
+model Course {
+  id          String   @unique @default(uuid())
+  dateCreated DateTime @default(now())
+  lastUpdated DateTime @updatedAt
+
+  name String
+  code String
+
+  Department    Department      @relation(fields: [departmentId], references: [id])
+  departmentId  String
+  ClassSchedule ClassSchedule[]
+
+  @@unique([name, code])
+}
+
+model ClassSchedule {
+  id          String   @unique @default(uuid())
+  dateCreated DateTime @default(now())
+  lastUpdated DateTime @updatedAt
+
+  start DateTime
+  end   DateTime
+
+  Course   Course @relation(fields: [courseId], references: [id])
+  courseId String
 }

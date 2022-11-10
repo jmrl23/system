@@ -12,9 +12,6 @@
       "../node_modules/@types"
     ],
     "paths": {
-      "https://cdn.socket.io/4.5.3/socket.io.esm.min.js": [
-        "../node_modules/socket.io-client"
-      ],
       "https://unpkg.com/@popperjs/core@2.11.6/dist/esm/index.js": [
         "../node_modules/@popperjs/core"
       ]
