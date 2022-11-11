@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
-import type { SessionUser } from '../types'
+import type { ExpressUser } from '../types'
 import { Router } from 'express'
 import { InternalServerError } from 'express-response-errors'
 import { Role } from '@prisma/client'
@@ -16,13 +16,13 @@ controller
           error: request.flash('error')[0]
         })
       }
-      const user = request.user as SessionUser
-      if (user.isDisabled) return response.render('disabled')
-      if (user.UserRole.role === Role.ADMIN) return response.render('admin')
-      if (user.UserRole.role === Role.REGISTRY)
+      const user = request.user as ExpressUser
+      if (user?.isDisabled) return response.render('disabled')
+      if (user?.UserLevel.role === Role.ADMIN) return response.render('admin')
+      if (user?.UserLevel.role === Role.REGISTRY)
         return response.render('registry')
-      if (user.UserRole.role === Role.STUDENT) {
-        if (!user.UserBasicInfo) return response.render('student-init')
+      if (user?.UserLevel.role === Role.STUDENT) {
+        if (!user?.UserInfo) return response.render('student-init')
         return response.render('student')
       }
       next(new InternalServerError('An error occurs to server'))
@@ -32,8 +32,8 @@ controller
   .get(
     '/profile',
     function (request: Request, response: Response, next: NextFunction) {
-      const user = request.user as SessionUser
-      if (request.isUnauthenticated() || user.UserRole.role !== Role.STUDENT)
+      const user = request.user as ExpressUser
+      if (request.isUnauthenticated() || user?.UserLevel.role !== Role.STUDENT)
         return next()
       response.render('profile')
     }

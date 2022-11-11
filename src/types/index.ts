@@ -1,2 +1,2 @@
 export * from './email-service-response'
-export * from './session-user'
+export * from './express-user'

@@ -1,5 +1,5 @@
 import type { Role } from '@prisma/client'
-import type { SessionUser } from '../types'
+import type { ExpressUser } from '../types'
 import type { Request, Response, NextFunction } from 'express'
 import { UnauthorizedError } from 'express-response-errors'
 import { API_AUTH_KEY } from '../configurations'
@@ -11,11 +11,11 @@ import { API_AUTH_KEY } from '../configurations'
  */
 export function authorization(roles: Role[]) {
   return function (request: Request, _response: Response, next: NextFunction) {
-    const user = request.user as SessionUser
+    const user = request.user as ExpressUser
     const key = request.query.authorization_key as string | undefined
     if (
       (typeof key === 'string' && key === API_AUTH_KEY) ||
-      (request.isAuthenticated() && roles.includes(user?.UserRole?.role))
+      (request.isAuthenticated() && user && roles.includes(user.UserLevel.role))
     )
       return next()
     next(new UnauthorizedError('Access denied'))
