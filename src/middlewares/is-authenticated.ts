@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express'
-import type { SessionUser } from '../types'
+import type { ExpressUser } from '../types'
 import { BadRequestError } from 'express-response-errors'
 
 /**
@@ -18,8 +18,8 @@ export function isAuthenticated(
   next: NextFunction
 ) {
   if (request.isAuthenticated()) {
-    const user = request.user as SessionUser
-    if (user.isDisabled) {
+    const user = request.user as ExpressUser
+    if (user?.isDisabled) {
       if (request.method === 'GET') return response.render('disabled')
       return next(new BadRequestError('Account has been disabled'))
     }

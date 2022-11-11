@@ -1,6 +1,5 @@
-async function main() {
-  await import('./env')
-  await import('./app')
-  await import('../../src/main')
+function main() {
+  import('./env')
+  import('../../src/main')
 }
-void main()
+main()

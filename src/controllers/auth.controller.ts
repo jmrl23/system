@@ -1,5 +1,6 @@
+/* eslint-disable indent */
 import type { Request, Response, NextFunction } from 'express'
-import type { SessionUser } from '../types'
+import type { ExpressUser } from '../types'
 import { Router } from 'express'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { db, cache, cached } from '../services'
@@ -14,6 +15,7 @@ import {
   PASSPORT_GOOGLE_CALLBACK_URL
 } from '../configurations'
 import passport from 'passport'
+import { Role } from '@prisma/client'
 
 passport.use(
   new GoogleStrategy(
@@ -32,7 +34,7 @@ passport.use(
           where: { email: data.email }
         })
         if (user) return next(null, user.id)
-        const userRole = await db.userRole.findUnique({
+        const userLevel = await db.userLevel.findUnique({
           where: { email: data.email }
         })
         const newUser = await db.user.create({
@@ -42,13 +44,16 @@ passport.use(
             familyName: data.family_name,
             displayName: data.name,
             picture: data.picture,
-            userRoleId:
-              userRole?.id ||
-              (
-                await db.userRole.create({
-                  data: { email: data.email }
-                })
-              ).id
+            userLevelId: userLevel
+              ? userLevel.id
+              : await db.userLevel
+                  .create({
+                    data: {
+                      email: data.email,
+                      role: Role.STUDENT
+                    }
+                  })
+                  .then(({ id }) => id)
           }
         })
         next(null, newUser.id)
@@ -66,13 +71,13 @@ passport.serializeUser((userId, done) => {
 passport.deserializeUser(async (userId: string, done) => {
   try {
     const user = await cached(
-      `user-${userId}`,
+      `session-user-${userId}`,
       async () => {
         return db.user.findUnique({
           where: { id: userId },
           include: {
-            UserBasicInfo: true,
-            UserRole: true
+            UserLevel: true,
+            UserInfo: true
           }
         })
       },
@@ -134,8 +139,8 @@ controller
       next(new BadRequestError('You are not signed in'))
     },
     function (request: Request, response: Response, next: NextFunction) {
-      const user = request.user as SessionUser
-      if (request.user) cache.del(`user-${user.id}`)
+      const user = request.user as ExpressUser
+      if (user) cache.del(`session-user-${user.id}`)
       request.logOut({ keepSessionInfo: false }, (error) => {
         if (error) return next(new BadRequestError(error.message))
         response.status(200).json({ ok: true })

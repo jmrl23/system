@@ -9,7 +9,7 @@ prisma/.env
 build/
 dist/
 public/css/style.css
-sandbox/erd.png
+sandbox/DATABASE_ERD.svg
 
 # error log
 yarn-error.log

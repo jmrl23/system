@@ -11,6 +11,7 @@ import { BadRequestError } from 'express-response-errors'
  * @param Cls - ClassConstructor<T>
  * @returns A function that takes a request, response, and next function.
  */
+// TODO: Fix this
 export function validateBody<T extends Record<string, unknown>>(
   Cls: ClassConstructor<T>
 ) {
