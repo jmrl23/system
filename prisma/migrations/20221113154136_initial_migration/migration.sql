@@ -37,7 +37,7 @@ CREATE TABLE `UserLevel` (
     `dateCreated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `lastUpdated` DATETIME(3) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
-    `role` ENUM('ADMIN', 'REGISTRY', 'STUDENT') NOT NULL,
+    `role` ENUM('ADMIN', 'REGISTRY', 'STUDENT') NOT NULL DEFAULT 'STUDENT',
 
     UNIQUE INDEX `UserLevel_id_key`(`id`),
     UNIQUE INDEX `UserLevel_email_key`(`email`)
@@ -48,6 +48,7 @@ CREATE TABLE `Department` (
     `id` VARCHAR(191) NOT NULL,
     `dateCreated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `lastUpdated` DATETIME(3) NOT NULL,
+    `isDisabled` BOOLEAN NOT NULL DEFAULT false,
     `name` VARCHAR(191) NOT NULL,
     `alias` VARCHAR(191) NOT NULL,
 
@@ -60,6 +61,7 @@ CREATE TABLE `Course` (
     `id` VARCHAR(191) NOT NULL,
     `dateCreated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `lastUpdated` DATETIME(3) NOT NULL,
+    `isDisabled` BOOLEAN NOT NULL DEFAULT false,
     `name` VARCHAR(191) NOT NULL,
     `alias` VARCHAR(191) NOT NULL,
 
@@ -85,12 +87,12 @@ CREATE TABLE `ClassSchedule` (
     `lastUpdated` DATETIME(3) NOT NULL,
     `sem` ENUM('FIRST', 'SECOND') NOT NULL,
     `day` ENUM('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY') NOT NULL,
-    `start` DATETIME(3) NOT NULL,
-    `end` DATETIME(3) NOT NULL,
+    `timeStart` DATETIME(3) NOT NULL,
+    `timeEnd` DATETIME(3) NOT NULL,
     `unit` INTEGER NOT NULL,
-    `labUnit` INTEGER NOT NULL,
-    `courseId` VARCHAR(191) NOT NULL,
+    `labUnit` INTEGER NOT NULL DEFAULT 0,
     `classSectionId` VARCHAR(191) NOT NULL,
+    `courseId` VARCHAR(191) NOT NULL,
     `prerequisiteId` VARCHAR(191) NOT NULL,
     `userInfoId` VARCHAR(191) NULL,
 

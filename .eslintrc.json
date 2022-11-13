@@ -23,7 +23,7 @@
       "error",
       2,
       {
-        "ignoredNodes": ["ConditionalExpression"]
+        "ignoredNodes": ["ConditionalExpression", "PropertyDefinition"]
       }
     ],
     "linebreak-style": ["error", "windows"],
