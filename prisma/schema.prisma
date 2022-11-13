@@ -11,6 +11,7 @@ generator erd {
   output                        = "../sandbox/DATABASE_ERD.svg"
   theme                         = "neutral"
   includeRelationshipFromFields = true
+  ERD_DEBUG                     = true
 }
 
 datasource db {
@@ -71,7 +72,7 @@ model User {
   @@unique([id, email])
 }
 
-// == MODEL: UserInfo | TODO: All more fields
+// == MODEL: UserInfo | TODO: Add more fields
 
 model UserInfo {
   id          String   @unique @default(uuid())
@@ -98,7 +99,7 @@ model UserLevel {
   lastUpdated DateTime @updatedAt
 
   email String
-  role  Role
+  role  Role   @default(STUDENT)
   User  User?
 
   @@unique([email])
@@ -111,6 +112,7 @@ model Department {
   dateCreated DateTime @default(now())
   lastUpdated DateTime @updatedAt
 
+  isDisabled   Boolean        @default(false)
   name         String
   alias        String
   ClassSection ClassSection[]
@@ -126,6 +128,7 @@ model Course {
   dateCreated DateTime @default(now())
   lastUpdated DateTime @updatedAt
 
+  isDisabled         Boolean         @default(false)
   name               String
   alias              String
   ClassSchedule      ClassSchedule[] @relation("ScheduleCourse")
@@ -156,14 +159,14 @@ model ClassSchedule {
 
   sem            Sem
   day            Day
-  start          DateTime
-  end            DateTime
+  timeStart      DateTime
+  timeEnd        DateTime
   unit           Int
-  labUnit        Int
+  labUnit        Int          @default(0)
   ClassSection   ClassSection @relation(fields: [classSectionId], references: [id])
+  classSectionId String
   Course         Course       @relation("ScheduleCourse", fields: [courseId], references: [id])
   courseId       String
-  classSectionId String
   Prerequisite   Course       @relation("Prerequisite", fields: [prerequisiteId], references: [id])
   prerequisiteId String
   UserInfo       UserInfo?    @relation(fields: [userInfoId], references: [id])
