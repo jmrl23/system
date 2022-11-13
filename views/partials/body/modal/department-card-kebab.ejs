@@ -1,0 +1,34 @@
+<div id="modal" class="w-32 h-16 bg-white text-left text-gray-600 rounded-xl font-poppins py-1 modal z-10 absolute hidden left-24 ">
+    <p id="edit" class="hover:bg-[#e9e9e9] active:bg-[#fdfdfd] mt-1 px-2" >Edit</p>
+    <p id="delete" class="hover:bg-[#e9e9e9] active:bg-[#fdfdfd] px-2">Delete</p>
+</div>
+
+
+<script nonce="<%= config.NONCE %>" type="module">
+    import { createPopper } from  'https://unpkg.com/@popperjs/core@2.11.6/dist/esm/index.js';
+
+        const modal = document.getElementById('modal')
+        const menuButtons = document.querySelectorAll('button.kebab')
+
+        menuButtons.forEach((button) =>{
+            
+            button.addEventListener('click',(e)=>{
+                modal.classList.remove('hidden')
+                createPopper(button,modal,{
+                    placement: 'left-start',
+                })
+                e.stopPropagation()
+            })
+        })
+        
+        
+        window.addEventListener('click', (e)=>{
+            if(e.target.id != "modal" && e.target.id != "edit" && e.target.id != "delete"){
+                modal.classList.add('hidden')
+            }
+            e.stopPropagation();
+        })
+
+
+</script>
+        
