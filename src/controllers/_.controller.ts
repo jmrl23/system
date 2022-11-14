@@ -22,7 +22,7 @@ controller
       if (user?.UserLevel.role === Role.REGISTRY)
         return response.render('registry')
       if (user?.UserLevel.role === Role.STUDENT) {
-        if (!user?.UserInfo) return response.render('student-init')
+        if (!user?.StudentInformation) return response.render('student-init')
         return response.render('student')
       }
       next(new InternalServerError('An error occurs to server'))
