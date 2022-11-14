@@ -18,17 +18,18 @@ CREATE TABLE `User` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `UserInfo` (
+CREATE TABLE `StudentInformation` (
     `id` VARCHAR(191) NOT NULL,
     `dateCreated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `lastUpdated` DATETIME(3) NOT NULL,
     `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
     `address` VARCHAR(191) NOT NULL,
+    `studentId` VARCHAR(191) NULL,
     `userId` VARCHAR(191) NOT NULL,
     `departmentId` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `UserInfo_id_key`(`id`),
-    UNIQUE INDEX `UserInfo_userId_key`(`userId`)
+    UNIQUE INDEX `StudentInformation_id_key`(`id`),
+    UNIQUE INDEX `StudentInformation_userId_key`(`userId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -94,7 +95,7 @@ CREATE TABLE `ClassSchedule` (
     `classSectionId` VARCHAR(191) NOT NULL,
     `courseId` VARCHAR(191) NOT NULL,
     `prerequisiteId` VARCHAR(191) NOT NULL,
-    `userInfoId` VARCHAR(191) NULL,
+    `studentInformationId` VARCHAR(191) NULL,
 
     UNIQUE INDEX `ClassSchedule_id_key`(`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
