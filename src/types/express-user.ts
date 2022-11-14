@@ -4,7 +4,7 @@ export type ExpressUser =
   | Prisma.UserGetPayload<{
       include: {
         UserLevel: true
-        UserInfo: true
+        StudentInformation: true
       }
     }>
   | undefined
