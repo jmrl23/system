@@ -1,4 +1,7 @@
 {
   "watch": ["src/", "sandbox/"],
+  "ignore": ["src/**/*.spec.ts"],
+  "exec": ["ts-node -P tsconfig.json sandbox/src/main.ts"],
+  "ext": "ts",
   "delay": 1200
 }
