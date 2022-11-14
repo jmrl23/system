@@ -77,7 +77,7 @@ passport.deserializeUser(async (userId: string, done) => {
           where: { id: userId },
           include: {
             UserLevel: true,
-            UserInfo: true
+            StudentInformation: true
           }
         })
       },

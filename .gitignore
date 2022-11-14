@@ -13,3 +13,6 @@ sandbox/DATABASE_ERD.svg
 
 # error log
 yarn-error.log
+
+# lock files
+package-lock.json
