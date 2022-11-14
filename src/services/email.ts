@@ -1,5 +1,4 @@
 import type { SendMailOptions } from 'nodemailer'
-import type { EmailServiceResponse } from '../types'
 import { createTransport } from 'nodemailer'
 import {
   SERVICE_EMAIL,
@@ -11,7 +10,7 @@ import {
 
 const transportURL = new URL(SMTP_TRANSPORT_URL)
 
-const transporter = createTransport({
+export const transporter = createTransport({
   host: transportURL.hostname,
   port: parseInt(transportURL.port, 10),
   secure: transportURL.port === '465',
@@ -25,22 +24,13 @@ const transporter = createTransport({
   }
 })
 
-async function sendMail(
-  options: SendMailOptions
-): Promise<EmailServiceResponse> {
-  if (SERVICE_EMAIL === 'off') {
-    return {
-      error: null,
-      info: { response: 'Email service is disabled' }
-    }
-  }
+export async function sendMail(options: SendMailOptions): Promise<unknown> {
+  if (SERVICE_EMAIL === 'off')
+    return { error: null, response: 'Email service is disabled' }
   try {
-    const info = await transporter.sendMail(options)
-    return { error: null, info }
+    const response = await transporter.sendMail(options)
+    return response
   } catch (error: unknown) {
-    if (error instanceof Error) return { error: error.message, info: null }
-    return { error: 'an error occurs', info: null }
+    if (error instanceof Error) return { error: error.message }
   }
 }
-
-export { sendMail }

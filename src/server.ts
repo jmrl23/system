@@ -1,6 +1,4 @@
 import { createServer } from 'http'
 import { app } from './app'
 
-const server = createServer(app)
-
-export { server }
+export const server = createServer(app)

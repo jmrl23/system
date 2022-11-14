@@ -7,6 +7,7 @@ import { ApiFetchUsers } from '../types'
 const controller = Router()
 
 controller
+
   .post(
     '/fetch-users',
     authorization([Role.ADMIN, Role.REGISTRY]),
@@ -34,6 +35,7 @@ controller
       response.json(data)
     }
   )
+
   .post(
     '/fetch-departments',
     async function (_request: Request, response: Response) {
