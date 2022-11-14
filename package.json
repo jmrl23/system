@@ -37,6 +37,7 @@
     "express-rate-limit": "^6.6.0",
     "express-response-errors": "^1.0.5",
     "express-session": "^1.17.3",
+    "flowbite": "^1.5.3",
     "helmet": "^6.0.0",
     "memory-cache": "^0.2.0",
     "morgan": "^1.10.0",
