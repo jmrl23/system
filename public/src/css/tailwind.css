@@ -3,10 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply focus:outline-none;
-  }
-
+  
   body {
     @apply overflow-x-hidden;
   }
