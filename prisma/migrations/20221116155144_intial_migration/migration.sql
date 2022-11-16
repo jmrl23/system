@@ -22,13 +22,14 @@ CREATE TABLE `StudentInformation` (
     `id` VARCHAR(191) NOT NULL,
     `dateCreated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `lastUpdated` DATETIME(3) NOT NULL,
-    `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
+    `gender` ENUM('MALE', 'FEMALE', 'NON_BINARY') NOT NULL,
     `address` VARCHAR(191) NOT NULL,
     `studentId` VARCHAR(191) NULL,
     `userId` VARCHAR(191) NOT NULL,
     `departmentId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `StudentInformation_id_key`(`id`),
+    UNIQUE INDEX `StudentInformation_studentId_key`(`studentId`),
     UNIQUE INDEX `StudentInformation_userId_key`(`userId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -52,6 +53,7 @@ CREATE TABLE `Department` (
     `isDisabled` BOOLEAN NOT NULL DEFAULT false,
     `name` VARCHAR(191) NOT NULL,
     `alias` VARCHAR(191) NOT NULL,
+    `color` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Department_id_key`(`id`),
     UNIQUE INDEX `Department_name_alias_key`(`name`, `alias`)
@@ -86,7 +88,7 @@ CREATE TABLE `ClassSchedule` (
     `id` VARCHAR(191) NOT NULL,
     `dateCreated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `lastUpdated` DATETIME(3) NOT NULL,
-    `sem` ENUM('FIRST', 'SECOND') NOT NULL,
+    `term` ENUM('FIRST', 'SECOND') NOT NULL,
     `day` ENUM('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY') NOT NULL,
     `timeStart` DATETIME(3) NOT NULL,
     `timeEnd` DATETIME(3) NOT NULL,

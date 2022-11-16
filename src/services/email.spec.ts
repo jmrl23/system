@@ -23,7 +23,7 @@ describe('service: email', () => {
 
   it('send an email', async () => {
     const { sendMail } = await import('./email')
-    const data = await sendMail(options)
+    const data = (await sendMail(options)) as Partial<{ error: string }>
     expect(data.error).toBe(null)
   })
 })
