@@ -68,6 +68,9 @@
       }
     }
   }
+  .text {
+    @apply font-poppins text-[#8b8b8b]
+  }
 }
 
 @layer utilities {

@@ -8,9 +8,16 @@
 
 
   <section class="hidden" data-content="users">
-    <%- include('../search') %> 
-    <%- include('contents/users') %> 
+    <div class="flex items-center gap-x-4 justify-between">
+      <%- include('../search') %> 
+      <%- include('../../../filter') %> 
+    </div>
     
+    <%- include('contents/users') %> 
+
+    <div class="flex justify-center">
+      <%- include('../../../pagination') %> 
+    </div>
   </section>
 
 
