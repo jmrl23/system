@@ -17,7 +17,7 @@ export const helmetConfig: HelmetOptions = {
       imgSrc: [
         'data:',
         'https://*.googleusercontent.com',
-        'https://*.google*.com',
+        'https://*.google.com',
         ...trusted
       ]
     }
