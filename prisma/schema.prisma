@@ -66,8 +66,8 @@ model User {
   picture     String?
 
   StudentInformation StudentInformation?
-  UserLevel          UserLevel           @relation(fields: [userLevelId], references: [id])
-  userLevelId        String              @unique
+  UserLevel          UserLevel?          @relation(fields: [userLevelId], references: [id])
+  userLevelId        String?             @unique
 
   @@unique([id, email])
 }

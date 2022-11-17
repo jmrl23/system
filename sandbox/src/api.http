@@ -7,7 +7,19 @@ POST http://localhost:3000/api/users/get?authorization_key={{auth_key}} HTTP/1.1
 Content-Type: application/json
 
 {
-  "role": "ADMIN"
+  "role": "ADMIN",
+  "skip": 0,
+  "take": 15,
+  "keyword": "j"
+}
+
+#### Fetch user
+
+POST http://localhost:3000/api/user/get?authorization_key={{auth_key}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": "1aa5b375-a1a9-40f3-9ff2-c887e7b3c463"
 }
 
 #### Disable/ Enable user's account
@@ -16,7 +28,7 @@ POST http://localhost:3000/api/user/toggle?authorization_key={{auth_key}} HTTP/1
 Content-Type: application/json
 
 {
-  "id": "9de5b5d4-d4a6-49ff-a80a-1ae5ca0d3040",
+  "id": "1aa5b375-a1a9-40f3-9ff2-c887e7b3c463",
   "state": false
 }
 
@@ -26,13 +38,22 @@ POST http://localhost:3000/api/user/set-role?authorization_key={{auth_key}} HTTP
 Content-Type: application/json
 
 {
-  "email": "jlpielago@paterostechnologicalcollege.edu.ph",
+  "email": "jagaitera@paterostechnologicalcollege.edu.ph",
   "role": "ADMIN"
+}
+
+#### Remove user's role (also disables the account)
+
+POST http://localhost:3000/api/user/remove-role?authorization_key={{auth_key}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "jagaitera@paterostechnologicalcollege.edu.ph"
 }
 
 #### Fetch departments
 
-POST http://localhost:3000/api/departments/get HTTP/1.1
+POST http://localhost:3000/api/departments/get?authorization_key={{auth_key}} HTTP/1.1
 
 #### Create department
 
@@ -45,6 +66,18 @@ Content-Type: application/json
   "color": "FFFFFF"
 }
 
+#### Update department
+
+POST http://localhost:3000/api/department/update?authorization_key={{auth_key}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": "234abf3c-6342-402e-8119-186ce099b9bf",
+  "name": "Bachelor of Science in Information Technology",
+  "alias": "BSIT",
+  "color": "000000"
+}
+
 #### Disable/ Enable department
 
 POST http://localhost:3000/api/department/toggle?authorization_key={{auth_key}} HTTP/1.1
@@ -53,4 +86,13 @@ Content-Type: application/json
 {
   "id": "234abf3c-6342-402e-8119-186ce099b9bf",
   "state": false
+}
+
+#### Delete department
+
+POST http://localhost:3000/api/department/delete?authorization_key={{auth_key}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": "234abf3c-6342-402e-8119-186ce099b9bf"
 }
