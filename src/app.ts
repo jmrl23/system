@@ -47,6 +47,12 @@ app.use(
   express.static(join(__dirname, '../public/dist'), staticConfig)
 )
 
+/** flowbite */
+app.use(
+  '/flowbite',
+  express.static(join(__dirname, '../node_modules/flowbite/dist'), staticConfig)
+)
+
 /** controllers */
 app.use(
   rateLimiter({ max: 50 }),

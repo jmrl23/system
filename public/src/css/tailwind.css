@@ -3,10 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply focus:outline-none;
-  }
-
+  
   body {
     @apply overflow-x-hidden;
   }
@@ -63,7 +60,7 @@
       }
 
       &.green-1 {
-        @apply font-semibold text-[#8B8B8B] bg-[#E9E9E9] hover:text-[#0ACF83] hover:bg-[#C0FFE7];
+        @apply font-semibold text-[#8B8B8B] bg-[#F0F0F0] hover:text-[#0ACF83] hover:bg-[#C0FFE7];
       
         &.active {
           @apply text-[#0ACF83] bg-[#9EFCD8];
