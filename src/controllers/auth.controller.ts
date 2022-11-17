@@ -29,8 +29,19 @@ passport.use(
         return next(null, undefined, { message: 'Invalid email' })
       try {
         const user = await db.user.findUnique({
-          where: { email: data.email }
+          where: { email: data.email },
+          include: { UserLevel: true }
         })
+        if (user && !user.isDisabled && !user?.UserLevel) {
+          await db.user.update({
+            where: { id: user.id },
+            data: {
+              userLevelId: await db.userLevel
+                .create({ data: { email: data.email } })
+                .then(({ id }) => id)
+            }
+          })
+        }
         if (user) return next(null, user.id)
         const userLevel = await db.userLevel.findUnique({
           where: { email: data.email }

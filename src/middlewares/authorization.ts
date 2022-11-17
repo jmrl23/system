@@ -15,7 +15,10 @@ export function authorization(roles: Role[]) {
     const key = request.query.authorization_key as string | undefined
     if (
       (typeof key === 'string' && key === API_AUTH_KEY) ||
-      (request.isAuthenticated() && user && roles.includes(user.UserLevel.role))
+      (request.isAuthenticated() &&
+        user &&
+        user.UserLevel &&
+        roles.includes(user.UserLevel.role))
     )
       return next()
     next(new UnauthorizedError('Access denied'))

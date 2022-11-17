@@ -9,7 +9,7 @@ CREATE TABLE `User` (
     `familyName` VARCHAR(191) NULL,
     `displayName` VARCHAR(191) NULL,
     `picture` VARCHAR(191) NULL,
-    `userLevelId` VARCHAR(191) NOT NULL,
+    `userLevelId` VARCHAR(191) NULL,
 
     UNIQUE INDEX `User_id_key`(`id`),
     UNIQUE INDEX `User_email_key`(`email`),
