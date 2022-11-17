@@ -1,3 +1,5 @@
+import { createPopper } from 'https://unpkg.com/@popperjs/core@2.11.6/dist/esm/index.js'
+
 const pageTitle = document.querySelector<HTMLHeadingElement>('#page-title')
 const sidebarButtons = document.querySelectorAll<HTMLButtonElement>(
   'button[data-toggle-page]'
@@ -14,3 +16,30 @@ for (const button of Array.from(sidebarButtons)) {
     }
   })
 }
+
+const modal = document.getElementById('modal')
+const menuButtons = document.querySelectorAll('button.kebab')
+
+menuButtons.forEach((button) => {
+  button.addEventListener('click', (e) => {
+    modal?.classList.remove('hidden')
+    if (modal) {
+      createPopper(button, modal, {
+        placement: 'left-start'
+      })
+      e.stopPropagation()
+    }
+  })
+})
+
+window.addEventListener('click', (e) => {
+  const element = e.target as HTMLDivElement
+  if (
+    element.id !== 'modal' &&
+    element.id !== 'edit' &&
+    element.id !== 'delete'
+  ) {
+    modal?.classList.add('hidden')
+  }
+  e.stopPropagation()
+})

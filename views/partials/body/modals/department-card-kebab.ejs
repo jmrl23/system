@@ -1,0 +1,78 @@
+<!-- DEPARTMENT SETTINGS POPPER -->
+<div id="modal" class="w-32 h-16 bg-white text-left text-gray-600 rounded-xl font-poppins py-1 modal z-10 absolute hidden left-24 ">
+    <p id="edit" class="hover:bg-[#e9e9e9] active:bg-[#fdfdfd] mt-1 px-2" data-modal-toggle="authentication-modal-edit">Edit</p>
+    <p id="delete" class="hover:bg-[#e9e9e9] active:bg-[#fdfdfd] px-2" data-modal-toggle="delete-popup-modal">Delete</p>
+</div>
+
+
+<!-- EDIT DEPARTMENT Main modal -->
+<div id="authentication-modal-edit" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
+    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-3xl shadow light:bg-gray-100">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center light:hover:bg-gray-800 light:hover:text-white" data-modal-toggle="authentication-modal-edit">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-10 lg:px-8 ">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[40px] h-[40px] mx-auto stroke-[#444444]">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                </svg>
+                  
+                
+                <h3 class="mb-4 text-xl font-medium text-[#444444] light:text-white text-center">Edit Department Name</h3>
+                <form class="space-y-6" action="" method="post">
+                    <div> 
+                        <label for="department-alias" class="block mb-2 text-md font-medium text-[#585858] light:text-gray-300 text-left">Department Alias</label>
+                        <input type="text" name="department-alias" id="department-alias" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#0acf83] focus:border-[#0acf83] block w-full p-2.5 light:bg-gray-600 light:border-gray-500 light:placeholder-gray-400 light:text-white placeholder-[#c5c5c5]" placeholder = "eg. BSIT" required>
+                    </div>
+                    <div>
+                        <label for="department-name" class="block mb-2 text-md font-medium text-[#585858] light:text-gray-300 text-left">Department Name</label>
+                        <input type="text" name="department-name" id="department-name"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#0ACF83] focus:border-[#0ACF83] block w-full p-2.5 light:bg-gray-600 light:border-gray-500 light:placeholder-gray-400 light:text-white placeholder-[#c5c5c5]" placeholder="Bachelor of Science in Information Technology" required="">
+                    </div>
+
+                
+                <div class="">
+                    <label for="department-color" class="block mb-2 text-md font-medium text-[#585858] light:text-gray-300 text-left">Department Color</label>
+                    
+                    <div class="flex gap-x-4">
+                        <button class="w-7 h-7 bg-[#6A1B9A] rounded-full focus:ring-[#02C87B] focus:border-[#02C87B] ring ring-inset ring-transparent " value="#6A1B9A" name="department-color" type="button"></button>
+                        <button class="w-7 h-7 bg-[#0891b2] rounded-full focus:ring-[#02C87B] focus:border-[#02C87B] ring ring-inset ring-transparent" value="#0891b2 " name="department-color" type="button"></button>
+                        <button class="w-7 h-7 bg-[#F43F5E] rounded-full focus:ring-[#02C87B] focus:border-[#02C87B] ring ring-inset ring-transparent" value="#F43F5E" name="department-color" type="button"></button>
+                        <button class="w-7 h-7 bg-[#455A64] rounded-full focus:ring-[#02C87B] focus:border-[#02C87B] ring ring-inset ring-transparent" value="#455A64 " name="department-color" type="button"></button>
+                        <button class="w-7 h-7 bg-[#FF5722] rounded-full focus:ring-[#02C87B] focus:border-[#02C87B] ring ring-inset ring-transparent" value="#FF5722" name="department-color" type="button"></button>
+                        <button class="w-7 h-7 bg-[#FDD835] rounded-full focus:ring-[#02C87B] focus:border-[#02C87B] ring ring-inset ring-transparent" value="#FDD835" name="department-color" type="button"></button>
+                    </div>
+                </div>
+
+                    <button type="button" class="w-full text-white bg-[#0ACF83] hover:bg-[#15E896] active:bg-[#0ACF83] font-medium rounded-lg text-sm px-5 py-2.5 text-center light:bg-blue-600 light:hover:bg-blue-700 light:focus:ring-blue-800" id="saveBtn" >Save</button>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<!-- DELETE DEPARTMENT modal -->
+<div id="delete-popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center" aria-hidden="true">
+    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+        <div class="relative bg-white rounded-3xl shadow light:bg-gray-700">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center light:hover:bg-gray-800 light:hover:text-white" data-modal-toggle="delete-popup-modal">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-8 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[45px] h-[45px] stroke-[#FD6E6E] mx-auto" stroke>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+                <h3 class="mb-5 text-lg font-normal text-[#444444] light:text-gray-400">Are you sure you want to delete <strong>[dept. name]</strong> department?</h3>
+                <button data-modal-toggle="delete-popup-modal" type="button" class="text-[#FF6161] bg-[#fdb4b4] hover:bg-[#FFC0C0] active:bg-[#ffaaaa] focus:ring-0 focus:outline-none focus:ring-red-300 light:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                    Yes, I'm sure
+                </button>
+                <button data-modal-toggle="delete-popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-0 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 light:bg-gray-700 light:text-gray-300 light:border-gray-500 light:hover:text-white light:hover:bg-gray-600 light:focus:ring-gray-600">No, cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
