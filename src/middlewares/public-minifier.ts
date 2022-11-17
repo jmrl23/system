@@ -1,5 +1,3 @@
 import minify from 'express-minify'
 
-const publicMinifier = minify()
-
-export { publicMinifier }
+export const publicMinifier = minify()

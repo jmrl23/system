@@ -7,8 +7,8 @@ import { BadRequestError } from 'express-response-errors'
 
 /**
  * It takes a class constructor as an argument, and returns a middleware function that validates the
- * request body against the class constructor.
- * @param Cls - ClassConstructor<T> - This is the class that you want to validate.
+ * request body against the class constructor
+ * @param {ClassConstructor<T>} Cls - ClassConstructor<T> - This is the class that you want to validate.
  * @returns The function is being returned.
  */
 export function validateBody<T>(Cls: ClassConstructor<T>) {
@@ -17,8 +17,8 @@ export function validateBody<T>(Cls: ClassConstructor<T>) {
     _response: Response,
     next: NextFunction
   ) {
-    if (!request.get('Content-Type')?.includes('application/json'))
-      return next()
+    if (!request.headers['content-type']?.startsWith('application/json'))
+      return next(new BadRequestError('Invalid Content-Type'))
     const instance = plainToInstance<T, unknown>(
       Cls,
       request.body

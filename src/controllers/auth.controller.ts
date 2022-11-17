@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import type { Request, Response, NextFunction } from 'express'
 import type { ExpressUser } from '../types'
 import { Router } from 'express'
@@ -15,7 +14,6 @@ import {
   PASSPORT_GOOGLE_CALLBACK_URL
 } from '../configurations'
 import passport from 'passport'
-import { Role } from '@prisma/client'
 
 passport.use(
   new GoogleStrategy(
@@ -26,7 +24,7 @@ passport.use(
       scope: ['profile', 'email']
     },
     async (_accessToken, _refreshToken, profile, next) => {
-      const data = profile._json
+      const data: typeof profile._json = profile._json
       if (!data.email?.endsWith('@paterostechnologicalcollege.edu.ph'))
         return next(null, undefined, { message: 'Invalid email' })
       try {
@@ -47,12 +45,9 @@ passport.use(
             userLevelId: userLevel
               ? userLevel.id
               : await db.userLevel
-                  .create({
-                    data: {
-                      email: data.email,
-                      role: Role.STUDENT
-                    }
-                  })
+                  // eslint-disable-next-line indent
+                  .create({ data: { email: data.email } })
+                  // eslint-disable-next-line indent
                   .then(({ id }) => id)
           }
         })

@@ -1,6 +1,6 @@
 import minifyHTML from 'express-minify-html-terser'
 
-const htmlMinifier = minifyHTML({
+export const htmlMinifier = minifyHTML({
   override: true,
   exception_url: false,
   htmlMinifier: {
@@ -12,5 +12,3 @@ const htmlMinifier = minifyHTML({
     minifyJS: true
   }
 })
-
-export { htmlMinifier }

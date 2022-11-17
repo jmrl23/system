@@ -14,7 +14,12 @@ export const helmetConfig: HelmetOptions = {
       scriptSrc: [`'nonce-${NONCE}'`, ...trusted],
       mediaSrc: [...trusted],
       frameSrc: [...trusted],
-      imgSrc: ['data:', 'https://*.googleusercontent.com', ...trusted]
+      imgSrc: [
+        'data:',
+        'https://*.googleusercontent.com',
+        'https://*.google*.com',
+        ...trusted
+      ]
     }
   }
 }
