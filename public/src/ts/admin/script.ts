@@ -74,3 +74,33 @@ async function fetchStudents(keyword?: string, skip = 0, take = 15) {
     if (error instanceof Error) alert(error.message)
   }
 })()
+
+const addDepartmentForm = document.querySelector('#add-department')
+
+addDepartmentForm?.addEventListener('submit', async function (e) {
+  e.preventDefault()
+  const departmentAlias = addDepartmentForm
+    .querySelector<HTMLInputElement>('input[name=department-alias]')
+    ?.value.trim()
+
+  const departmentName = addDepartmentForm
+    .querySelector<HTMLInputElement>('input[name=department-name]')
+    ?.value.trim()
+
+  const departmentColor = addDepartmentForm
+    .querySelector<HTMLInputElement>('input[name=department-color]')
+    ?.value.trim()
+
+  const response = await fetch('/api/department/create', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: departmentName,
+      alias: departmentAlias,
+      color: departmentColor
+    })
+  })
+  const department = await response.json()
+  if (response.status >= 400) throw new Error(department.message)
+  console.log(department)
+})

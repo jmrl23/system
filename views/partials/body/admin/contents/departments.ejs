@@ -8,7 +8,7 @@
           
     </div>
 
-    <div class=" w-64 h-64 p-4 bg-[#3F51B5] text-center rounded-3xl text-white shadow-md shadow-black/30 ">
+    <!-- <div class=" w-64 h-64 p-4 bg-[#3F51B5] text-center rounded-3xl text-white shadow-md shadow-black/30 ">
 
         <div class="relative right-5">
             <%- include('../../modals/department-card-kebab') %> 
@@ -220,6 +220,31 @@
             <p class=" my-4 font-semibold text-5xl font-poppins ">ACET</p>
             <p class="">Associate in Computer Engineering Technology</p>
         </div>
+
+
+        <div class=" w-64 h-64 p-4 bg-[#0ca56a] text-center rounded-3xl text-white shadow-md shadow-black/30 relative grid place-items-center">
+
+            <div class="flex justify-between absolute top-0 w-[calc(100%-2rem)] mt-4 ">
+                <%- include('../../switch', {
+                    attributes: {
+                    id: 'my-switch',
+                    title: 'switch',
+                    }
+                })  %>
+
+                <button class="kebab">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                    </svg>
+                </button>
+            </div>
+  
+            <div class="mt-10">
+                <p class=" my-4 font-semibold text-5xl font-poppins ">BSOA</p>
+                <p class="">Bachelor of Science in Psychology</p>
+            </div>
+            
+        </div> -->
 
 </div>
 
