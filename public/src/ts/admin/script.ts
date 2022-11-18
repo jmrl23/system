@@ -1,5 +1,5 @@
 import { createPopper } from 'https://unpkg.com/@popperjs/core@2.11.6/dist/esm/index.js'
-import { pageToggler } from '/js/helper.js'
+import { pageToggler, makeDepartmentCard } from '/js/helper.js'
 
 const sidebarButtons = document.querySelectorAll<HTMLButtonElement>(
   '.side-bar-container button[data-target]'
@@ -64,14 +64,36 @@ async function fetchStudents(keyword?: string, skip = 0, take = 15) {
   return students
 }
 
-/* An IIFE (Immediately Invoked Function Expression) */
+/**
+ * It fetches the departments from the server and returns them as a promise.
+ * @returns An array of departments.
+ */
+async function fetchDepartments() {
+  const response = await fetch('/api/departments/get', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  const departments = await response.json()
+  if (response.status >= 400) throw new Error(departments.message)
+  return departments
+}
+
+// initialization, fetch data from server
 ;(async () => {
-  // test
   try {
-    const students = await fetchStudents(undefined, 0, 10)
-    console.log('Students:', students)
+    const [students, departments] = await Promise.all([
+      fetchStudents(),
+      fetchDepartments()
+    ])
+    console.log('Students', students)
+    const departmentCards = departments.map(makeDepartmentCard)
+    const departmentsContainer = document.querySelector('#card-container')
+    departmentsContainer?.append(...departmentCards)
   } catch (error) {
-    if (error instanceof Error) alert(error.message)
+    if (error instanceof Error) {
+      alert('An error occurs')
+      console.error(error)
+    }
   }
 })()
 

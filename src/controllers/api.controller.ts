@@ -144,13 +144,7 @@ controller
     authorization([Role.ADMIN, Role.REGISTRY, Role.STUDENT]),
     async function (request: Request, response: Response, next: NextFunction) {
       try {
-        const data = await cached(
-          request.url.toString(),
-          async () => {
-            return await db.department.findMany({})
-          },
-          60000
-        )
+        const data = await db.department.findMany({})
         response.json(data)
       } catch (error) {
         if (error instanceof Error) next(new InternalServerError(error.message))

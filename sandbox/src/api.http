@@ -63,7 +63,7 @@ Content-Type: application/json
 {
   "name": "Bachelor of Science in Information Technology",
   "alias": "BSIT",
-  "color": "FFFFFF"
+  "color": "#FFFFFF"
 }
 
 #### Update department
@@ -72,10 +72,10 @@ POST http://localhost:3000/api/department/update?authorization_key={{auth_key}} 
 Content-Type: application/json
 
 {
-  "id": "234abf3c-6342-402e-8119-186ce099b9bf",
+  "id": "6ff82103-1fc7-49ae-b956-2f9f81482e6b",
   "name": "Bachelor of Science in Information Technology",
   "alias": "BSIT",
-  "color": "000000"
+  "color": "#6A1B9A"
 }
 
 #### Disable/ Enable department
@@ -84,7 +84,7 @@ POST http://localhost:3000/api/department/toggle?authorization_key={{auth_key}} 
 Content-Type: application/json
 
 {
-  "id": "234abf3c-6342-402e-8119-186ce099b9bf",
+  "id": "6ff82103-1fc7-49ae-b956-2f9f81482e6b",
   "state": false
 }
 
