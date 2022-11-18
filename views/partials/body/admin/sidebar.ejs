@@ -1,11 +1,11 @@
 <div class="side-bar-container w-72 inline-block h-screen border-r border-r-gray-100 fixed left-0 top-0">
-  <div class="sidebar h-screen w-64 mx-4 inline-block">
+  <div class="sidebar  w-64 mx-4 inline-block">
     <div class="logo my-5 py-8">
       <%- include('logo-sidebar') %>
     </div>
 
     <div class="nav-buttons  flex flex-col w-50 gap-y-1">
-      <button class="sidebar btn-sidebar green-1 active my-1.5 text-left text-xl" id="departmentsTab" data-toggle-page="departments">
+      <button class="sidebar btn-sidebar green-1 active my-1.5 text-left text-xl " id="departmentsTab" data-toggle-page="departments">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-1 align-middle inline-block">
           <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
         </svg> 
@@ -27,17 +27,19 @@
       </button>
 
 
-    <script nonce="<%= config.NONCE %>">
+    
+    </div>
+  </div>
+  <p class="text-[#c9c9c9] ml-4 text-sm absolute bottom-0 p-4">PTC Subject Reservation System</p>
+</div>
+
+
+<script nonce="<%= config.NONCE %>">
       const buttons = document.querySelectorAll('button[data-toggle-page]')
         for (const button of buttons) {
-          
-
           button.addEventListener('click', function () {
             const pageTitle = document.querySelector('#page-title')
             pageTitle.textContent = button.dataset.togglePage
           })
         }
-    </script>
-    </div>
-  </div>
-</div>
+</script>
