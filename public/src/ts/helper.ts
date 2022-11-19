@@ -1,9 +1,12 @@
+import { createPopper } from 'https://unpkg.com/@popperjs/core@2.11.6/dist/esm/index.js'
+
 /**
  * It creates a switch element with a checkbox and a span that moves when the checkbox is checked
+ *
  * @param [checked=false] - boolean
  * @returns A label element with a checkbox and span element as children.
  */
-export function makeSwitch(isDisabled = false) {
+export function makeSwitch(checked = false) {
   const container = document.createElement('label')
   container.className =
     'w-[50px] h-[25px] rounded-full inline-block relative bg-[#F0F0F0] overflow-hidden shadow cursor-pointer'
@@ -11,7 +14,7 @@ export function makeSwitch(isDisabled = false) {
   checkbox.type = 'checkbox'
   checkbox.className = 'peer hidden'
   checkbox.title = 'switch'
-  if (!isDisabled) checkbox.setAttribute('checked', 'true')
+  if (checked) checkbox.setAttribute('checked', 'true')
   const span = document.createElement('span')
   span.className = `w-full h-full left-0 top-0 p-[2px] peer-checked:bg-[#0ACF83] absolute transition-colors before:content-[''] before:w-[17px] before:h-[17px] before:bg-white before:shadow before:rounded-full before:absolute before:left-[4px] before:top-[4px] peer-checked:before:translate-x-[24px] before:transition-transform`
   container.append(checkbox, span)
@@ -55,17 +58,41 @@ export function pageToggler(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function makeDepartmentCard(department: any) {
   const container = document.createElement('div')
-  container.className = `w-64 h-64 p-4 bg-[${department.color}] text-center rounded-3xl text-white shadow-md shadow-black/30 relative`
+  container.className = `w-64 h-64 p-4 bg-[#${department.color}] text-center rounded-3xl text-white shadow-md shadow-black/30 relative`
   const header = document.createElement('header')
   header.className = 'flex justify-between absolute w-full left-0 top-0 p-4'
   const kebab = document.createElement('button')
-  kebab.className = 'kebab'
+  kebab.className = 'kebab cursor-pointer'
   kebab.type = 'button'
   kebab.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ">
       <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
     </svg>
   `
+  const tooltip = document.createElement('div')
+  tooltip.className =
+    'w-32 h-16 bg-white text-gray-600 rounded-xl font-poppins py-1 modal -z-50 invisible absolute left-24'
+  const tooltipUpdate = document.createElement('button')
+  tooltipUpdate.type = 'button'
+  tooltipUpdate.title = 'update'
+  tooltipUpdate.textContent = 'Edit'
+  tooltipUpdate.className =
+    'hover:bg-[#e9e9e9] active:bg-[#fdfdfd] mt-1 px-2 block w-full text-left'
+  const tooltipDelete = document.createElement('button')
+  tooltipDelete.type = 'button'
+  tooltipDelete.title = 'delete'
+  tooltipDelete.textContent = 'Delete'
+  tooltipDelete.className =
+    'hover:bg-[#e9e9e9] active:bg-[#fdfdfd] px-2 block w-full text-left'
+  tooltip.append(tooltipUpdate, tooltipDelete)
+  kebab.append(tooltip)
+  createPopper(kebab, tooltip, {
+    placement: 'left-start'
+  })
+  kebab.addEventListener('click', function () {
+    tooltip.classList.toggle('invisible')
+    tooltip.classList.toggle('-z-50')
+  })
   const toggler = makeSwitch(!department.isDisabled)
   toggler.addEventListener('click', async function () {
     try {
