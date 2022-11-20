@@ -26,9 +26,8 @@ export function responseErrorHandler(
   const { code, message, name } = error
   response.status(code)
   if (request.method === 'GET') {
-    if (code === 404) return response.render('page-not-found', { message })
-    if (code === 429) return response.render('limit-reached', { message })
-    if (code === 503) return response.render('maintenance', { message })
+    if (code <= 499) return response.render('4xx', { code, message })
+    if (code <= 599) return response.render('5xx', { code, message })
   }
   response.json({
     statusCode: code,

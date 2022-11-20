@@ -20,7 +20,7 @@ export function isMaintenance(
   if (IS_MAINTENANCE)
     return next(
       new ServiceUnavailableError(
-        'Sorry for the inconvenience, we currenlty improving the system. We&rsquo;ll be back soon!'
+        `Sorry for the inconvenience, we currenlty improving the system. We'll be back soon!`
       )
     )
   next()

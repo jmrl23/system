@@ -60,7 +60,7 @@ export class ApiDepartmentCreate {
   @Length(3, 10)
   alias: string
 
-  @Length(6, 8)
+  @Length(6, 20)
   color: string
 }
 
@@ -74,7 +74,7 @@ export class ApiDepartmentUpdate {
   @Length(3, 10)
   alias: string
 
-  @Length(6, 8)
+  @Length(6, 20)
   color: string
 }
 

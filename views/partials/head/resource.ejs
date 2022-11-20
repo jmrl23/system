@@ -1,10 +1,4 @@
 <%- include('_external') %> 
-<link rel="stylesheet" href="/flowbite/flowbite.min.css"/>
 <link rel="stylesheet" href="/css/style.css" />
-<script src="/flowbite/flowbite.js" nonce="<%= config.NONCE %>"></script>
-<script nonce="<%= config.NONCE %>">
-/**
- * HTTP: GET /js/lazy.js
- * */
-"use strict";document.addEventListener("DOMContentLoaded",function(){function r(){return Array.from(document.querySelectorAll("img[data-lazy-src]"))}function o(t){var e=t.dataset.lazySrc;"string"==typeof e&&(t.removeAttribute("data-lazy-src"),t.setAttribute("src",e))}if("IntersectionObserver"in window)for(var t=new IntersectionObserver(function(t,e){for(var n=0,r=t;n<r.length;n++){var i=r[n];i.isIntersecting&&(o(i.target),e.unobserve(i.target))}}),e=0,n=r();e<n.length;e++){var i=n[e];t.observe(i)}else{try{var a=setInterval(function(){for(var t=0,e=r();t<e.length;t++){var n=e[t];!function(t){t=t.getBoundingClientRect();return t.top>=-t.height&&t.left>=-t.width&&t.bottom<=(window.innerHeight||document.documentElement.clientHeight)+t.height&&t.right<=(window.innerWidth||document.documentElement.clientWidth)+t.width}(n)||o(n)}r().length<1&&clearInterval(a)},10);return}catch(t){}for(var c=0,l=r();c<l.length;c++){i=l[c];o(i),i.setAttribute("loading","lazy")}}});
-</script>
+<script src="/js/lazy-image.js" nonce="<%= config.NONCE %>" defer></script>
+<script src="/js/initialize.js" nonce="<%= config.NONCE %>" type="module" defer></script>

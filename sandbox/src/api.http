@@ -94,5 +94,5 @@ POST http://localhost:3000/api/department/delete?authorization_key={{auth_key}} 
 Content-Type: application/json
 
 {
-  "id": "2fc8ecd6-58a0-445d-aea9-f8d154eaa60e"
+  "id": "f5af39fb-7845-43ad-9c34-19d0d983dfc7"
 }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head/meta') %>
+    <title>Error</title>
+    <%- include('partials/head/resource') %>
+  </head>
+  <body>
+    <main class="h-screen overflow-hidden grid place-items-center p-4 font-poppins w-full text-slate">
+      <div class="prose">
+        <h1>
+          <%= code %>
+        </h1>
+        <p>
+          <%= message %>
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

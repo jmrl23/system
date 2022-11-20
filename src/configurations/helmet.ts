@@ -11,7 +11,7 @@ export const helmetConfig: HelmetOptions = {
   contentSecurityPolicy: {
     directives: {
       defaultSrc: trusted,
-      scriptSrc: [`'nonce-${NONCE}'`, ...trusted],
+      scriptSrc: [`'nonce-${NONCE}'`, 'https://unpkg.com', ...trusted],
       mediaSrc: [...trusted],
       frameSrc: [...trusted],
       imgSrc: [

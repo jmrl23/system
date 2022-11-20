@@ -12,74 +12,75 @@
   button {
     @apply cursor-default md:cursor-pointer;
   }
+
 }
 
 @layer components {
+  
   .btn {
-    @apply px-4 py-2 rounded-md text-black bg-gray-200 hover:bg-gray-300 ring-4 ring-transparent focus:ring focus:ring-inset focus:ring-gray-400 transition-colors shadow-sm;
+    @apply px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md;
 
-    &.black {
-      @apply text-white bg-black hover:bg-black/90 focus:ring-black/90;
+    &.btn-black {
+      @apply bg-black hover:bg-black/90 text-white;
     }
 
-    &.red {
-      @apply text-white bg-red-500 hover:bg-red-600 focus:ring-red-700;
+    &.btn-red {
+      @apply bg-red-400 hover:bg-red-500 text-white;
     }
-
-    &.blue {
-      @apply text-white bg-blue-500 hover:bg-blue-600 focus:ring-blue-600;
-    }
-
-    &.yellow {
-      @apply bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-500;
-    }
-
-    &.green {
-      @apply text-white bg-green-600 hover:bg-green-700 focus:ring-green-700;
-    }
-
   }
-  .sidebar {
-    .btn-sidebar {
-      @apply px-4 py-4 rounded-xl text-black bg-gray-200 hover:bg-gray-300 transition-colors shadow-sm ;
 
-      &.black {
-        @apply text-white bg-black hover:bg-black/90 focus:ring-black/90;
+  .sidenav {
+    @apply fixed w-[5.5rem] md:w-[300px] h-full left-0 top-0 border-r border-r-gray-200 bg-white flex flex-col py-4;
+
+    button {
+      @apply bg-gray-200 hover:bg-green-300 p-4 rounded-md flex gap-x-10 font-bold transition-colors;
+
+      &.active {
+        @apply bg-green-300;
       }
 
-      &.red {
-        @apply text-white bg-red-500 hover:bg-red-600 focus:ring-red-700;
+      & > span {
+        @apply hidden md:inline;
+      }
+    }
+  }
+
+  .main-container {
+    @apply flex flex-col ml-[5.5rem] md:ml-[300px];
+
+    & > section#contents {
+      @apply p-4;
+    }
+
+    table {
+      @apply w-full table-auto;
+
+      thead {
+        @apply border-b-2 border-b-gray-200 border-collapse;
+        tr {
+          th {
+            @apply px-4 py-2 text-left;
+          }
+        }
       }
 
-      &.blue {
-        @apply text-white bg-blue-500 hover:bg-blue-600 focus:ring-blue-600;
-      }
-
-      &.yellow {
-        @apply bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-500;
-      }
-
-      &.green-1 {
-        @apply font-semibold text-[#8B8B8B] bg-[#F0F0F0] hover:text-[#0ACF83] hover:bg-[#C0FFE7];
-      
-        &.active {
-          @apply text-[#0ACF83] bg-[#9EFCD8];
+      tbody {
+        tr {
+          @apply border-collapse;
+          td {
+            @apply border-b border-b-gray-200 border-collapse px-4 py-2;
+          }
         }
       }
     }
   }
-  .text {
-    @apply font-poppins text-[#8b8b8b]
-  }
+
 }
 
 @layer utilities {
-  /* 
-    add `__dev` class to body to enable
-    why #777?
-      - It does not blend with black or white background.
-  */
+
   body.__dev * {
     @apply outline-[#777] outline-dotted outline-1;
   }
+
 }

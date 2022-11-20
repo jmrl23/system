@@ -144,7 +144,9 @@ controller
     authorization([Role.ADMIN, Role.REGISTRY, Role.STUDENT]),
     async function (request: Request, response: Response, next: NextFunction) {
       try {
-        const data = await db.department.findMany({})
+        const data = await db.department.findMany({
+          orderBy: { lastUpdated: 'desc' }
+        })
         response.json(data)
       } catch (error) {
         if (error instanceof Error) next(new InternalServerError(error.message))
