@@ -2,14 +2,17 @@ import { createPopper } from 'https://unpkg.com/@popperjs/core@2.11.6/dist/esm/i
 import { makeSwitch, pageToggler } from './helper.js'
 import type { Department } from '@prisma/client'
 
-// initialize
+// initializer
 ;(async function () {
-  const response = await fetch('/api/departments/get', { method: 'POST' })
-  const departments = await response.json()
+  const [departments] = await Promise.all([
+    (await fetch('/api/departments/get', { method: 'POST' })).json()
+  ])
   const departmentCards = departments.map(generateDepartmentCard)
   const departmentsContainer = document.querySelector('#departments-container')
   departmentsContainer?.append(...departmentCards)
 })()
+
+// page toggler
 
 const sidenavButtons =
   document.querySelectorAll<HTMLButtonElement>('.sidenav button')
@@ -28,17 +31,11 @@ pageToggler(
   }
 )
 
+// modals
+
 const modalContainer = document.querySelector('#modal-container')
 const modal = modalContainer?.querySelector('#modal')
 const modalCloseButtons = document.querySelectorAll('[data-action=close-modal]')
-
-for (const button of Array.from(modalCloseButtons)) {
-  button.addEventListener('click', hideModal)
-}
-
-modalContainer?.addEventListener('click', function (e) {
-  if (e.target === modalContainer || e.target === modal) hideModal()
-})
 
 function hideModal() {
   modalContainer?.classList.remove('grid')
@@ -59,40 +56,68 @@ function hideModal() {
   document.body.classList.remove('overflow-hidden')
 }
 
-const deleteDepartmentModal = document.querySelector<HTMLFormElement>(
-  '#delete-department-modal'
+function toggleModal(target: string) {
+  modalContainer?.classList.add('grid')
+  modalContainer?.classList.remove('hidden')
+  for (const modalContent of Array.from(modal?.children || [])) {
+    const content = modalContent as HTMLDivElement
+    content.classList.toggle('hidden', content.dataset.content !== target)
+  }
+  document.body.classList.add('overflow-hidden')
+}
+
+for (const button of Array.from(modalCloseButtons)) {
+  button.addEventListener('click', hideModal)
+}
+
+modalContainer?.addEventListener('click', function (e) {
+  if (e.target === modalContainer || e.target === modal) hideModal()
+})
+
+// modal forms eventlisteners
+
+const createDepartmentButton = document.querySelector<HTMLDivElement>(
+  '#create-department-button'
 )
 
-deleteDepartmentModal?.addEventListener('click', async function (e) {
-  e.preventDefault()
-  try {
-    const id = deleteDepartmentModal['target-id'].value
-    const response = await fetch('/api/department/delete', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id })
-    })
-    const { message, error } = await response.json()
-    if (error) throw new Error(message)
-    const cardsContainer = document.querySelector(
-      `#departments-container`
-    )?.children
-    for (const card of Array.from(cardsContainer || [])) {
-      const current = card as HTMLDivElement
-      if (current.dataset.referenceId === id) {
-        current.remove()
-        break
-      }
-    }
-    hideModal()
-  } catch (error) {
-    if (error instanceof Error) alert(error.message)
-  }
-})
+const createDepartmentModal = document.querySelector<HTMLFormElement>(
+  '#create-department-modal'
+)
 
 const editDepartmentModal = document.querySelector<HTMLFormElement>(
   '#edit-department-modal'
 )
+
+const deleteDepartmentModal = document.querySelector<HTMLFormElement>(
+  '#delete-department-modal'
+)
+
+createDepartmentButton?.addEventListener('click', function () {
+  toggleModal('create-department')
+})
+
+createDepartmentModal?.addEventListener('submit', async function (e) {
+  e.preventDefault()
+  try {
+    const name = createDepartmentModal['department-name'].value.trim()
+    const alias = createDepartmentModal['department-alias'].value
+      .trim()
+      .toUpperCase()
+    const color = createDepartmentModal['department-color'].value.trim()
+    hideModal()
+    const response = await fetch('/api/department/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, alias, color })
+    })
+    const department = await response.json()
+    if (response.status > 399) throw new Error(department.message)
+    const card = generateDepartmentCard(department)
+    createDepartmentButton?.insertAdjacentElement('afterend', card)
+  } catch (error) {
+    if (error instanceof Error) alert(error.message)
+  }
+})
 
 editDepartmentModal?.addEventListener('submit', async function (e) {
   e.preventDefault()
@@ -103,6 +128,7 @@ editDepartmentModal?.addEventListener('submit', async function (e) {
       .trim()
       .toUpperCase()
     const color = editDepartmentModal['department-color'].value.trim()
+    hideModal()
     const response = await fetch('/api/department/update', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -122,56 +148,39 @@ editDepartmentModal?.addEventListener('submit', async function (e) {
         break
       }
     }
-    hideModal()
   } catch (error) {
     if (error instanceof Error) alert(error.message)
   }
 })
 
-function toggleModal(target: string) {
-  modalContainer?.classList.add('grid')
-  modalContainer?.classList.remove('hidden')
-  for (const modalContent of Array.from(modal?.children || [])) {
-    const content = modalContent as HTMLDivElement
-    content.classList.toggle('hidden', content.dataset.content !== target)
-  }
-  document.body.classList.add('overflow-hidden')
-}
-
-const createDepartmentButton = document.querySelector(
-  '#create-department-button'
-)
-
-createDepartmentButton?.addEventListener('click', function () {
-  toggleModal('create-department')
-})
-
-const createDepartmentModal = document.querySelector<HTMLFormElement>(
-  '#create-department-modal'
-)
-
-createDepartmentModal?.addEventListener('submit', async function (e) {
+deleteDepartmentModal?.addEventListener('submit', async function (e) {
+  const id = deleteDepartmentModal['target-id'].value
   e.preventDefault()
+  const cardsContainer = document.querySelector(
+    `#departments-container`
+  )?.children
+  for (const card of Array.from(cardsContainer || [])) {
+    const current = card as HTMLDivElement
+    if (current.dataset.referenceId === id) {
+      current.remove()
+      break
+    }
+  }
+  hideModal()
   try {
-    const name = createDepartmentModal['department-name'].value.trim()
-    const alias = createDepartmentModal['department-alias'].value
-      .trim()
-      .toUpperCase()
-    const color = createDepartmentModal['department-color'].value.trim()
-    const response = await fetch('/api/department/create', {
+    const response = await fetch('/api/department/delete', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, alias, color })
+      body: JSON.stringify({ id })
     })
-    const department = await response.json()
-    if (response.status > 399) throw new Error(department.message)
-    const card = generateDepartmentCard(department)
-    createDepartmentButton?.insertAdjacentElement('afterend', card)
-    hideModal()
+    const { message, error } = await response.json()
+    if (error) throw new Error(message)
   } catch (error) {
     if (error instanceof Error) alert(error.message)
   }
 })
+
+// DOM generators
 
 function generateDepartmentCard(department: Department) {
   const card = document.createElement('div')
@@ -216,13 +225,13 @@ function generateDepartmentCard(department: Department) {
   `
   const tooltip = document.createElement('div')
   tooltip.className =
-    'w-32 h-16 bg-white text-gray-600 rounded-xl font-poppins py-1 modal -z-50 invisible absolute left-24'
+    'w-32 h-16 bg-white text-gray-600 rounded-xl font-poppins py-1 modal -z-50 invisible absolute left-24 overflow-hidden'
   const tooltipUpdate = document.createElement('button')
   tooltipUpdate.type = 'button'
   tooltipUpdate.title = 'update'
   tooltipUpdate.textContent = 'Edit'
   tooltipUpdate.className = 'hover:bg-gray-200 mt-1 px-4 block w-full text-left'
-  tooltip.addEventListener('click', function () {
+  tooltipUpdate.addEventListener('click', function () {
     if (!editDepartmentModal) return
     editDepartmentModal['target-id'].value = department.id
     editDepartmentModal['department-name'].value = department.name
