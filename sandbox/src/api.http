@@ -7,7 +7,7 @@ POST http://localhost:3000/api/users/get?authorization_key={{auth_key}} HTTP/1.1
 Content-Type: application/json
 
 {
-  "role": "ADMIN",
+  "role": ["STUDENT", "ADMIN"],
   "skip": 0,
   "take": 15,
   "keyword": "j"
@@ -95,4 +95,15 @@ Content-Type: application/json
 
 {
   "id": "f5af39fb-7845-43ad-9c34-19d0d983dfc7"
+}
+
+#### Fetch roles
+
+POST http://localhost:3000/api/roles/get?authorization_key={{auth_key}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "role": ["ADMIN"],
+  "skip": 0,
+  "take": 15
 }

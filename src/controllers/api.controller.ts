@@ -3,7 +3,7 @@ import { Role } from '@prisma/client'
 import { NextFunction, Request, Response, Router } from 'express'
 import { BadRequestError, InternalServerError } from 'express-response-errors'
 import { authorization, validateBody } from '../middlewares'
-import { cached, db } from '../services'
+import { db } from '../services'
 import {
   ApiUsersGet,
   ApiUserSetRole,
@@ -12,7 +12,9 @@ import {
   ApiDepartmentCreate,
   ApiDepartmentUpdate,
   ApiDepartmentDelete,
-  ApiUserGet
+  ApiUserGet,
+  ApiRolesGet,
+  ExpressUser
 } from '../types'
 
 const controller = Router()
@@ -26,33 +28,26 @@ controller
     async function (request: Request, response: Response, next: NextFunction) {
       try {
         const { role, take, skip, keyword } = request.body
-        const q = JSON.stringify(request.body)
-        const data = await cached(
-          `${request.url.toString()} ${q}`,
-          async () => {
-            return await db.user.findMany({
-              where: {
-                AND: [
-                  { UserLevel: { role } },
-                  {
-                    OR: [
-                      { id: { contains: keyword } },
-                      { givenName: { contains: keyword } },
-                      { email: { contains: keyword } }
-                    ]
-                  }
+        const users = await db.user.findMany({
+          where: {
+            AND: [
+              { UserLevel: { role: { in: role } } },
+              {
+                OR: [
+                  { id: { contains: keyword } },
+                  { givenName: { contains: keyword } },
+                  { email: { contains: keyword } }
                 ]
-              },
-              skip,
-              take,
-              include: {
-                StudentInformation: request.body?.role === Role.STUDENT
               }
-            })
+            ]
           },
-          60000
-        )
-        response.json(data)
+          skip,
+          take,
+          include: {
+            StudentInformation: request.body?.role === Role.STUDENT
+          }
+        })
+        response.json(users)
       } catch (error) {
         if (error instanceof Error) next(new InternalServerError(error.message))
       }
@@ -82,6 +77,8 @@ controller
     validateBody(ApiUserToggle),
     async function (request: Request, response: Response, next: NextFunction) {
       const { id, state } = request.body
+      const user = request.user as ExpressUser
+      if (user && user.id === id) return response.json(request.user)
       try {
         const data = await db.user.update({
           where: { id },
@@ -126,13 +123,18 @@ controller
     async function (request: Request, response: Response, next: NextFunction) {
       try {
         const { email } = request.body
-        await db.userLevel.delete({ where: { email } })
-        const user = await db.user.update({
+        const result = await db.userLevel.delete({
           where: { email },
-          data: { isDisabled: true },
-          include: { UserLevel: true }
+          include: { User: true }
         })
-        response.json(user)
+        if (result.User) {
+          await db.user.update({
+            where: { id: result.User.id },
+            data: { isDisabled: true },
+            include: { UserLevel: true }
+          })
+        }
+        response.json(result)
       } catch (error) {
         if (error instanceof Error) next(new BadRequestError(error.message))
       }
@@ -215,6 +217,27 @@ controller
           data: { isDisabled: state }
         })
         response.json(data)
+      } catch (error) {
+        if (error instanceof Error) next(new BadRequestError(error.message))
+      }
+    }
+  )
+
+  .post(
+    '/moderators/get',
+    authorization([Role.ADMIN]),
+    validateBody(ApiRolesGet),
+    async function (request: Request, response: Response, next: NextFunction) {
+      const { role, skip, take } = request.body
+      try {
+        const result = await db.userLevel.findMany({
+          where: { role: { in: role } },
+          include: { User: true },
+          skip,
+          take,
+          orderBy: { lastUpdated: 'desc' }
+        })
+        response.json(result)
       } catch (error) {
         if (error instanceof Error) next(new BadRequestError(error.message))
       }

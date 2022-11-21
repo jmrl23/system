@@ -1,8 +1,8 @@
 /**
- * It creates a switch element with a checkbox and a span that moves when the checkbox is checked
- *
+ * It creates a switch element with a checkbox and a span element
  * @param [checked=false] - boolean
- * @returns A label element with a checkbox and span element as children.
+ * @returns An array of two elements. The first element is the label element. The second element is the
+ * input element.
  */
 export function makeSwitch(checked = false) {
   const container = document.createElement('label')
@@ -12,7 +12,7 @@ export function makeSwitch(checked = false) {
   checkbox.type = 'checkbox'
   checkbox.className = 'peer hidden'
   checkbox.title = 'switch'
-  if (checked) checkbox.setAttribute('checked', 'true')
+  checkbox.checked = checked
   const span = document.createElement('span')
   span.className = `w-full h-full left-0 top-0 p-[2px] peer-checked:bg-[#0ACF83] absolute transition-colors before:content-[''] before:w-[17px] before:h-[17px] before:bg-white before:shadow before:rounded-full before:absolute before:left-[4px] before:top-[4px] peer-checked:before:translate-x-[24px] before:transition-transform`
   container.append(checkbox, span)
@@ -38,8 +38,9 @@ export function pageToggler(
   for (const button of Array.from(buttons)) {
     if (!button.dataset.target) continue
     button.addEventListener('click', function () {
-      const pages =
-        pageContainer?.querySelectorAll<HTMLDivElement>('[data-content]')
+      const pages = pageContainer?.children as
+        | NodeListOf<HTMLDivElement>
+        | undefined
       if (pages) {
         for (const page of Array.from(pages)) {
           page.classList.toggle(

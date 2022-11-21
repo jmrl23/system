@@ -11,82 +11,95 @@ import {
 } from 'class-validator'
 
 export class ApiUsersGet {
-  @IsEnum(Role)
-  role: Role
+  @IsEnum(Role, { each: true })
+  readonly role: Role[]
 
   @IsOptional()
   @IsInt()
-  skip: number
+  readonly skip: number
 
   @IsOptional()
   @IsInt()
-  take: number
+  readonly take: number
 
   @IsOptional()
   @MinLength(1)
-  keyword: string
+  readonly keyword: string
 }
 
 export class ApiUserGet {
   @IsUUID()
-  id: string
+  readonly id: string
 }
 
 export class ApiUserSetRole {
   @IsEmail()
-  email: string
+  readonly email: string
 
   @IsEnum(Role)
-  role: Role
+  readonly role: Role
 }
 
 export class ApiUserRemoveRole {
   @IsEmail()
-  email: string
+  readonly email: string
 }
 
 export class ApiUserToggle {
   @IsUUID()
-  id: string
+  readonly id: string
 
   @IsBoolean()
-  state: boolean
+  readonly state: boolean
 }
 
 export class ApiDepartmentCreate {
   @Length(6, 100)
-  name: string
+  readonly name: string
 
   @Length(3, 10)
-  alias: string
+  readonly alias: string
 
   @Length(6, 20)
-  color: string
+  readonly color: string
 }
 
 export class ApiDepartmentUpdate {
   @IsUUID()
-  id: string
+  readonly id: string
 
   @Length(6, 100)
-  name: string
+  readonly name: string
 
   @Length(3, 10)
-  alias: string
+  readonly alias: string
 
   @Length(6, 20)
-  color: string
+  readonly color: string
 }
 
 export class ApiDepartmentToggle {
   @IsUUID()
-  id: string
+  readonly id: string
 
   @IsBoolean()
-  state: boolean
+  readonly state: boolean
 }
 
 export class ApiDepartmentDelete {
   @IsUUID()
-  id: string
+  readonly id: string
+}
+
+export class ApiRolesGet {
+  @IsEnum(Role, { each: true })
+  readonly role: Role[]
+
+  @IsOptional()
+  @IsInt()
+  readonly skip: number
+
+  @IsOptional()
+  @IsInt()
+  readonly take: number
 }

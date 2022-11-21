@@ -21,7 +21,7 @@
             Users
           </span>
         </button>
-        <button class="active" type="button" title="users" data-target="departments">
+        <button type="button" title="users" data-target="departments">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
           </svg>
@@ -29,12 +29,12 @@
             Departments
           </span>
         </button>
-        <button type="button" title="users" data-target="roles">
+        <button class="active" type="button" title="users" data-target="moderators">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
           </svg>
           <span>
-            Roles
+            Moderators
           </span>
         </button>
       </div>
@@ -45,7 +45,7 @@
     <main class="main-container">
       <header class="border-b border-b-gray-200 p-4 flex justify-between items-center sticky top-0 bg-white z-10">
         <h2 class="font-poppins md:text-2xl font-bold" id="current-page">
-          Departments
+          Moderators
         </h2>
         <%- include('partials/body/profile-floater') %>
       </header>
@@ -54,7 +54,7 @@
         <!-- users -->
         <div class="hidden" data-content="users">
           <form class="flex gap-x-2 w-full md:max-w-screen-sm" id="users-form-search">
-            <input class="rounded-md bg-gray-200 px-4 py-2 focus:outline-dashed focus:outline-2 focus:outline-green-300 w-[calc(100%-4rem)]" type="search" name="q" />
+            <input class="border-none rounded-md bg-gray-200 px-4 py-2 w-[calc(100%-4rem)]" placeholder="Search" type="search" name="q" />
             <button class="btn w-14" type="submit">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -103,7 +103,7 @@
         </div>
 
         <!-- departments -->
-        <div class="" data-content="departments">
+        <div class="hidden" data-content="departments">
           
           <div class="flex gap-4 flex-wrap w-full" id="departments-container">
             <div class="bg-slate-500 w-[300px] h-[300px] md:w-[200px] md:h-[200px] lg:w-[300px] lg:h-[300px] rounded-lg p-4 text-white md:cursor-pointer" id="create-department-button">
@@ -118,9 +118,57 @@
 
         </div>
 
-        <!-- roles -->
-        <div class="hidden" data-content="roles">
-          Roles
+        <!-- moderators -->
+        <div class="" data-content="moderators">
+          
+          <div class="flex flex-col gap-x-2 gap-y-4 md:flex-row justify-between border-b border-b-gray-200 pb-4">
+            <form class="flex gap-x-2 w-full md:max-w-screen-sm" id="moderators-form-search">
+              <input class="border-none rounded-md bg-gray-200 px-4 py-2 w-[calc(100%-4rem)]" placeholder="Search" type="search" name="q" />
+              <button class="btn w-14" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </button>
+            </form>
+            <div class="flex justify-between gap-x-2">
+              <button class="btn" type="button" title="previous">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+              <button class="btn btn-blue grow md:-order-1 md:flex gap-x-2" type="button" title="register" id="register-moderator-button">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden md:inline-block">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Register
+              </button>
+              <button class="btn" type="button" title="next">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto mt-4">
+            <table>
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Enable Acount</th>
+                  <th>
+                    <!-- actions -->
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="moderator-list">
+                <!-- moderators -->
+              </tbody>
+            </table>
+          </div>
+
         </div>
       </section>
 
@@ -303,6 +351,80 @@
                 Cancel
               </button>
               <button class="btn btn-black" type="submit">
+                Confirm
+              </button>
+            </footer>
+          </form>
+
+          <!-- register moderator -->
+
+          <form class="bg-white shadow max-w-[400px] rounded-lg mx-auto p-4 hidden" data-content="register-moderator" id="register-moderator-modal">
+            <header class="flex justify-between items-center">
+              <h2 class="font-poppins text-xl font-bold">
+                Register Moderator
+              </h2>
+              <button class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200" type="button" data-action="close-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </header>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 mx-auto my-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+            </svg>
+            <section class="flex flex-col gap-y-4">
+              <div>
+                <label class="font-bold" for="register-moderator-modal-email">Email</label>
+                <input class="w-full px-4 py-2 rounded-md bg-gray-200" type="email" id="register-moderator-modal-email" name="moderator-email" placeholder="jad@paterostechnologicalcollege.edu.ph"/>
+              </div>
+              <div>
+                <label class="font-bold block" for="edit-department-modal-name">Role</label>
+                <select class="border-none bg-gray-200 rounded-md text-sm" name="moderator-role">
+                  <option value="REGISTRY" selected>REGISTRY</option>
+                  <option value="ADMIN">ADMIN</option>
+                </select>
+              </div>
+            </section>
+            <footer class="flex justify-end gap-x-4 mt-4">
+              <button class="btn" type="button" title="close" data-action="close-modal">
+                Cancel
+              </button>
+              <button class="btn btn-black" title="confirm" type="submit">
+                Confirm
+              </button>
+            </footer>
+          </form>
+
+          <!-- delete moderator -->
+
+          <form class="bg-white shadow max-w-[400px] rounded-lg mx-auto p-4 hidden" data-content="delete-moderator" id="delete-moderator-modal">
+            <input type="hidden" name="target-email-ref"/>
+            <header class="flex justify-between items-center">
+              <h2 class="font-poppins text-xl font-bold">
+                Delete moderator
+              </h2>
+              <button class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200" type="button" title="close" data-action="close-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </header>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 mx-auto my-4 text-red-500">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+            </svg>
+            <section class="flex flex-col gap-y-4">
+              <h3 class="text-center">
+                Are you sure you want to delete 
+                <span class="font-bold text-sm" id="target-email">
+                  HOTDOG@example.com
+                </span>&nbsp;as moderator?
+              </h3>
+            </section>
+            <footer class="flex justify-end gap-x-4 mt-4">
+              <button class="btn" type="button" title="close" data-action="close-modal">
+                Cancel
+              </button>
+              <button class="btn btn-red" title="confirm" type="submit">
                 Confirm
               </button>
             </footer>

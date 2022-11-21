@@ -1,16 +1,46 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createPopper } from 'https://unpkg.com/@popperjs/core@2.11.6/dist/esm/index.js'
 import { makeSwitch, pageToggler } from './helper.js'
 import type { Department } from '@prisma/client'
 
+const CONFIG = {
+  paginationTake: 1
+}
+
+const STATUS = {
+  studentPaginationSkip: 0,
+  moderatorPaginationSkip: 0
+}
+
 // initializer
 ;(async function () {
-  const [departments] = await Promise.all([
-    (await fetch('/api/departments/get', { method: 'POST' })).json()
+  const [students, departments, moderators] = await Promise.all([
+    getStudents(STATUS.studentPaginationSkip),
+    getDepartments(),
+    getModerators(STATUS.moderatorPaginationSkip)
   ])
+
+  loadDepartmentCards(departments)
+  loadModeratorList(moderators)
+
+  console.log(students, moderators)
+})()
+
+// init
+
+function loadDepartmentCards(departments: any[]) {
   const departmentCards = departments.map(generateDepartmentCard)
   const departmentsContainer = document.querySelector('#departments-container')
   departmentsContainer?.append(...departmentCards)
-})()
+}
+
+function loadModeratorList(moderators: any[]) {
+  const rows = moderators.map(generateModeratorRow)
+  const tbody = document.querySelector('#moderator-list')
+  if (!tbody) return
+  tbody.innerHTML = ''
+  tbody.append(...rows)
+}
 
 // page toggler
 
@@ -41,7 +71,7 @@ function hideModal() {
   modalContainer?.classList.remove('grid')
   modalContainer?.classList.add('hidden')
   const inputs = modal?.querySelectorAll<HTMLInputElement>(
-    'input[type=text], input[type=hidden]'
+    'input[type=text], input[type=hidden], input[type=email]'
   )
   for (const input of Array.from(inputs || [])) {
     input.value = ''
@@ -92,8 +122,24 @@ const deleteDepartmentModal = document.querySelector<HTMLFormElement>(
   '#delete-department-modal'
 )
 
+const deleteModeratorModal = document.querySelector<HTMLFormElement>(
+  '#delete-moderator-modal'
+)
+
+const registerModeratorButton = document.querySelector<HTMLButtonElement>(
+  '#register-moderator-button'
+)
+
+const registerModeratorModal = document.querySelector<HTMLFormElement>(
+  '#register-moderator-modal'
+)
+
 createDepartmentButton?.addEventListener('click', function () {
   toggleModal('create-department')
+})
+
+registerModeratorButton?.addEventListener('click', function () {
+  toggleModal('register-moderator')
 })
 
 createDepartmentModal?.addEventListener('submit', async function (e) {
@@ -115,7 +161,7 @@ createDepartmentModal?.addEventListener('submit', async function (e) {
     const card = generateDepartmentCard(department)
     createDepartmentButton?.insertAdjacentElement('afterend', card)
   } catch (error) {
-    if (error instanceof Error) alert(error.message)
+    if (error instanceof Error) console.error(error.message)
   }
 })
 
@@ -149,15 +195,15 @@ editDepartmentModal?.addEventListener('submit', async function (e) {
       }
     }
   } catch (error) {
-    if (error instanceof Error) alert(error.message)
+    if (error instanceof Error) console.error(error.message)
   }
 })
 
 deleteDepartmentModal?.addEventListener('submit', async function (e) {
-  const id = deleteDepartmentModal['target-id'].value
   e.preventDefault()
+  const id = deleteDepartmentModal['target-id'].value
   const cardsContainer = document.querySelector(
-    `#departments-container`
+    '#departments-container'
   )?.children
   for (const card of Array.from(cardsContainer || [])) {
     const current = card as HTMLDivElement
@@ -174,9 +220,54 @@ deleteDepartmentModal?.addEventListener('submit', async function (e) {
       body: JSON.stringify({ id })
     })
     const { message, error } = await response.json()
-    if (error) throw new Error(message)
+    if (error && message) throw new Error(message)
   } catch (error) {
-    if (error instanceof Error) alert(error.message)
+    if (error instanceof Error) console.error(error.message)
+  }
+})
+
+deleteModeratorModal?.addEventListener('submit', async function (e) {
+  e.preventDefault()
+  const email = deleteModeratorModal['target-email-ref'].value
+  const moderatorList = document.querySelector('#moderator-list')?.children
+  for (const row of Array.from(moderatorList || [])) {
+    const current = row as HTMLDivElement
+    if (current.dataset.referenceEmail === email) {
+      current.remove()
+      break
+    }
+  }
+  hideModal()
+  try {
+    const response = await fetch('/api/user/remove-role', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    })
+    const { message, error } = await response.json()
+    if (error && message) throw new Error(message)
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message)
+  }
+})
+
+registerModeratorModal?.addEventListener('submit', async function (e) {
+  e.preventDefault()
+  const email = registerModeratorModal['moderator-email'].value
+  const role = registerModeratorModal['moderator-role'].value
+  hideModal()
+  try {
+    const response = await fetch('/api/user/set-role', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, role })
+    })
+    if (response.status > 399) throw new Error(response.statusText)
+    STATUS.moderatorPaginationSkip = 0
+    const moderators = await getModerators(STATUS.moderatorPaginationSkip)
+    loadModeratorList(moderators)
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message)
   }
 })
 
@@ -207,11 +298,10 @@ function generateDepartmentCard(department: Department) {
       })
       const { isDisabled } = await response.json()
       department.isDisabled = isDisabled
-      if (isDisabled) checkbox.removeAttribute('checked')
-      else checkbox.setAttribute('checked', 'true')
+      const _checkbox = checkbox as HTMLInputElement
+      _checkbox.checked = !isDisabled
     } catch (error) {
-      alert('An error occurs')
-      console.error(error)
+      if (error instanceof Error) console.error(error.message)
     }
   })
   const optionsButton = document.createElement('button')
@@ -273,4 +363,144 @@ function generateDepartmentCard(department: Department) {
   container.append(innerContainer)
   card.append(header, container)
   return card
+}
+
+function generateModeratorRow(moderator: any) {
+  const row = document.createElement('tr')
+  const statusContainer = document.createElement('td')
+  const emailContainer = document.createElement('td')
+  const roleContainer = document.createElement('td')
+  const enabledContainer = document.createElement('td')
+  const actionContainer = document.createElement('td')
+  row.dataset.referenceEmail = moderator.email
+  const _statusContainer = document.createElement('div')
+  _statusContainer.className = 'flex gap-x-2 items-center'
+  const statusIndicator = document.createElement('span')
+  statusIndicator.className = moderator?.User
+    ? 'w-2 h-2 rounded-full bg-green-500'
+    : 'w-2 h-2 rounded-full bg-gray-300'
+  const statusText = document.createElement('span')
+  statusText.className = moderator?.User ? 'text-green-500' : 'text-gray-400'
+  statusText.append(
+    document.createTextNode(moderator?.User ? 'Active' : 'Unregistered')
+  )
+  _statusContainer.append(statusIndicator, statusText)
+  statusContainer.append(_statusContainer)
+  emailContainer.append(document.createTextNode(moderator?.email))
+  const roleOptions = ['ADMIN', 'REGISTRY'].map((e) => {
+    const option = document.createElement('option')
+    option.append(document.createTextNode(e))
+    if (e === moderator.role) option.selected = true
+    return option
+  })
+  const roleSelect = document.createElement('select')
+  roleSelect.className = 'border-none bg-gray-200 rounded-md text-sm'
+  roleSelect.title = 'Role'
+  roleSelect.append(...roleOptions)
+  roleContainer.append(roleSelect)
+  if (moderator?.User) {
+    let state = !moderator?.User?.isDisabled
+    const [switchContainer, checkbox] = makeSwitch(state)
+    enabledContainer.append(switchContainer)
+    checkbox.addEventListener('click', async function () {
+      try {
+        const response = await fetch('/api/user/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: moderator.User.id, state })
+        })
+        const { isDisabled, error } = await response.json()
+        if (error) throw new Error(error)
+        state = !isDisabled
+        if (checkbox instanceof HTMLInputElement) checkbox.checked = state
+      } catch (error) {
+        if (error instanceof Error) console.error(error.message)
+      }
+    })
+  }
+  const deleteRoleButton = document.createElement('button')
+  deleteRoleButton.className = 'btn btn-red'
+  deleteRoleButton.title = 'Delete'
+  deleteRoleButton.type = 'button'
+  deleteRoleButton.append(document.createTextNode('Delete'))
+  deleteRoleButton.addEventListener('click', function () {
+    if (!deleteDepartmentModal) return
+    const targetEmailRef =
+      deleteModeratorModal?.querySelector<HTMLInputElement>(
+        'input[name=target-email-ref]'
+      )
+    const targetEmail =
+      deleteModeratorModal?.querySelector<HTMLSpanElement>('#target-email')
+    if (targetEmailRef) targetEmailRef.value = moderator.email
+    if (targetEmail) targetEmail.textContent = moderator.email
+    toggleModal('delete-moderator')
+  })
+  actionContainer.append(deleteRoleButton)
+  row.append(
+    statusContainer,
+    emailContainer,
+    roleContainer,
+    enabledContainer,
+    actionContainer
+  )
+  return row
+}
+
+// fetchers
+
+async function getDepartments() {
+  try {
+    const response = await fetch('/api/departments/get', { method: 'POST' })
+    const departments = await response.json()
+    if (departments.error) throw new Error(departments.error)
+    return departments
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message)
+    return []
+  }
+}
+
+async function getUsers(
+  role: string[],
+  skip = 0,
+  take = 15
+): Promise<unknown[]> {
+  try {
+    const response = await fetch('/api/users/get', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role, skip, take })
+    })
+    const users = await response.json()
+    if (users.error) throw new Error(users.error)
+    return users
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message)
+    return []
+  }
+}
+
+async function getStudents(skip = 0, take = 15) {
+  const students = await getUsers(['STUDENT'], skip, take)
+  return students
+}
+
+async function getModerators(skip = 0, take = 10) {
+  try {
+    const response = await fetch('/api/moderators/get', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        role: ['ADMIN', 'REGISTRY'],
+        skip,
+        take
+      })
+    })
+    const data = await response.json()
+    if (data.error) throw new Error(data.error)
+    return data
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message)
+    return []
+  }
 }
