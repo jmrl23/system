@@ -4,7 +4,7 @@ import { makeSwitch, pageToggler } from './helper.js'
 import type { Department } from '@prisma/client'
 
 const CONFIG = {
-  paginationTake: 1
+  paginationTakeRate: 10
 }
 
 const STATUS = {
@@ -15,13 +15,14 @@ const STATUS = {
 // initializer
 ;(async function () {
   const [students, departments, moderators] = await Promise.all([
-    getStudents(STATUS.studentPaginationSkip),
+    getStudents(STATUS.studentPaginationSkip, CONFIG.paginationTakeRate),
     getDepartments(),
-    getModerators(STATUS.moderatorPaginationSkip)
+    getModerators(STATUS.moderatorPaginationSkip, CONFIG.paginationTakeRate)
   ])
 
   loadDepartmentCards(departments)
   loadModeratorList(moderators)
+  initializePaginationButtons()
 
   console.log(students, moderators)
 })()
@@ -132,6 +133,10 @@ const registerModeratorButton = document.querySelector<HTMLButtonElement>(
 
 const registerModeratorModal = document.querySelector<HTMLFormElement>(
   '#register-moderator-modal'
+)
+
+const moderatorSearchForm = document.querySelector<HTMLFormElement>(
+  '#moderators-form-search'
 )
 
 createDepartmentButton?.addEventListener('click', function () {
@@ -254,6 +259,8 @@ deleteModeratorModal?.addEventListener('submit', async function (e) {
 registerModeratorModal?.addEventListener('submit', async function (e) {
   e.preventDefault()
   const email = registerModeratorModal['moderator-email'].value
+    .trim()
+    .toLowerCase()
   const role = registerModeratorModal['moderator-role'].value
   hideModal()
   try {
@@ -269,6 +276,19 @@ registerModeratorModal?.addEventListener('submit', async function (e) {
   } catch (error) {
     if (error instanceof Error) console.error(error.message)
   }
+})
+
+moderatorSearchForm?.addEventListener('submit', async function (e) {
+  e.preventDefault()
+  const q = moderatorSearchForm['q']
+  if (q.disabled) return
+  q.disabled = true
+  const keyword = q.value.toLowerCase().trim() || undefined
+  const moderators = await getModerators(0, CONFIG.paginationTakeRate, keyword)
+  STATUS.moderatorPaginationSkip = 0
+  q.value = ''
+  loadModeratorList(moderators)
+  q.disabled = false
 })
 
 // DOM generators
@@ -397,6 +417,20 @@ function generateModeratorRow(moderator: any) {
   roleSelect.className = 'border-none bg-gray-200 rounded-md text-sm'
   roleSelect.title = 'Role'
   roleSelect.append(...roleOptions)
+  roleSelect.addEventListener('change', async function () {
+    try {
+      const response = await fetch('/api/user/set-role', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: moderator.email, role: roleSelect.value })
+      })
+      if (response.status >= 399) throw new Error(response.statusText)
+      const { role } = await response.json()
+      roleSelect.value = role
+    } catch (error) {
+      if (error instanceof Error) console.error(error.message)
+    }
+  })
   roleContainer.append(roleSelect)
   if (moderator?.User) {
     let state = !moderator?.User?.isDisabled
@@ -446,6 +480,65 @@ function generateModeratorRow(moderator: any) {
   return row
 }
 
+function initializePaginationButtons() {
+  const moderatorPaginationPreviousButton = document.querySelector(
+    '#moderator-pagination-previous-button'
+  )
+  const moderatorPaginationNextButton = document.querySelector(
+    '#moderator-pagination-next-button'
+  )
+  let moderatorPaginationOnprocess = false
+
+  moderatorPaginationPreviousButton?.addEventListener(
+    'click',
+    async function () {
+      if (moderatorPaginationOnprocess) return
+      moderatorPaginationOnprocess = true
+      moderatorPaginationPreviousButton.classList.add('cursor-not-allowed')
+      moderatorPaginationNextButton?.classList.add('cursor-not-allowed')
+      moderatorPaginationPreviousButton.setAttribute('disabled', 'disabled')
+      moderatorPaginationNextButton?.setAttribute('disabled', 'disabled')
+      const moderators = await getModerators(
+        STATUS.moderatorPaginationSkip,
+        CONFIG.paginationTakeRate
+      )
+      STATUS.moderatorPaginationSkip -= CONFIG.paginationTakeRate
+      if (STATUS.moderatorPaginationSkip < 0) STATUS.moderatorPaginationSkip = 0
+      moderatorPaginationPreviousButton.classList.remove('cursor-not-allowed')
+      moderatorPaginationNextButton?.classList.remove('cursor-not-allowed')
+      moderatorPaginationPreviousButton.removeAttribute('disabled')
+      moderatorPaginationNextButton?.removeAttribute('disabled')
+      moderatorPaginationOnprocess = false
+      if (moderators.length < 1) return
+      loadModeratorList(moderators)
+    }
+  )
+
+  moderatorPaginationNextButton?.addEventListener('click', async function () {
+    if (moderatorPaginationOnprocess) return
+    moderatorPaginationOnprocess = true
+    moderatorPaginationPreviousButton?.classList.add('cursor-not-allowed')
+    moderatorPaginationNextButton.classList.add('cursor-not-allowed')
+    moderatorPaginationPreviousButton?.setAttribute('disabled', 'disabled')
+    moderatorPaginationNextButton.setAttribute('disabled', 'disabled')
+    const moderators = await getModerators(
+      STATUS.moderatorPaginationSkip,
+      CONFIG.paginationTakeRate
+    )
+    STATUS.moderatorPaginationSkip += CONFIG.paginationTakeRate
+    moderatorPaginationPreviousButton?.classList.remove('cursor-not-allowed')
+    moderatorPaginationNextButton.classList.remove('cursor-not-allowed')
+    moderatorPaginationPreviousButton?.removeAttribute('disabled')
+    moderatorPaginationNextButton.removeAttribute('disabled')
+    moderatorPaginationOnprocess = false
+    if (moderators.length < 1) {
+      STATUS.moderatorPaginationSkip -= CONFIG.paginationTakeRate
+      return
+    }
+    loadModeratorList(moderators)
+  })
+}
+
 // fetchers
 
 async function getDepartments() {
@@ -485,7 +578,11 @@ async function getStudents(skip = 0, take = 15) {
   return students
 }
 
-async function getModerators(skip = 0, take = 10) {
+async function getModerators(
+  skip = 0,
+  take = 10,
+  keyword: string | undefined = undefined
+) {
   try {
     const response = await fetch('/api/moderators/get', {
       method: 'POST',
@@ -493,7 +590,8 @@ async function getModerators(skip = 0, take = 10) {
       body: JSON.stringify({
         role: ['ADMIN', 'REGISTRY'],
         skip,
-        take
+        take,
+        keyword
       })
     })
     const data = await response.json()

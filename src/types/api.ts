@@ -102,4 +102,8 @@ export class ApiRolesGet {
   @IsOptional()
   @IsInt()
   readonly take: number
+
+  @IsOptional()
+  @MinLength(1)
+  readonly keyword: string
 }

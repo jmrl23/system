@@ -109,6 +109,14 @@ controller
             where: { email },
             data: { isDisabled: false, userLevelId: userLevel.id }
           })
+          const sessionUser = request.user as ExpressUser
+          if (sessionUser?.id === user.id && sessionUser?.UserLevel?.role) {
+            const data = await db.userLevel.update({
+              where: { id: userLevel.id },
+              data: { role: sessionUser?.UserLevel.role }
+            })
+            return response.json(data)
+          }
         }
         response.json(userLevel)
       } catch (error) {
@@ -228,10 +236,14 @@ controller
     authorization([Role.ADMIN]),
     validateBody(ApiRolesGet),
     async function (request: Request, response: Response, next: NextFunction) {
-      const { role, skip, take } = request.body
+      const { role, skip, take, keyword } = request.body
       try {
+        const user = request.user as ExpressUser
         const result = await db.userLevel.findMany({
-          where: { role: { in: role } },
+          where: {
+            AND: [{ role: { in: role } }, { email: { contains: keyword } }],
+            NOT: [{ email: user?.email }]
+          },
           include: { User: true },
           skip,
           take,
