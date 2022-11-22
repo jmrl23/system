@@ -2,7 +2,6 @@
 import { createPopper } from 'https://unpkg.com/@popperjs/core@2.11.6/dist/esm/index.js'
 import { makeSwitch, pageToggler } from './helper.js'
 import type { Department } from '@prisma/client'
-
 ;(function () {
   const CONFIG = {
     paginationTakeRate: 10
@@ -320,7 +319,7 @@ import type { Department } from '@prisma/client'
     q.disabled = true
     const keyword = q.value.toLowerCase().trim() || undefined
     const students = await getStudents(0, CONFIG.paginationTakeRate, keyword)
-    STATUS.moderatorPaginationSkip = 0
+    STATUS.studentPaginationSkip = 0
     q.value = ''
     loadStudentList(students)
     q.disabled = false
