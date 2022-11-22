@@ -69,7 +69,7 @@
         tr {
           @apply border-collapse;
           td {
-            @apply border-b border-b-gray-200 border-collapse px-4 py-2;
+            @apply border-b border-b-gray-200 border-collapse px-4 py-2 whitespace-nowrap;
           }
         }
       }

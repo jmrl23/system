@@ -11,6 +11,7 @@ import {
 import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
+  ORGANIZATION_EMAIL_DOMAIN,
   PASSPORT_GOOGLE_CALLBACK_URL
 } from '../configurations'
 import passport from 'passport'
@@ -25,7 +26,7 @@ passport.use(
     },
     async (_accessToken, _refreshToken, profile, next) => {
       const data: typeof profile._json = profile._json
-      if (!data.email?.endsWith('@paterostechnologicalcollege.edu.ph'))
+      if (!data.email?.endsWith(`@${ORGANIZATION_EMAIL_DOMAIN}`))
         return next(null, undefined, { message: 'Invalid email' })
       try {
         const user = await db.user.findUnique({

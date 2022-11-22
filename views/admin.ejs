@@ -11,17 +11,9 @@
   <body>
     <%- include('partials/body/noscript') %>
     <nav class="sidenav">
-      <img class="w-52 mx-auto my-10 hidden md:block" src="/assets/image/app-logo.svg" alt="Resrv logo" width="129" height="32" />
+      <img class="w-52 mx-auto mt-8 mb-10 hidden md:block" src="/assets/image/app-logo.svg" alt="Resrv logo" width="129" height="32" />
       <div class="flex flex-col gap-y-4 mx-4 text-black/60">
-        <button class="active" type="button" title="users" data-target="users">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-          </svg>
-          <span>
-            Users
-          </span>
-        </button>
-        <button type="button" title="users" data-target="departments">
+        <button class="active" type="button" title="departments" data-target="departments">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
           </svg>
@@ -29,7 +21,15 @@
             Departments
           </span>
         </button>
-        <button type="button" title="users" data-target="moderators">
+        <button type="button" title="students" data-target="students">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+          </svg>
+          <span>
+            Students
+          </span>
+        </button>
+        <button type="button" title="moderators" data-target="moderators">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
           </svg>
@@ -45,66 +45,14 @@
     <main class="main-container">
       <header class="border-b border-b-gray-200 p-4 flex justify-between items-center sticky top-0 bg-white z-10">
         <h2 class="font-poppins md:text-2xl font-bold" id="current-page">
-          Users
+          Departments
         </h2>
         <%- include('partials/body/profile-floater') %>
       </header>
       <section id="contents">
 
-        <!-- users -->
-        <div data-content="users">
-          <form class="flex gap-x-2 w-full md:max-w-screen-sm" id="users-form-search">
-            <input class="border-none rounded-md bg-gray-200 px-4 py-2 w-[calc(100%-4rem)]" placeholder="Search" type="search" name="q" />
-            <button class="btn w-14" type="submit">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-              </svg>
-            </button>
-          </form>
-          <div class="overflow-x-auto mt-4">
-            <table>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>jagaitera@paterostechnologicalcollege.edu.ph</td>
-                  <td>Jomariel Gaitera</td>
-                  <td>
-                    <button class="btn">
-                      View
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>jagaitera@paterostechnologicalcollege.edu.ph</td>
-                  <td>Jomariel Gaitera</td>
-                  <td>
-                    <button class="btn">
-                      View
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>jagaitera@paterostechnologicalcollege.edu.ph</td>
-                  <td>Jomariel Gaitera</td>
-                  <td>
-                    <button class="btn">
-                      View
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
         <!-- departments -->
-        <div class="hidden" data-content="departments">
-          
+        <div data-content="departments">
           <div class="flex gap-4 flex-wrap w-full" id="departments-container">
             <div class="bg-slate-500 w-[300px] h-[300px] md:w-[200px] md:h-[200px] lg:w-[300px] lg:h-[300px] rounded-lg p-4 text-white md:cursor-pointer" id="create-department-button">
               <div class="w-full h-full grid place-items-center">
@@ -115,7 +63,53 @@
             </div>
             <!-- SSR department cards -->
           </div>
+        </div>
 
+        <!-- students -->
+        <div class="hidden" data-content="students">
+          <div class="flex flex-col gap-x-2 gap-y-4 md:flex-row justify-between border-b border-b-gray-200 pb-4">
+            <form class="flex gap-x-2 w-full md:max-w-screen-sm" id="student-form-search">
+              <input class="border-none rounded-md bg-gray-200 px-4 py-2 w-[calc(100%-4rem)]" placeholder="Search" type="search" name="q" />
+              <button class="btn w-14" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </button>
+            </form>
+            <div class="flex justify-end gap-x-2">
+              <button class="btn" type="button" title="previous" id="students-pagination-previous-button">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+              <select class="border-none bg-gray-200 rounded-md text-sm grow md:-order-1" id="user-list-department-filter" title="Filter by Department">
+                <option value="placeholder" selected>Initializing..</option>
+              </select>
+              <button class="btn" type="button" title="next" id="students-pagination-next-button">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="overflow-x-auto mt-4">
+            <table>
+              <thead>
+                <tr>
+                  <th>Enable</th>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th>Department</th>
+                  <th>
+                    <!-- actions -->
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="students-list">
+                <!-- students -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- moderators -->
@@ -176,6 +170,41 @@
 
       <div class="w-full h-full fixed z-50 left-0 top-0 backdrop-blur-sm bg-black/40 hidden place-items-center" id="modal-container">
         <div class="p-4 md:p-0 w-full" id="modal">
+
+          <!-- delete student -->
+
+          <form class="bg-white shadow max-w-[400px] rounded-lg mx-auto p-4 hidden" data-content="delete-student" id="delete-student-modal">
+            <input type="hidden" name="target-email-ref"/>
+            <header class="flex justify-between items-center">
+              <h2 class="font-poppins text-xl font-bold">
+                Delete student
+              </h2>
+              <button class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200" type="button" title="close" data-action="close-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </header>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 mx-auto my-4 text-red-500">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+            </svg>
+            <section class="flex flex-col gap-y-4">
+              <h3 class="text-center">
+                Are you sure you want to delete 
+                <span class="font-bold text-sm" id="target-email-0">
+                  HOTDOG@example.com
+                </span>
+              </h3>
+            </section>
+            <footer class="flex justify-end gap-x-4 mt-4">
+              <button class="btn" type="button" title="close" data-action="close-modal">
+                Cancel
+              </button>
+              <button class="btn btn-red" title="confirm" type="submit">
+                Confirm
+              </button>
+            </footer>
+          </form>
 
           <!-- create department -->
 
@@ -375,7 +404,7 @@
             <section class="flex flex-col gap-y-4">
               <div>
                 <label class="font-bold" for="register-moderator-modal-email">Email</label>
-                <input class="w-full px-4 py-2 rounded-md bg-gray-200" type="email" id="register-moderator-modal-email" name="moderator-email" placeholder="jad@paterostechnologicalcollege.edu.ph"/>
+                <input class="w-full px-4 py-2 rounded-md bg-gray-200" type="email" id="register-moderator-modal-email" name="moderator-email" placeholder="jad@<%= config.ORGANIZATION_EMAIL_DOMAIN %>"/>
               </div>
               <div>
                 <label class="font-bold block" for="edit-department-modal-name">Role</label>

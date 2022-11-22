@@ -5,6 +5,7 @@ import {
   IsEnum,
   IsInt,
   IsOptional,
+  IsString,
   IsUUID,
   Length,
   MinLength
@@ -23,6 +24,7 @@ export class ApiUsersGet {
   readonly take: number
 
   @IsOptional()
+  @IsString()
   @MinLength(1)
   readonly keyword: string
 }
@@ -104,6 +106,7 @@ export class ApiRolesGet {
   readonly take: number
 
   @IsOptional()
+  @IsString()
   @MinLength(1)
   readonly keyword: string
 }

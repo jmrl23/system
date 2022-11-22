@@ -43,6 +43,11 @@ export const PASSPORT_GOOGLE_CALLBACK_URL = e
   .required()
   .asUrlString()
 
+export const ORGANIZATION_EMAIL_DOMAIN = e
+  .get('ORGANIZATION_EMAIL_DOMAIN')
+  .required()
+  .asString()
+
 export const SERVICE_EMAIL = e
   .get('SERVICE_EMAIL')
   .required()

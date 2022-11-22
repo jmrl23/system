@@ -28,15 +28,26 @@ controller
     async function (request: Request, response: Response, next: NextFunction) {
       try {
         const { role, take, skip, keyword } = request.body
+        console.log(keyword)
         const users = await db.user.findMany({
           where: {
             AND: [
               { UserLevel: { role: { in: role } } },
               {
                 OR: [
-                  { id: { contains: keyword } },
-                  { givenName: { contains: keyword } },
-                  { email: { contains: keyword } }
+                  { id: { contains: keyword ?? '' } },
+                  { givenName: { contains: keyword ?? '' } },
+                  { email: { contains: keyword ?? '' } },
+                  {
+                    StudentInformation: {
+                      Department: {
+                        OR: [
+                          { name: { contains: keyword ?? '' } },
+                          { alias: { contains: keyword ?? '' } }
+                        ]
+                      }
+                    }
+                  }
                 ]
               }
             ]
@@ -241,7 +252,10 @@ controller
         const user = request.user as ExpressUser
         const result = await db.userLevel.findMany({
           where: {
-            AND: [{ role: { in: role } }, { email: { contains: keyword } }],
+            AND: [
+              { role: { in: role } },
+              { email: { contains: keyword ?? '' } }
+            ],
             NOT: [{ email: user?.email }]
           },
           include: { User: true },

@@ -3,6 +3,8 @@ import type { ExpressUser } from '../types'
 import { Router } from 'express'
 import { InternalServerError } from 'express-response-errors'
 import { Role } from '@prisma/client'
+import { ORGANIZATION_EMAIL_DOMAIN } from '../configurations'
+import { authorization } from '../middlewares'
 
 const controller = Router()
 
@@ -30,11 +32,10 @@ controller
   )
 
   .get(
-    '/profile',
-    function (request: Request, response: Response, next: NextFunction) {
-      const user = request.user as ExpressUser
-      if (request.isUnauthenticated() || user?.UserLevel?.role !== Role.STUDENT)
-        return next()
+    `/:email(([a-z]+)@${ORGANIZATION_EMAIL_DOMAIN})`,
+    authorization([Role.ADMIN, Role.REGISTRY, Role.STUDENT]),
+    function (_request: Request, response: Response) {
+      // TODO: student profile
       response.render('profile')
     }
   )
