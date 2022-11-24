@@ -3,7 +3,7 @@
     <div class="rounded-full overflow-hidden">
       <img 
         class="w-10 h-10"
-        src="<%= user.picture %>" 
+        src="<%= user?.picture %>" 
         alt="User's picture"
         width="150"
         height="150"
@@ -11,10 +11,10 @@
     </div>
     <p class="flex items-center gap-x-2">
       <span class="font-bold">
-        <%= output(user?.UserLevel?.role) %>
+        <%= user?.UserLevel?.role %>
       </span> 
       <span class="overflow-hidden max-w-[250px] text-ellipsis">
-        <%= output(user?.givenName) %>
+        <%= user?.givenName %>
       </span>
     </p>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -34,7 +34,7 @@
         </span>
       </a>
     <% } %>
-    <a class="btn btn-red flex gap-x-2" href="#" id="signout-btn">
+    <a class="btn btn-red flex gap-x-2" href="#" id="profile-floater-signout-btn">
       <span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
           <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm5.03 4.72a.75.75 0 010 1.06l-1.72 1.72h10.94a.75.75 0 010 1.5H10.81l1.72 1.72a.75.75 0 11-1.06 1.06l-3-3a.75.75 0 010-1.06l3-3a.75.75 0 011.06 0z" clip-rule="evenodd" />
@@ -44,27 +44,6 @@
         Sign out
       </span>
     </a>
-    <script nonce="<%= config.NONCE %>">
-      (function () {
-        const signoutButton = document.querySelector('#signout-btn')
-        let abortController = null
-        if (!signoutButton) return
-        signoutButton.addEventListener('click', async function (e) {
-          e.preventDefault()
-          if (abortController instanceof AbortController) signal.abort()
-          try {
-            abortController = new AbortController()
-            const response = await fetch('/auth/logout', {
-              method: 'POST', 
-              signal: abortController.signal
-            })
-            const { ok } = await response.json()
-            if (ok) location.href = '/'
-          } catch (error) {
-            if (error instanceof Error) alert(error.message)
-          }
-        })
-      })()
-    </script>
   </div>
 </div>
+<script src="/js/profile-floater.js" type="module" nonce="<%= NONCE %>"></script>

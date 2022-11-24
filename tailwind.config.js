@@ -1,3 +1,12 @@
+const tailwindCSSColors = require('tailwindcss/colors')
+
+// depracated colors
+delete tailwindCSSColors['lightBlue']
+delete tailwindCSSColors['warmGray']
+delete tailwindCSSColors['trueGray']
+delete tailwindCSSColors['coolGray']
+delete tailwindCSSColors['blueGray']
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -6,6 +15,7 @@ module.exports = {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
+    colors: tailwindCSSColors,
     extend: {
       fontFamily: {
         poppins: ['\'Poppins\'', 'sans-serif']
@@ -14,8 +24,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/forms')({
-      strategy: 'base'
-    })
+    require('@tailwindcss/forms')({ strategy: 'base' })
   ]
 }

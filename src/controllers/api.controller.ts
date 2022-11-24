@@ -28,7 +28,6 @@ controller
     async function (request: Request, response: Response, next: NextFunction) {
       try {
         const { role, take, skip, keyword } = request.body
-        console.log(keyword)
         const users = await db.user.findMany({
           where: {
             AND: [

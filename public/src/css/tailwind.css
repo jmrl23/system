@@ -34,10 +34,10 @@
     @apply fixed w-[5.5rem] md:w-[300px] h-full left-0 top-0 border-r border-r-gray-200 bg-white flex flex-col py-4;
 
     button {
-      @apply bg-gray-200 hover:bg-green-300 p-4 rounded-md flex gap-x-10 font-bold transition-colors;
+      @apply bg-gray-200 hover:bg-gray-300 p-4 rounded-md flex gap-x-10 font-bold transition-colors;
 
       &.active {
-        @apply bg-green-300;
+        @apply bg-green-300 hover:bg-green-400;
       }
 
       & > span {

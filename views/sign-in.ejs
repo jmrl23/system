@@ -4,6 +4,7 @@
     <%- include('partials/head/meta') %>
     <title>Resrv | Sign In</title>
     <%- include('partials/head/resource') %>
+    <script src="/js/lazy-image.js" nonce="<%= NONCE %>" defer></script>
   </head>
   <body>
     <%- include('partials/body/noscript') %>
@@ -34,7 +35,7 @@
                 </svg>                
               </div>
             </div>
-            <script nonce="<%= config.NONCE %>" id="error-script">
+            <script nonce="<%= NONCE %>" id="error-script">
               (function () {
                 const errorContainer = document.querySelector('#error-container')
                 const errorScript = document.querySelector('#error-script')

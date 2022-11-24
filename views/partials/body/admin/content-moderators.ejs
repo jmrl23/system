@@ -1,0 +1,48 @@
+<div class="hidden" data-content="moderators">
+  <div class="flex flex-col gap-x-2 gap-y-4 md:flex-row justify-between border-b border-b-gray-200 pb-4">
+    <form class="flex gap-x-2 w-full md:max-w-screen-sm" id="moderators-form-search">
+      <input class="border-none rounded-md bg-gray-200 px-4 py-2 w-[calc(100%-4rem)]" placeholder="Search" type="search" name="q" />
+      <button class="btn w-14" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        </svg>
+      </button>
+    </form>
+    <div class="flex justify-between gap-x-2">
+      <button class="btn" type="button" title="previous" id="moderator-pagination-previous-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+      <button class="btn btn-blue grow md:-order-1 md:flex gap-x-2" type="button" title="register" id="register-moderator-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden md:inline-block">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        Register
+      </button>
+      <button class="btn" type="button" title="next" id="moderator-pagination-next-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="overflow-x-auto mt-4">
+    <table>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Enable Acount</th>
+          <th>
+            <!-- actions -->
+          </th>
+        </tr>
+      </thead>
+      <tbody id="moderator-list">
+        <!-- moderators -->
+      </tbody>
+    </table>
+  </div>
+</div>

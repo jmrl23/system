@@ -1,0 +1,36 @@
+<form class="bg-white shadow max-w-[400px] rounded-lg mx-auto p-4 hidden" data-content="register-moderator" id="register-moderator-modal">
+  <header class="flex justify-between items-center">
+    <h2 class="font-poppins text-xl font-bold">
+      Register Moderator
+    </h2>
+    <button class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200" type="button" data-action="close-modal">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </header>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 mx-auto my-4">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+  </svg>
+  <section class="flex flex-col gap-y-4">
+    <div>
+      <label class="font-bold" for="register-moderator-modal-email">Email</label>
+      <input class="w-full px-4 py-2 rounded-md bg-gray-200" type="email" id="register-moderator-modal-email" name="moderator-email" placeholder="jad@<%= ORGANIZATION_EMAIL_DOMAIN %>"/>
+    </div>
+    <div>
+      <label class="font-bold block" for="edit-department-modal-name">Role</label>
+      <select class="border-none bg-gray-200 rounded-md text-sm" name="moderator-role">
+        <option value="REGISTRY" selected>REGISTRY</option>
+        <option value="ADMIN">ADMIN</option>
+      </select>
+    </div>
+  </section>
+  <footer class="flex justify-end gap-x-4 mt-4">
+    <button class="btn" type="button" title="close" data-action="close-modal">
+      Cancel
+    </button>
+    <button class="btn btn-black" title="confirm" type="submit">
+      Confirm
+    </button>
+  </footer>
+</form>

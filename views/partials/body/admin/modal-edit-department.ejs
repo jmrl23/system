@@ -1,0 +1,71 @@
+<form class="bg-white shadow max-w-[400px] rounded-lg mx-auto p-4 hidden" data-content="edit-department" id="edit-department-modal">
+  <input type="hidden" name="target-id"/>
+  <header class="flex justify-between items-center">
+    <h2 class="font-poppins text-xl font-bold">
+      Edit Department
+    </h2>
+    <button class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200" type="button" data-action="close-modal">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </header>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 mx-auto my-4">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+  </svg>
+  <section class="flex flex-col gap-y-4">
+    <div>
+      <label class="font-bold" for="edit-department-modal-name">Name</label>
+      <input class="w-full px-4 py-2 rounded-md bg-gray-200" type="text" id="edit-department-modal-name" name="department-name" placeholder="Bachelor of Science in Information Technology"/>
+    </div>
+    <div>
+      <label class="font-bold" for="edit-department-modal-alias">Alias</label>
+      <input class="w-full px-4 py-2 rounded-md bg-gray-200" type="text" name="department-alias" id="edit-department-modal-alias" placeholder="BSIT"/>
+    </div>
+    <div>
+      <label class="font-bold">Color</label>
+      <div class="flex gap-x-2 mt-2">
+        <label class="inline-block md:cursor-pointer">
+          <input class="hidden peer" type="radio" name="department-color" value="slate-900" checked>
+          <span class="h-4 w-4 bg-slate-900 block rounded-full peer-checked:bg-slate-800"></span>
+        </label>
+        <label class="inline-block md:cursor-pointer">
+          <input class="hidden peer" type="radio" name="department-color" value="red-500">
+          <span class="h-4 w-4 bg-red-500 block rounded-full peer-checked:bg-red-600"></span>
+        </label>
+        <label class="inline-block md:cursor-pointer">
+          <input class="hidden peer" type="radio" name="department-color" value="orange-500">
+          <span class="h-4 w-4 bg-orange-500 block rounded-full peer-checked:bg-orange-600"></span>
+        </label>
+        <label class="inline-block md:cursor-pointer">
+          <input class="hidden peer" type="radio" name="department-color" value="amber-500">
+          <span class="h-4 w-4 bg-amber-500 block rounded-full peer-checked:bg-amber-600"></span>
+        </label>
+        <label class="inline-block md:cursor-pointer">
+          <input class="hidden peer" type="radio" name="department-color" value="green-500">
+          <span class="h-4 w-4 bg-green-500 block rounded-full peer-checked:bg-green-600"></span>
+        </label>
+        <label class="inline-block md:cursor-pointer">
+          <input class="hidden peer" type="radio" name="department-color" value="blue-500">
+          <span class="h-4 w-4 bg-blue-500 block rounded-full peer-checked:bg-blue-600"></span>
+        </label>
+        <label class="inline-block md:cursor-pointer">
+          <input class="hidden peer" type="radio" name="department-color" value="purple-500">
+          <span class="h-4 w-4 bg-purple-500 block rounded-full peer-checked:bg-purple-600"></span>
+        </label>
+        <label class="inline-block md:cursor-pointer">
+          <input class="hidden peer" type="radio" name="department-color" value="pink-500">
+          <span class="h-4 w-4 bg-pink-500 block rounded-full peer-checked:bg-pink-600"></span>
+        </label>
+      </div>
+    </div>
+  </section>
+  <footer class="flex justify-end gap-x-4 mt-4">
+    <button class="btn" type="button" data-action="close-modal">
+      Cancel
+    </button>
+    <button class="btn btn-black" type="submit">
+      Confirm
+    </button>
+  </footer>
+</form>
