@@ -27,8 +27,6 @@ import type { Department } from '@prisma/client'
     void refreshFilterSelects()
   })()
 
-  // init
-
   function loadStudentList(students: any[]) {
     const rows = students.map(generateUserRow)
     const tbody = document.querySelector('#students-list')
