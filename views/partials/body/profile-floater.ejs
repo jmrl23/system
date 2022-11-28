@@ -1,8 +1,8 @@
 <div class="relative" id="profile-floater-container">
   <div class="text-sm md:text-base flex rounded-xl font-medium bg-gray-200 hover:bg-gray-300 transition-colors hover:font-semibold p-4 gap-x-2 items-center cursor-default md:cursor-pointer" id="profile-floater">
-    <div class="rounded-full overflow-hidden">
+    <div class="rounded-full overflow-hidden w-10 h-10">
       <img 
-        class="w-10 h-10"
+        class="w-full h-full"
         src="<%= user?.picture %>" 
         alt="User's picture"
         width="150"
@@ -10,7 +10,7 @@
       />
     </div>
     <p class="flex items-center gap-x-2">
-      <span class="font-bold">
+      <span class="font-bold hidden md:inline">
         <%= user?.UserLevel?.role %>
       </span> 
       <span class="overflow-hidden max-w-[250px] text-ellipsis">

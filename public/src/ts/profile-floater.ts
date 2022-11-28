@@ -26,7 +26,8 @@ import { createPopper } from 'https://unpkg.com/@popperjs/core@2.11.6/dist/esm/i
           method: 'POST',
           signal: abortController.signal
         })
-        const { ok } = await response.json()
+        const { ok, error, message } = await response.json()
+        if (error && message) throw new Error(message)
         if (ok) location.href = '/'
       } catch (error) {
         if (error instanceof Error) alert(error.message)

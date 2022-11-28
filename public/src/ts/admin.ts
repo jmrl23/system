@@ -345,7 +345,7 @@ import type { Department } from '@prisma/client'
   function generateDepartmentCard(department: Department) {
     const card = document.createElement('div')
     card.dataset.referenceId = department.id
-    card.className = `bg-${department.color} w-[300px] h-[300px] md:w-[200px] md:h-[200px] lg:w-[300px] lg:h-[300px] rounded-lg p-4 text-white relative`
+    card.className = `bg-${department.color} w-[300px] h-[300px] md:w-[200px] md:h-[200px] lg:w-[300px] lg:h-[300px] rounded-lg p-4 text-white relative shadow`
     const header = document.createElement('header')
     header.className = 'absolute w-full left-0 top-0 flex justify-between p-4'
     const [checkboxContainer, checkbox] = makeSwitch(!department.isDisabled)
@@ -699,7 +699,7 @@ import type { Department } from '@prisma/client'
           STATUS.studentPaginationSkip -= CONFIG.paginationTakeRate
           return
         }
-        loadModeratorList(students)
+        loadStudentList(students)
       }
     )
 

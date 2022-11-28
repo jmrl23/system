@@ -49,6 +49,12 @@ enum Day {
   SATURDAY
 }
 
+enum ReservationStatus {
+  PENDING
+  APPROVED
+  DECLINE
+}
+
 // ============================= MODELS =============================
 
 // == MODEL: User
@@ -68,19 +74,21 @@ model User {
   StudentInformation StudentInformation?
   UserLevel          UserLevel?          @relation(fields: [userLevelId], references: [id])
   userLevelId        String?             @unique
+  Reservation        Reservation[]
 
   @@unique([id, email])
 }
 
-// == MODEL: StudentInformation | TODO: Add more fields
+// == MODEL: StudentInformation
 
 model StudentInformation {
   id          String   @unique @default(uuid())
   dateCreated DateTime @default(now())
   lastUpdated DateTime @updatedAt
 
-  gender  Gender
-  address String
+  gender        Gender
+  address       String
+  contactNumber String?
 
   studentId     String?         @unique // registry ang maglalagay
   ClassSchedule ClassSchedule[]
@@ -173,4 +181,18 @@ model ClassSchedule {
   prerequisiteId       String
   StudentInformation   StudentInformation? @relation(fields: [studentInformationId], references: [id])
   studentInformationId String?
+  Reservation          Reservation?        @relation(fields: [reservationId], references: [id])
+  reservationId        String?
+}
+
+// == MODEL: Reservation
+model Reservation {
+  id          String   @unique @default(uuid())
+  dateCreated DateTime @default(now())
+  lastUpdated DateTime @updatedAt
+
+  status         ReservationStatus @default(PENDING)
+  user           User              @relation(fields: [userId], references: [id])
+  userId         String
+  classSchedules ClassSchedule[]
 }
